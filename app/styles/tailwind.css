@@ -10,3 +10,7 @@ body {
     color-scheme: dark;
   }
 }
+
+.nav-item{
+  @apply text-white capitalize font-light;
+}

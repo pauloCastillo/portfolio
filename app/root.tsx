@@ -6,8 +6,9 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
-
-import "./tailwind.css";
+import Navbar from "~/components/Navbar";
+import Footer from "~/components/Footer";
+import "./styles/tailwind.css";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -41,5 +42,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return(
+    <div className="container mx-auto w-full-screen">
+         <Navbar />
+         <main className="flex flex-col items-center justify-center h-screen bg-orange-300">
+            <Outlet />
+          </main>  
+          <Footer />
+    </div>
+  );
 }
