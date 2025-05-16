@@ -42,13 +42,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return(
-    <div className="container mx-auto w-full-screen">
-         <Navbar />
-         <main className="flex flex-col items-center justify-center h-screen bg-orange-300">
-            <Outlet />
-          </main>  
-          <Footer />
+  return (
+    <div className="container bg-darkBlue mx-auto w-full-screen">
+      <Navbar />
+      <main className="flex flex-col items-center justify-center h-screen bg-orange-300">
+        <Outlet />
+      </main>
+      <Footer />
     </div>
   );
 }
