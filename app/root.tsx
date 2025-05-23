@@ -9,6 +9,7 @@ import type { LinksFunction } from "@remix-run/node";
 import Navbar from "~/components/Navbar";
 import Footer from "~/components/Footer";
 import "./styles/tailwind.css";
+import Slider from "~/components/slider/Slider";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -42,10 +43,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+   const images = [
+        "https://static.vecteezy.com/system/resources/previews/021/495/985/non_2x/facebook-social-media-logo-icon-free-png.png",
+        "https://www.google.com/url?sa=i&url=https%3A%2F%2F1000marcas.net%2Ftik-tok-logo%2F&psig=AOvVaw0gBa_AHutN8NzgylNJOtXY&ust=1747964953588000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLikgIP7tY0DFQAAAAAdAAAAABAE",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHP2W0X8Bj9Wwou8Y5Iv2q_Aa-nME9SMwEAA&s"
+    ]
+
   return(
     <div className="container mx-auto w-full-screen">
          <Navbar />
-         <main className="flex flex-col items-center justify-center h-screen bg-orange-300">
+          <main className="flex flex-col items-center justify-center min-h-screen relative">
+            <Slider slides={images} />
             <Outlet />
           </main>  
           <Footer />
