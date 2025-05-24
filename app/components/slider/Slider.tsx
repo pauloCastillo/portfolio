@@ -19,9 +19,8 @@ export default function Slider({
         if (!autoSlide) return;
 
         slideIntervalRef.current = setInterval(nextSlide, autoSlideInterval);
-
         return () => {
-        if (slideIntervalRef.current) clearInterval(slideIntervalRef.current);
+            if (slideIntervalRef.current) clearInterval(slideIntervalRef.current);
         };
     }, [currentIndex, autoSlide, autoSlideInterval]);
 
@@ -54,24 +53,24 @@ export default function Slider({
         onMouseLeave={resumeAutoSlide}>
             <div className="w-full h-full flex transition-transform duration-500 ease-in-out"
                 style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-                {slides.map((image, index) => (
+                {slides?.map((slide, index) => (
                     <img
                         key={index}
-                        src={image}
+                        src={slide}
                         alt={`Slide-${index + 1}`}
-                        className="absolute inset-0 object-cover w-full h-full"
+                        className="w-full h-full object-cover"
                     />
                 ))}
             </div>
             <button
                 onClick={prevSlide}
-                className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80"
+                className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80 z-10"
             >
                 &#10094;
             </button>
             <button
                 onClick={nextSlide}
-                className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80"
+                className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80 z-10"
             >
                 &#10095;
             </button>
@@ -82,7 +81,7 @@ export default function Slider({
                     key={idx}
                     type="button"
                     aria-label={`Go to slide ${idx + 1}`}
-                    className={`w-3 h-3 rounded-full cursor-pointer focus:outline-none ${
+                    className={`w-3 h-3 rounded-full cursor-pointer focus:outline-none z-10 ${
                     idx === currentIndex ? "bg-white" : "bg-white/50"}`}
                     onClick={() => setCurrentIndex(idx)}
                     tabIndex={0}

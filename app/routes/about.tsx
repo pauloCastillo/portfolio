@@ -1,4 +1,5 @@
 import { Link } from "@remix-run/react";
+import BaseCard from "~/components/BaseCard";
 import Newsletter from "~/components/Newsletter";
 export default function About() {
   const designLogos = [
@@ -24,7 +25,7 @@ export default function About() {
   ];
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+    <div className="flex flex-col items-center justify-center p-4">
       <h1 className="text-4xl font-bold">About Me</h1>
       <h2 className="text-2xl font-semibold">Paulo Castillo</h2>
       <div className="flex items-center justify-center mt-4 w-full">
@@ -38,15 +39,7 @@ export default function About() {
       <section className="h-64 w-full text-center my-8">
         <h3 className="text-2xl font-semibold uppercase">skills</h3>
         <div className="flex items-center justify-around mt-4 w-full">
-          <ul className="flex mx-5 justify-around w-1/2 flex-wrap">
-            { designLogos.map((logo) => (
-              <li key={logo.alt} className="flex flex-col items-center justify-center">
-                <img src={logo.src} alt={logo.alt} className="h-16 w-16 mr-2" />
-                <span className="text-sm text-gray-200 ml-2 uppercase">{logo.alt}</span>
-              </li>
-            )) }
-          </ul>
-          <ul className="flex mx-5 items-center justify-around w-1/2 flex-wrap">
+          <ul className="flex items-center w-[40%] flex-wrap">
             { devLogos.map((logo) => (
               <li key={logo.alt} className="flex flex-col items-center justify-center">
                 <img src={logo.src} alt={logo.alt} className="h-16 w-16 mr-2" />
@@ -54,95 +47,73 @@ export default function About() {
               </li>
             )) }
           </ul>
+          <ul className="flex items-center justify-center w-72 flex-wrap">
+            { designLogos.map((logo) => (
+              <li key={logo.alt} className="flex flex-col items-center justify-center">
+                <img src={logo.src} alt={logo.alt} className="h-16 w-16 mr-2" />
+                <span className="text-sm text-gray-200 ml-2 uppercase">{logo.alt}</span>
+              </li>
+            )) }
+          </ul>
         </div>
+        <div className="flex flex-col items-center my-8">
+          <Link to="/about" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-green-600">Descarga mi CV para saber más</Link> 
+        </div> 
       </section>
-      <section className="min-h-screen w-full text-center my-4">
-            <h3 className="text-2xl font-semibold">Mis Servicios</h3>
-            <div className="flex flex-col items-center my-8">
-              <Link to="/about" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-green-600">Descarga mi CV para saber más</Link> 
-            </div> 
+      <section className="w-full h-full">
+            <h3 className="text-2xl font-semibold mt-8 text-center my-5">Mis Servicios</h3>
+            <div className="flex flex-wrap items-center justify-evenly">
+              <BaseCard title="Diseño Gráfico" image="/figma.svg">
+                  <div className="flex flex-col items-center justify-center text-start w-full">
+                    <p className="text-sm">Diseño de interfaces de usuario (UI) y experiencia de usuario (UX).</p>
+                    <p className="text-sm">Desarrollo Frontend con tecnologías como React.js, Vue.js, HTML5, CSS3 y SASS.</p>
+                    <p className="text-sm">Desarrollo de aplicaciones web y móviles.</p>
+                    <p className="text-sm">Integración de API´s Restfull.</p>
+                  </div>
+              </BaseCard>
+                <BaseCard title="Diseño Gráfico" image="/figma.svg">
+                  <div className="flex flex-col items-center justify-center text-start w-full">
+                    <p className="text-sm">Diseño de interfaces de usuario (UI) y experiencia de usuario (UX).</p>
+                    <p className="text-sm">Desarrollo Frontend con tecnologías como React.js, Vue.js, HTML5, CSS3 y SASS.</p>
+                    <p className="text-sm">Desarrollo de aplicaciones web y móviles.</p>
+                    <p className="text-sm">Integración de API´s Restfull.</p>
+                  </div>
+              </BaseCard>
+                <BaseCard title="Diseño Gráfico" image="/figma.svg">
+                  <div className="flex flex-col items-center justify-center text-start w-full">
+                    <p className="text-sm">Diseño de interfaces de usuario (UI) y experiencia de usuario (UX).</p>
+                    <p className="text-sm">Desarrollo Frontend con tecnologías como React.js, Vue.js, HTML5, CSS3 y SASS.</p>
+                    <p className="text-sm">Desarrollo de aplicaciones web y móviles.</p>
+                    <p className="text-sm">Integración de API´s Restfull.</p>
+                  </div>
+              </BaseCard>
+                <BaseCard title="Diseño Gráfico" image="/figma.svg">
+                  <div className="flex flex-col items-center justify-center text-start w-full">
+                    <p className="text-sm">Diseño de interfaces de usuario (UI) y experiencia de usuario (UX).</p>
+                    <p className="text-sm">Desarrollo Frontend con tecnologías como React.js, Vue.js, HTML5, CSS3 y SASS.</p>
+                    <p className="text-sm">Desarrollo de aplicaciones web y móviles.</p>
+                    <p className="text-sm">Integración de API´s Restfull.</p>
+                  </div>
+              </BaseCard>
+                <BaseCard title="Diseño Gráfico" image="/figma.svg">
+                  <div className="flex flex-col items-center justify-center text-start w-full">
+                    <p className="text-sm">Diseño de interfaces de usuario (UI) y experiencia de usuario (UX).</p>
+                    <p className="text-sm">Desarrollo Frontend con tecnologías como React.js, Vue.js, HTML5, CSS3 y SASS.</p>
+                    <p className="text-sm">Desarrollo de aplicaciones web y móviles.</p>
+                    <p className="text-sm">Integración de API´s Restfull.</p>
+                  </div>
+              </BaseCard>
+                <BaseCard title="Diseño Gráfico" image="/figma.svg">
+                  <div className="flex flex-col items-center justify-center text-start w-full">
+                    <p className="text-sm">Diseño de interfaces de usuario (UI) y experiencia de usuario (UX).</p>
+                    <p className="text-sm">Desarrollo Frontend con tecnologías como React.js, Vue.js, HTML5, CSS3 y SASS.</p>
+                    <p className="text-sm">Desarrollo de aplicaciones web y móviles.</p>
+                    <p className="text-sm">Integración de API´s Restfull.</p>
+                  </div>
+              </BaseCard>
+            </div>
             <Newsletter />
       </section>
-      {/* <section className="mt-8">
-        
-        <ul className="list-disc list-inside mt-4">
-          <li>HTML5</li>
-          <li>CSS3</li>
-          <li>Bootstrap</li>
-          <li>SASS</li>
-          <li>Javascript</li>
-          <li>React.js</li>
-          <li>Vue.js</li>
-          <li>API Restfull</li>
-          <li>Node.js</li>
-          <li>Express.js</li>
-          <li>MongoDB</li>
-          <li>PostgreSQL</li>
-          <li>Git</li>
-          <li>Figma</li>
-          <li>Photoshop</li>
-          <li>Illustrator</li>
-          <li>InDesign</li>
-          <li>After Effects</li>
-          <li>Premiere Pro</li>
-          <li>Canva</li>
-          <li>WordPress</li>
-          <li>Shopify</li>
-          <li>SEO</li>
-          <li>Google Analytics</li>
-          <li>Google Ads</li>
-          <li>Facebook Ads</li>
-          <li>Instagram Ads</li>
-          <li>LinkedIn Ads</li>
-          <li>Twitter Ads</li>
-          <li>Mailchimp</li>
-          <li>HubSpot</li>
-          <li>Zapier</li>
-          <li>Slack</li>
-          <li>Trello</li>
-          <li>Asana</li>
-        </ul>
-      </section>
-        
-        <ul className="list-disc list-inside mt-4">
-          <li>Licenciatura en Diseño Gráfico - Universidad de Buenos Aires (2015)</li>
-          <li>Desarrollo Web Full Stack - Digital House (2018)</li>
-          <li>React.js - Coderhouse (2020)</li>
-          <li>Vue.js - Coderhouse (2021)</li>
-          <li>Node.js - Coderhouse (2021)</li>
-          <li>MongoDB - Coderhouse (2021)</li>
-          <li>PostgreSQL - Coderhouse (2021)</li>
-          <li>Git - Coderhouse (2021)</li>
-          <li>Figma - Coderhouse (2021)</li>
-          <li>Photoshop - Coderhouse (2021)</li>
-          <li>Illustrator - Coderhouse (2021)</li>
-          <li>InDesign - Coderhouse (2021)</li>
-          <li>After Effects - Coderhouse (2021)</li>
-          <li>Premiere Pro - Coderhouse (2021)</li>
-          <li>Canva - Coderhouse (2021)</li>
-          <li>WordPress - Coderhouse (2021)</li>
-          <li>Shopify - Coderhouse (2021)</li>
-          <li>SEO - Coderhouse (2021)</li>
-          <li>Google Analytics - Coderhouse (2021)</li>
-        </ul>
-        <h3 className="text-2xl font-semibold mt-8">Certifications</h3>
-        <ul className="list-disc list-inside mt-4">
-          <li>Google Analytics - Google (2021)</li>
-          <li>Google Ads - Google (2021)</li>
-          <li>Facebook Ads - Facebook (2021)</li>
-          <li>Instagram Ads - Facebook (2021)</li>
-          <li>LinkedIn Ads - LinkedIn (2021)</li>
-          <li>Twitter Ads - Twitter (2021)</li>
-          <li>Mailchimp - Mailchimp (2021)</li>
-          <li>HubSpot - HubSpot (2021)</li>
-          <li>Zapier - Zapier (2021)</li>
-        </ul>
-        <h3 className="text-2xl font-semibold mt-8">Languages</h3>
-        <ul className="list-disc list-inside mt-4">
-          <li>Español - Nativo</li>
-          <li>Inglés - Intermedio</li>
-          <li>Portugués - Intermedio</li>
-        </ul> */}
     </div>
   );   
 }
