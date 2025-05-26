@@ -28,12 +28,21 @@ export default function About() {
     <div className="flex flex-col items-center justify-center p-4">
       <h1 className="text-4xl font-bold">About Me</h1>
       <h2 className="text-2xl font-semibold">Paulo Castillo</h2>
-      <div className="flex items-center justify-center mt-4 w-full">
+      <h3 className="font-bold text-xl">Tu Socio Creativo para Soluciones Web Impactantes</h3>
+      <p className="text-sm mt-4 w-[70%]">Hola, soy diseñador gráfico y desarrollador full-stack con una pasión por construir experiencias web que no solo se ven bien, sino que también funcionen a la perfección y podamos tener un crecimiento juntos. Durante los últimos 5 años, he tenido la oportunidad de colaborar con el desarrollo de un ecommerce, y el desarrollo de un sistema educativo por completo, tanto la parte visual como técnica del desarrollo, ayudándoles a transformar sus ideas en realidades digitales y a su crecimiento.</p>
+      <div className="flex items-center justify-center mt-1 w-full">
         <img src="/fotoCV.jpg" alt="Profile" className="rounded-full w-64 h-64 mr-10" />
         <div className="p-4 w-1/2">
-          <p className="text-sm">Diseñador Gráfico y Desarrollador Frontend con más de 5 años de experiencia haciendo uso de tecnologías en frontend como: Html5, CSS3, Bootstrap, SASS, Javascript, React.js y Vue.js e integraciones de API´s Restfull.</p>
-          <p className="text-sm">Tuve la oportunidad de desarrollar una API desde cero para una institución de retail, logrando una conexión efectiva a una pasarela de pagos y así poder realizar cobros digitales para su crecimiento digital. Desarrollé desde cero una aplicación web implementando una base de datos con una óptima conexión entre el frontend y el backend para una institución educativa, mejorando así su presencia digital y apoyando al incremento de nuevos estudiantes.</p>
-          <p className="text-sm">Me encuentro en la búsqueda de una posición remota como FrontEnd Developer en un equipo ágil, remoto y comprometido a alcanzar metas y objetivos comunes, aportando a los diferentes retos mis conocimientos de diseño para lograr mejores resultados.</p>
+          <p className="text-sm my-4"><b>Mi filosofía es simple: </b>Creo que el diseño y el desarrollo no son disciplinas separadas, sino dos caras de la misma moneda. Por eso, me esfuerzo por integrar ambos aspectos en cada proyecto, desde la concepción inicial hasta la implementación final.</p>
+          <p className="text-xl font-bold">¿Qué me diferencia?</p>
+          <br/>
+          <ul className="list-disc list-inside text-sm">
+            <li><b>Una perspectiva integral: </b>Entiendo la importancia de la usabilidad, la accesibilidad y la identidad visual.</li>
+            <li><b>Un enfoque centrado en el usuario: </b>Creo experiencias intuitivas y atractivas que conectan con tu audiencia.</li>
+            <li><b>Un compromiso con la calidad: </b> Me aseguro de que cada línea de código y cada elemento de diseño cumplan con los requerimientos y expectativas del cliente.</li>
+          </ul>
+          <p className="text-sm my-4">Más allá de mis habilidades técnicas, soy un apasionado del aprendizaje continuo. Me encanta explorar nuevas tecnologías, experimentar con nuevas ideas y desafiar mis propios límites. Creo que la clave para el éxito en este campo es mantenerse curioso y nunca dejar de aprender.</p>
+          <p className="text-sm">Si estás buscando un socio creativo que pueda ayudarte a llevar tu presencia online al siguiente nivel, ¡me encantaría charlar contigo! <Link to={"/contact"} className="text-green-300">Contáctame hoy mismo</Link> para discutir tu proyecto.</p>
         </div>
       </div>
       <section className="h-64 w-full text-center my-8">

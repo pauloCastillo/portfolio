@@ -23,7 +23,7 @@ export default function Contact() {
           {rrssLogos.map((socialm) => (
             <li key={socialm.socialLink} className="flex justify-center items-center">
               <Link to={socialm.socialLink} target="_blank" rel="noopener noreferrer">
-                <FontAwesomeIcon icon={socialm.icon} size="xl" className="text-blue-500 hover:text-blue-700" />
+                <FontAwesomeIcon icon={socialm.icon} size="xl" className="text-blue-500 hover:text-blue-100 " />
               </Link>  
             </li>
           ))}    

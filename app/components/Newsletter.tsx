@@ -9,8 +9,8 @@ export default function Newsletter() {
 
     return (
         <div className="bg-green-500 rounded-lg p-4 my-5 text-center">
-            <h3 className="uppercase text-2xl">¡ únete a la lista ! <br/> y recibe noticias sobre diseño y programación</h3>
-            <p>prometo no spamearte, solo mantenerte informado</p>
+            <h3 className="uppercase text-2xl">¡ únete a la lista ! <br/> recibe noticias sobre diseño y programación</h3>
+            <p>prometo no spamearte, sólo mantenerte informado</p>
             <Form method="post" action="/newsletter" className="flex flex-col items-center mt-4">
                 <input 
                     type="text" 

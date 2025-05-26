@@ -14,12 +14,12 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#2F81EE] p-4 rounded-b-md sticky bottom-0 z-30">
-        <Link to="/" className="capitalize font-light hover:cursor-pointer">terms and conditions</Link>
         <div className="flex items-center justify-between">
             <p className="font-light text-amber-50 capitalize">paulo sergio castillo monroy &copy; 2026</p>
-            <ul className="flex justify-around items-center text-cyan-300 w-80">
+            <Link to="/" className="capitalize font-light hover:cursor-pointer hover:text-lime-300">terms and conditions</Link>
+            <ul className="flex justify-around items-center text-cyan-100 w-80">
                 {rrssLogos.map(socialm => (
-                    <li key={socialm.socialLink}><Link to={socialm.socialLink}><FontAwesomeIcon icon={socialm.icon} size="xl"/></Link></li>
+                    <li key={socialm.socialLink}><Link to={socialm.socialLink}><FontAwesomeIcon icon={socialm.icon} size="xl" className="hover:text-green-300"/></Link></li>
                 ))}
             </ul>
         </div>

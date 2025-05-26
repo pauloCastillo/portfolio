@@ -17,5 +17,5 @@ body {
 }
 
 .nav-item{
-  @apply text-white capitalize font-light;
+  @apply text-blue-500 capitalize font-light;
 }

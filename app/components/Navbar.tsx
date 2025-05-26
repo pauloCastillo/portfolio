@@ -3,9 +3,9 @@ import Button from "./Button";
 
 export default function Navbar() {
     return (
-        <nav className="flex items-center justify-between bg-[#2F81EE] p-2 rounded-t-md shadow-lg sticky top-0 z-30">
+        <nav className="flex items-center justify-between bg-blue-50 p-2 rounded-t-md shadow-lg sticky top-0 z-30">
             <Link to="/" className="h-14">
-                <img src="/horizontal_logo.svg" alt="logo" className="h-14" />
+                <img src="/horizontal_logo.png" alt="logo" className="h-14" />
             </Link>
             <ul className="flex space-x-4 items-center justify-center">
                 <li><Link to="/" className="nav-item">home</Link></li>
