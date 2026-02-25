@@ -1,23 +1,32 @@
-from pydantic import BaseModel, Field, field_validator
-from datetime import datetime
+from pydantic import BaseModel, Field, ConfigDict, field_validator
+from datetime import datetime, UTC
 
 
-class ProjectDTO(BaseModel):
-    id: int = Field(
-        gt=0, description="The unique identifier for the project", default=None)
-    title: str
-    media: str
-    description: str
-    tech_stack: str
-    github_link: str
-    demo_link: str
-    category: str
-    created_at: str
+class Projects_DTO(BaseModel): 
+    title: str = Field(..., example="My Awesome Project")
+    description: str = Field(..., example="A brief description of the project")
+    tech_stack: str = Field(..., example="Python, React, PostgreSQL")
+    github_link: str = Field(..., example="https://github.com/user/project")
+    demo_link: str = Field(..., example="https://demo.example.com")
+    category: str = Field(..., example="Web Development")
 
-    @field_validator('created_at')
-    def validate_created_at(cls, value):
-        try:
-            datetime.strptime(value, "%d/%m/%Y")
-        except ValueError:
-            raise ValueError("created_at must be in the format DD/MM/YYYY")
+class Project_Create(Projects_DTO):
+    pass
+
+class Project_Response(Projects_DTO):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int = Field(..., example=1)
+    media: str | None = Field(None, example="project_image.jpg")
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC).strftime("%d/%m/%Y")) 
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC).strftime("%d/%m/%Y"))
+
+    @field_validator("media", check_fields=True)
+    @classmethod
+    def ensure_path_images(cls, value):
+        if value is not None and not value.startswith("static/media"):
+            return f"static/media/{value}"
         return value
+
+class Project_Update(Projects_DTO):
+    pass

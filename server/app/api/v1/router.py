@@ -1,6 +1,7 @@
 from fastapi import APIRouter
-from app.api.v1.router import Project
 
-api_router = APIRouter()
-api_router.include_router(
-    projects.router, prefix="/projects", tags=["projects"])
+from .endpoints.projects import router as projects_router
+
+router = APIRouter()
+
+router.include_router(projects_router, prefix="/projects", tags=["projects"])
