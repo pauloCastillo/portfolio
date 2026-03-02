@@ -16,6 +16,7 @@ import {
   faGithub,
 } from "@fortawesome/free-brands-svg-icons";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function AboutPage() {
   const categories = [
@@ -91,9 +92,18 @@ export default function AboutPage() {
     return [...new Set(arr.map((item) => item.name))];
   };
 
+  const [showSkill, setShowSkill] = useState<boolean>(false);
+
   const downloadBtns = () => {
     console.log(window.open("/assets/docs/pauloCastilloCVes.docsx", "_blank"));
     // () => window.open('/assets/docs/resume.pdf', '_blank')
+  };
+
+  const handlerShowSkill = (el: HTMLElement) => {
+    if(!el.classList.contains("hover:animate-pulse")) {
+      setShowSkill(false);
+    } 
+    setShowSkill(true);
   };
 
   return (
@@ -101,7 +111,7 @@ export default function AboutPage() {
       <h1 className="capitalize text-4xl font-bold text-gray-800 dark:text-gray-200">
         Esta es mi trayectoria profesional
       </h1>
-      <div className="flex items-center justify-around mt-6 max-w-4xl mb-5">
+      <div className="flex items-center justify-around mt-6 max-w-4xl mb-5 rounded-xl bg-zinc-100 py-4">
         <div className="flex flex-col items-center">
           <Image
             src="/assets/imgs/fotoCv.jpg"
@@ -112,7 +122,7 @@ export default function AboutPage() {
           />
           <div className="flex items-center justify-center">
             <Button
-              className="capitalize bg-green-500 text-white mt-5 min-w-full rounded-md p-1.5 hover:cursor-pointer hover:bg-green-700 hover:transition-colors w-12 mr-4"
+              className="capitalize bg-green-500 text-white mt-5 min-w-full rounded-md p-1.5 hover:cursor-pointer hover:bg-green-700 hover:transition-colors mr-4"
               pressedBtn={downloadBtns}
             >
               descargar cv
@@ -123,9 +133,7 @@ export default function AboutPage() {
           <p className="ml-4 text-gray-800 dark:text-gray-200">
             Soy un apasionado desarrollador fullstack con una habilidad especial
             para construir aplicaciones web elegantes, eficientes y escalables.
-            Mi viaje en la tecnología comenzó con un simple `&quot`Hola
-            Mundo`&quot`, y a evolucionado hacia un profundo amor por resolver
-            problemas complejos y crear experiencias de usuario significativas.
+            Mi viaje en la tecnología comenzó con un simple &quot;Hola Mundo&quot;, y a evolucionado hacia un profundo amor por resolver problemas complejos y crear experiencias de usuario significativas.
           </p>
           <p className="ml-4 text-gray-800 dark:text-gray-200">
             A lo largo de mi carrera he tenido el privilegio de trabajar en
@@ -139,15 +147,16 @@ export default function AboutPage() {
         </div>
       </div>
       <div className="min-w-4xl">
-        <h3 className="ml-4 text-gray-800 dark:text-gray-200 text-left mt-6 font-bold text-2xl">
+        <h3 className="ml-4 text-gray-800 dark:text-gray-200 text-center mt-6 font-bold text-2xl">
           Habilidades Técnicas
         </h3>
         {categoriesControl(categories).map((category) => {
           return (
             <div className="my-5" key={category}>
-              <p className="ml-4 text-gray-800 dark:text-gray-200 capitalize text-2xl mb-8">
+              <p className="ml-4 text-gray-800 dark:text-gray-200 capitalize text-2xl mb-2.5">
                 {category}
               </p>
+              <hr className="mb-4 text-slate-300"/>
               <ul className="flex items-center justify-center">
                 {categories.map((cat) => {
                   return (
@@ -155,7 +164,7 @@ export default function AboutPage() {
                     cat.skills.map((skill) => (
                       <li
                         key={skill.name}
-                        className="flex flex-col items-center ml-6 text-gray-600 dark:text-gray-400"
+                        className="flex flex-col items-center ml-6 text-gray-600 dark:text-gray-400 hover:cursor-pointer hover:animate-pulse mb-5"
                       >
                         {typeof skill.icon === "string" ? (
                           <Image
