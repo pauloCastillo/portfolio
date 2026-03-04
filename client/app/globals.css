@@ -1,16 +1,51 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp");
+  font-family: "JetBrains Mono";
+  src: url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp");
+  font-family: "Inter";
+  src: url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap");
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+ --color-glass-gradient: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.1) 100%);
+ --color-glass-surface: rgba(17, 24, 39, 0.7);
+ --color-void: #030712;
+ --color-primary: #06B6D4;
+ --color-secondary: #A855F7;
+ --color-success: #10B981;
+ --color-warning: #F59E0B;
+ --color-border-glass: rgba(255, 255, 255, 0.08);
+ --color-text-primary: #F3F4F6;
+ --color-text-muted: #9CA3AF;
+
+ --font-display: "Space Grotesk", sans-serif;
+ --font-mono: "JetBrains Mono", monospace;
+ --font-body: "Inter", sans-serif;
+
+ --box-shadow-glow: 0 0 15px rgba(6,182,212,0.3);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-glass-gradient: var(--color-glass-gradient);
+  --color-glass-surface: var(--color-glass-surface);
+  --color-void: var(--color-void);
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+  --color-border-glass: var(--color-border-glass);
+  --color-text-primary: var(--color-text-primary);
+  --color-text-muted: var(--color-text-muted);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+  --font-body: var(--font-body);
+  --box-shadow-glow: var(--box-shadow-glow);
 }
+
+@background: var(--color-glass-gradient);
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -20,7 +55,22 @@
 }
 
 body {
-  background: var(--background);
+  background: var(--color-glass-gradient);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body)
+}
+
+/* Custom scrollbar for deep space feel */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #030712; 
+}
+::-webkit-scrollbar-thumb {
+    background: #1f2937; 
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #374151; 
 }

@@ -111,10 +111,10 @@ export default function AboutPage() {
       <h1 className="capitalize text-4xl font-bold text-gray-800 dark:text-gray-200">
         Esta es mi trayectoria profesional
       </h1>
-      <div className="flex items-center justify-around mt-6 max-w-4xl mb-5 rounded-xl bg-zinc-100 py-4">
+      <div className="flex items-center justify-around mt-6 max-w-4xl mb-5 rounded-xl bg-slate-50 py-4">
         <div className="flex flex-col items-center">
           <Image
-            src="/assets/imgs/fotoCv.jpg"
+            src="/assets/imgs/fotoCV.jpg"
             alt="Foto de perfil"
             width={200}
             height={200}

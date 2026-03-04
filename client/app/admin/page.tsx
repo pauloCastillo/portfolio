@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Field from "@/components/UI/Form/Field";
 import { clearForm } from "@/utils/clearForm";
 import { validateUserData } from "@/utils/validations";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function AdminPage(){ 
   const [user, setUser] = useState<{
@@ -45,10 +47,12 @@ export default function AdminPage(){
   },[])
 
  return(
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-4xl font-bold mb-4">Admin Page</h1>
-      <p className="text-lg text-gray-600">Welcome to the admin dashboard!</p>
-      <form onSubmit={handleSubmit} className="mt-6 w-full max-w-sm">
+    <div className="bg-void flex flex-col items-center justify-center h-screen">
+      <Link href="/" className="flex items-center-safe bg-black p-5 rounded-lg text-white">
+        <Image src={"/vercel.svg"} alt="logo" width={45} height={45} />
+        <p className="text-xl">PortfolioLogo</p>
+      </Link>
+      <form onSubmit={handleSubmit} className="mt-6 w-full max-w-sm text-primary bg-glass-surface backdrop-blur-lg border border-border-glass rounded-lg p-6">
         <Field 
           labelField="email" 
           labelText="Email"

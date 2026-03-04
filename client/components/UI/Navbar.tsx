@@ -1,9 +1,15 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function NavbarLayout() {
   const links = ["Home", "Proyectos", "Servicios", "Sobre Mí", "Contacto"];
+  const pathname = usePathname();
+
+  if(pathname.startsWith("/admin")) {
+    return null; // No renderizar la barra de navegación en rutas que comienzan con "/admin"
+  }
 
   return (
     <nav className="bg-gray-950 flex items-center justify-between px-4">

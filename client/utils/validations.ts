@@ -11,14 +11,12 @@ const UserSchema = z.object({
 
 type UserForm = z.infer<typeof UserSchema>;
 
-export function validateUserData({ email, password }: UserForm): boolean {
+export function validateUserData({ email, password }: UserForm) {
     try {
-        UserSchema.parse({ email, password });
-        return true;
+        return UserSchema.parse({ email, password });
     } catch (error) {
         if (error instanceof z.ZodError) {
-            console.error("Validation errors:", error.message);
+            return "Validation errors: " + error.message;
         }
-        return false;
     }
 }
