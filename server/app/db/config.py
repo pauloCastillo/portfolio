@@ -1,16 +1,27 @@
-import psycopg2
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, DeclarativeBase
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+load_dotenv(".env.local")
 
-connection = psycopg2.connect(
-    host=os.getenv('DB_HOST'),
-    user=os.getenv('DB_USERNAME'),
-    password=os.getenv('DB_PASSWORD'),
-    database=os.getenv('DB_NAME'),
-    port=os.getenv('DB_PORT')
-)
-cursor = connection.cursor()
-cursor.execute("SELECT * FROM posts")
-print(cursor.fetchall())
+DB_USER = os.getenv("USER_DB")
+DB_PASSWORD = os.getenv("PASSWORD_DB")
+DB_HOST = os.getenv("HOST_DB")
+DB_PORT = os.getenv("PORT_DB")
+DB_NAME = os.getenv("NAME_DB")
+
+DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}?charset=utf8mb4&collation=utf8mb4_unicode_ci"
+
+engine = create_engine(DATABASE_URL, echo=True)
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+class Base(DeclarativeBase):
+    pass
+
+def get_db():
+    with SessionLocal() as db:
+        yield db
+
+Base.metadata.create_all(bind=engine)
