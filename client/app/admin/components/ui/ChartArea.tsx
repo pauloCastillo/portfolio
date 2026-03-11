@@ -40,7 +40,7 @@ export default function ChartArea() {
         </svg>
       </div>
       {/* <!-- Hover Crosshair Mockup (Static for visual) --> */}
-      <div className="absolute left-[60%] top-0 bottom-0 w-[1px] bg-neon-cyan/50 pointer-events-none">
+      <div className="absolute left-[60%] top-0 bottom-0 w-1 bg-neon-cyan/50 pointer-events-none">
         <div className="absolute top-[30%] -left-1.5 h-3 w-3 rounded-full border-2 border-neon-cyan bg-void shadow-glow-cyan"></div>
         {/* <!-- Tooltip --> */}
         <div className="absolute top-[20%] left-4 bg-void/90 border border-neon-cyan/30 rounded p-2 shadow-xl backdrop-blur-md">

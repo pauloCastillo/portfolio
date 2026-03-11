@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
-import "@/app/admin/styles/globalAdmin.css";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import "./styles/dashboard.css"
+import SidebarContainer from "./components/SidebarContainer";
+
+const displaytype = Space_Grotesk({
+  variable: "--font-display",
+  subsets: ["latin"],
+});
 
 const bodytype = Inter({
   variable: "--font-body",
@@ -26,9 +32,14 @@ export default function AdminLayout({
   return (
     <html lang="es">
       <body
-        className={`${monotype.variable} ${bodytype.variable} bg-void font-sans antialiased overflow-hidden selection:bg-cyan-300 selection:text-void`}
+        className={`${displaytype.variable} ${monotype.variable} ${bodytype.variable} bg-void font-sans antialiased overflow-hidden selection:bg-cyan-500 selection:text-void`}
       >
-        <main>{children}</main>
+        <div className="flex bg-void min-h-screen overflow-hidden">
+          <aside>
+            <SidebarContainer />
+          </aside>
+          <main className="flex-1 z-10 relative">{children}</main>
+        </div>
       </body>
     </html>
   );

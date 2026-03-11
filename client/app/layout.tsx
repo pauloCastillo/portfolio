@@ -1,16 +1,21 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
 import NavbarLayout from "@/components/UI/Navbar";
 import AppFooter from "@/components/UI/AppFooter";
 
-const geistSans = Inter({
+const displaytype = Space_Grotesk({
+  variable: "--font-display",
+  subsets: ["latin"],
+});
+
+const bodytype = Inter({
   variable: "--font-body",
   subsets: ["latin"],
 });
 
-const geistMono = JetBrains_Mono({
+const monotype = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
 });
@@ -41,7 +46,7 @@ export default function RootLayout({
     <html lang="es">
 
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased `}
+        className={`${displaytype.variable} ${bodytype.variable} ${monotype.variable} antialiased `}
       >
 
         <NavbarLayout /> 

@@ -2,11 +2,52 @@
 import Image from "next/image";
 import AdminNavbar from "./AdminNavbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOut } from "@fortawesome/free-solid-svg-icons";
+import { faSignOut, faDashboard, faLayerGroup, faComment, faEdit, faChartBar, faGear} from "@fortawesome/free-solid-svg-icons";
 
 export default function SidebarContainer() {
     const ImageLink = "/assets/imgs/fotoCV.jpg";
-
+    const adminSection = {
+        title: "Main Menu",
+        items:[
+          {
+            title: "Dashboard",
+            href: "/admin/dashboard",
+            icon: faDashboard,
+            itemActive: true,
+            iconClass: "text-primary",
+          },
+          {
+            title: "Projects",
+            href: "/admin/projects",
+            icon: faLayerGroup,
+            iconClass: "text-primary",
+          },
+          {
+            title: "Signal Feed",
+            href: "/admin/feed",
+            icon: faComment,
+            iconClass: "text-primary",
+          },
+          {
+            title: "Knowledge Base",
+            href: "/admin/knowledge",
+            icon: faEdit,
+            iconClass: "text-primary",
+          },
+          {
+            title: "Analytics Core",
+            href: "/admin/analytics",
+            icon: faChartBar,
+            iconClass: "text-primary",
+          },
+          {
+            title: "System Config",
+            href: "/admin/config",
+            icon: faGear,
+            iconClass: "text-primary",
+          },
+        ]
+    }
     return (
     <aside 
      className="flex flex-col w-72 h-full bg-void border-r border-border-glass relative z-50 shadow-2xl"
@@ -26,7 +67,7 @@ export default function SidebarContainer() {
           </div>
         </div>    
 
-        <AdminNavbar />
+        <AdminNavbar section={adminSection} />
         
         {/*User Profile Footer */ }
       <div className="p-4 border-t border-border-glass bg-void/30 backdrop-blur-sm">
