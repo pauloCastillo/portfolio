@@ -20,6 +20,7 @@ export default function LogItemBase({
   bgColor,
   textColor,
 }: Readonly<LogItem>) {
+  
   return (
     <div
       className={`group flex gap-3 rounded-lg border border-transparent bg-white/5 p-3 transition-colors hover:${hoverBorderColor}/30 hover:bg-white/10 cursor-pointer`}
@@ -33,7 +34,7 @@ export default function LogItemBase({
         <div className="flex justify-between items-start">
           <span className="font-medium text-sm text-white">{title}</span>
           <span className="font-mono text-[10px] text-slate-500">{time}</span>
-        </div>
+        </div> 
         <p className="text-xs text-slate-400 line-clamp-1">{description}</p>
       </div>
     </div>

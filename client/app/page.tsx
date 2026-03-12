@@ -4,6 +4,7 @@ import HeroePage from "./components/Heroe";
 import ProjectsLayout from "./components/ProjectsPage";
 
 export default function HomePage() {
+  
   return (
     <main>
       <HeroePage />

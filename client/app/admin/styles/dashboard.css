@@ -36,6 +36,7 @@
   --color-purple: var(--color-purple);
   --color-amber: var(--color-amber);
   --color-neon: var(--color-neon);
+  --color-neon-cyan:var(--color-neon, --color-cyan)
 
   --box-shadow-glow-cyan: var(--box-shadow-glow-cyan);
   --box-shadow-glow-emerald: var(--box-shadow-glow-emerald);

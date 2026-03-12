@@ -7,8 +7,8 @@ export default function NavbarLayout() {
   const links = ["Home", "Proyectos", "Servicios", "Sobre Mí", "Contacto"];
   const pathname = usePathname();
 
-  if(pathname.startsWith("/admin")) {
-    return null; // No renderizar la barra de navegación en rutas que comienzan con "/admin"
+  if(pathname.startsWith("/auth") || pathname.startsWith("/admin")) {
+    return null; // No renderizar la barra de navegación en rutas que comienzan con "/auth"
   }
 
   return (
