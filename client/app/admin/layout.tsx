@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./styles/dashboard.css"
-import SidebarContainer from "./components/SidebarContainer";
+import SidebarContainer from "./shared/components/SidebarContainer";
 
 import { config } from "@fortawesome/fontawesome-svg-core"
 import "@fortawesome/fontawesome-svg-core/styles.css"
