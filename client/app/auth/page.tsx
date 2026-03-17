@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Field from "@/components/UI/Form/Field";
-import { clearForm } from "@/utils/clearForm";
 import { validateUserData } from "@/utils/validations";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation"
 
 export default function AdminPage(){ 
   const [user, setUser] = useState<{
@@ -13,36 +13,43 @@ export default function AdminPage(){
     password: string;
   }>({ email: "", password: "" });
   
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
+    setUser(()=>{
+      return {
+        ...user,
+        email: e.target.value
+      }
+    });
   }
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
+    setUser(()=>{
+      return {
+        ...user,
+        password: e.target.value
+      }
+    });
   }
+
+  const router = useRouter();
   
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Aquí puedes agregar la lógica para manejar el inicio de sesión del administrador
-    console.log("Email:", email);
-    console.log("Password:", password);
-    setUser({ email, password });
 
     if(validateUserData(user)){
-      console.log("Validación exitosa", user);
+      router.push("/admin");
     } else {
       console.log("Validación fallida revise usuario o contraseña");
     }
   }
 
+  const clearform = ()=>{
+    setUser({ email: "", password: "" });
+  }
+
   useEffect(()=>{
     // Aquí puedes agregar lógica para verificar si el usuario es un administrador
     return () => {
-        // Aquí puedes agregar lógica para limpiar cualquier estado relacionado con el administrador
-        setUser({ email: "", password: "" });
-        clearForm([setEmail, setPassword]);
+        clearform();
     }
   },[])
 
@@ -59,7 +66,7 @@ export default function AdminPage(){
           type="text"
           placeholder="corre@ registrado"
           fieldControlMethod={handleEmailChange}   
-          fieldValue={email}
+          fieldValue={user.email}
         />
         <Field 
           labelField="password" 
@@ -67,7 +74,7 @@ export default function AdminPage(){
           type="password"
           placeholder="contraseña"
           fieldControlMethod={handlePasswordChange}   
-          fieldValue={password}      
+          fieldValue={user.password}      
         />
         <button 
           className="w-full mt-4 hover:cursor-pointer bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200"

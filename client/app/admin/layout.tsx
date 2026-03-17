@@ -3,6 +3,11 @@ import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./styles/dashboard.css"
 import SidebarContainer from "./components/SidebarContainer";
 
+import { config } from "@fortawesome/fontawesome-svg-core"
+import "@fortawesome/fontawesome-svg-core/styles.css"
+
+config.autoAddCss = false;
+
 const displaytype = Space_Grotesk({
   variable: "--font-display",
   subsets: ["latin"],
@@ -19,7 +24,7 @@ const monotype = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio - Admin",
+  title: "Kastify - Admin",
   keywords: ["administracion"],
   description: "Administrativa",
 };
