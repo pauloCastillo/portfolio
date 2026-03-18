@@ -1,0 +1,593 @@
+[   50642ms] [WARNING] Image with src "http://localhost:3000/vercel.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio. @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   58194ms] [ERROR] Failed to load resource: the server responded with a status of 400 (Bad Request) @ http://localhost:3000/_next/image?url=%2Fimages%2Fproject2.png&w=640&q=75:0
+[   58228ms] [ERROR] Failed to load resource: the server responded with a status of 400 (Bad Request) @ http://localhost:3000/_next/image?url=%2Fimages%2Fproject1.png&w=640&q=75:0
+[   58233ms] [ERROR] Failed to load resource: the server responded with a status of 400 (Bad Request) @ http://localhost:3000/_next/image?url=%2Fimages%2Fproject3.png&w=640&q=75:0
+[  191455ms] [ERROR] ./utils/utils.ts:1:1
+Module not found: Can't resolve 'clsx'
+> 1 | import { clsx, type ClassValue } from "clsx";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { twMerge } from "tailwind-merge";
+  3 |  
+  4 | export function cn(...inputs: ClassValue[]) {
+
+Import traces:
+  #1 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/AdminNavbar.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #2 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+  #3 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/AdminNavbar.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  191455ms] [ERROR] ./utils/utils.ts:2:1
+Module not found: Can't resolve 'tailwind-merge'
+  1 | import { clsx, type ClassValue } from "clsx";
+> 2 | import { twMerge } from "tailwind-merge";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 |  
+  4 | export function cn(...inputs: ClassValue[]) {
+  5 |   return twMerge(clsx(inputs));
+
+Import traces:
+  #1 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/AdminNavbar.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #2 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+  #3 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/AdminNavbar.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  191765ms] [ERROR] ./utils/utils.ts:1:1
+Module not found: Can't resolve 'clsx'
+> 1 | import { clsx, type ClassValue } from "clsx";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { twMerge } from "tailwind-merge";
+  3 |  
+  4 | export function cn(...inputs: ClassValue[]) {
+
+Import traces:
+  #1 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/AdminNavbar.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #2 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+  #3 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/AdminNavbar.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  191766ms] [ERROR] ./utils/utils.ts:2:1
+Module not found: Can't resolve 'tailwind-merge'
+  1 | import { clsx, type ClassValue } from "clsx";
+> 2 | import { twMerge } from "tailwind-merge";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 |  
+  4 | export function cn(...inputs: ClassValue[]) {
+  5 |   return twMerge(clsx(inputs));
+
+Import traces:
+  #1 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/AdminNavbar.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #2 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+  #3 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/AdminNavbar.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  193099ms] [ERROR] ./utils/utils.ts:1:1
+Module not found: Can't resolve 'clsx'
+> 1 | import { clsx, type ClassValue } from "clsx";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { twMerge } from "tailwind-merge";
+  3 |  
+  4 | export function cn(...inputs: ClassValue[]) {
+
+Import traces:
+  #1 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/AdminNavbar.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #2 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+  #3 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/AdminNavbar.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  193100ms] [ERROR] ./utils/utils.ts:2:1
+Module not found: Can't resolve 'tailwind-merge'
+  1 | import { clsx, type ClassValue } from "clsx";
+> 2 | import { twMerge } from "tailwind-merge";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 |  
+  4 | export function cn(...inputs: ClassValue[]) {
+  5 |   return twMerge(clsx(inputs));
+
+Import traces:
+  #1 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/AdminNavbar.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #2 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+  #3 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/AdminNavbar.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  193298ms] [ERROR] ./utils/utils.ts:1:1
+Module not found: Can't resolve 'clsx'
+> 1 | import { clsx, type ClassValue } from "clsx";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { twMerge } from "tailwind-merge";
+  3 |  
+  4 | export function cn(...inputs: ClassValue[]) {
+
+Import traces:
+  #1 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/AdminNavbar.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #2 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+  #3 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/AdminNavbar.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  193299ms] [ERROR] ./utils/utils.ts:2:1
+Module not found: Can't resolve 'tailwind-merge'
+  1 | import { clsx, type ClassValue } from "clsx";
+> 2 | import { twMerge } from "tailwind-merge";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 |  
+  4 | export function cn(...inputs: ClassValue[]) {
+  5 |   return twMerge(clsx(inputs));
+
+Import traces:
+  #1 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/AdminNavbar.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #2 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+  #3 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/AdminNavbar.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  194940ms] [ERROR] ./utils/utils.ts:1:1
+Module not found: Can't resolve 'clsx'
+> 1 | import { clsx, type ClassValue } from "clsx";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { twMerge } from "tailwind-merge";
+  3 |  
+  4 | export function cn(...inputs: ClassValue[]) {
+
+Import traces:
+  #1 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/AdminNavbar.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #2 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+  #3 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/AdminNavbar.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  194940ms] [ERROR] ./utils/utils.ts:2:1
+Module not found: Can't resolve 'tailwind-merge'
+  1 | import { clsx, type ClassValue } from "clsx";
+> 2 | import { twMerge } from "tailwind-merge";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 |  
+  4 | export function cn(...inputs: ClassValue[]) {
+  5 |   return twMerge(clsx(inputs));
+
+Import traces:
+  #1 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/AdminNavbar.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #2 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+  #3 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/AdminNavbar.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  195372ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/admin/dashboard:0
+[  195857ms] Error: ./utils/utils.ts:1:1
+Module not found: Can't resolve 'clsx'
+> 1 | import { clsx, type ClassValue } from "clsx";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { twMerge } from "tailwind-merge";
+  3 |  
+  4 | export function cn(...inputs: ClassValue[]) {
+
+
+
+Import traces:
+  #1 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/AdminNavbar.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #2 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+  #3 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/AdminNavbar.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (Error: ./utils/utils.ts:1:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at Object.getCompilationErrors (file://C:\Users\Pollo\Documents\work\clients\pauloCastillo\projects\portfolio\client\node_modules\next\dist\server\dev\hot-reloader-turbopack.js:1008:59)
+    at DevBundlerService.getCompilationError (file://C:\Users\Pollo\Documents\work\clients\pauloCastillo\projects\portfolio\client\node_modules\next\dist\server\lib\dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file://C:\Users\Pollo\Documents\work\clients\pauloCastillo\projects\portfolio\client\node_modules\next\dist\server\dev\next-dev-server.js:706:42)
+    at DevServer.findPageComponents (file://C:\Users\Pollo\Documents\work\clients\pauloCastillo\projects\portfolio\client\node_modules\next\dist\server\dev\next-dev-server.js:676:43)
+    at async DevServer.renderErrorToResponseImpl (file://C:\Users\Pollo\Documents\work\clients\pauloCastillo\projects\portfolio\client\node_modules\next\dist\server\base-server.js:1733:26)
+[  195841ms] [ERROR] ./utils/utils.ts:1:1
+Module not found: Can't resolve 'clsx'
+> 1 | import { clsx, type ClassValue } from "clsx";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { twMerge } from "tailwind-merge";
+  3 |  
+  4 | export function cn(...inputs: ClassValue[]) {
+
+Import traces:
+  #1 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/AdminNavbar.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #2 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+  #3 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/AdminNavbar.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_b3fb3b5f._.js:1920
+[  195841ms] [ERROR] ./utils/utils.ts:2:1
+Module not found: Can't resolve 'tailwind-merge'
+  1 | import { clsx, type ClassValue } from "clsx";
+> 2 | import { twMerge } from "tailwind-merge";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 |  
+  4 | export function cn(...inputs: ClassValue[]) {
+  5 |   return twMerge(clsx(inputs));
+
+Import traces:
+  #1 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/AdminNavbar.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #2 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+  #3 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/AdminNavbar.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_b3fb3b5f._.js:1920
+[  196031ms] [ERROR] ./utils/utils.ts:1:1
+Module not found: Can't resolve 'clsx'
+> 1 | import { clsx, type ClassValue } from "clsx";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { twMerge } from "tailwind-merge";
+  3 |  
+  4 | export function cn(...inputs: ClassValue[]) {
+
+Import traces:
+  #1 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/AdminNavbar.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #2 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+  #3 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/AdminNavbar.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_b3fb3b5f._.js:1920
+[  196031ms] [ERROR] ./utils/utils.ts:2:1
+Module not found: Can't resolve 'tailwind-merge'
+  1 | import { clsx, type ClassValue } from "clsx";
+> 2 | import { twMerge } from "tailwind-merge";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 |  
+  4 | export function cn(...inputs: ClassValue[]) {
+  5 |   return twMerge(clsx(inputs));
+
+Import traces:
+  #1 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/AdminNavbar.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Client Component Browser]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #2 [Client Component Browser]:
+    ./utils/utils.ts [Client Component Browser]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Client Component Browser]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+  #3 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/AdminNavbar.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Client Component SSR]
+    ./app/admin/components/SidebarContainer.tsx [Server Component]
+    ./app/admin/layout.tsx [Server Component]
+
+  #4 [Client Component SSR]:
+    ./utils/utils.ts [Client Component SSR]
+    ./app/admin/components/ui/BaseCard.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Client Component SSR]
+    ./app/admin/components/MainContent.tsx [Server Component]
+    ./app/admin/dashboard/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_b3fb3b5f._.js:1920

@@ -4,22 +4,22 @@ export default function ProjectsLayout() {
   const projects = [
     {
       id: 1,
-      name: "Proyecto 1", 
-      imageUrl: "/images/project1.png",
+      name: "Proyecto 1",
+      imageUrl: "/images/project1.svg",
       description: "Descripción del proyecto 1",
       stack: ["React", "Next.js", "TypeScript"],
     },
     {
       id: 2,
       name: "Proyecto 2",
-      imageUrl: "/images/project2.png",
+      imageUrl: "/images/project2.svg",
       description: "Descripción del proyecto 2",
       stack: ["React", "Next.js", "TypeScript"],
     },
     {
       id: 3,
       name: "Proyecto 3",
-      imageUrl: "/images/project3.png",
+      imageUrl: "/images/project3.svg",
       description: "Descripción del proyecto 3",
       stack: ["React", "Next.js", "TypeScript"],
     },
