@@ -5,6 +5,11 @@ import "./globals.css";
 import NavbarLayout from "@/components/UI/Navbar";
 import AppFooter from "@/components/UI/AppFooter";
 
+import { config } from "@fortawesome/fontawesome-svg-core"
+import "@fortawesome/fontawesome-svg-core/styles.css"
+
+config.autoAddCss = false;
+
 const displaytype = Space_Grotesk({
   variable: "--font-display",
   subsets: ["latin"],
@@ -21,7 +26,7 @@ const monotype = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "",
+  title: "Kastify",
   keywords: [
     "desarrollo de aplicaciones web y móviles",
     "development of web and mobile apps",

@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import BodyNavbar from "./BodyNavbar";
 import Card from "./ProjectCard";
-import Badge from "../ui/Badges";
 
 export default function ProjectsContent(){
     const projects = [
@@ -27,7 +26,7 @@ export default function ProjectsContent(){
                 <Card projects={projects} />
                 {/* <!-- Empty State Placeholder (Visual interest only, not functional empty state) --> */}
                 <div
-                    className="glass-panel border-dashed border-2 border-border-glass rounded-xl overflow-hidden group hover:border-primary/30 transition-all duration-300 flex flex-col items-center justify-center min-h-[350px] cursor-pointer">
+                    className="glass-panel border-dashed border-2 border-border-glass rounded-xl overflow-hidden group hover:border-primary/30 transition-all duration-300 flex flex-col items-center justify-center min-h-80 cursor-pointer">
                     <div
                         className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
                             <FontAwesomeIcon icon={faAdd} className="text-3xl text-text-muted group-hover:text-primary transition-colors" />

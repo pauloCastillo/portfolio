@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental:{
+    optimizePackageImports:["@fortawesome/free-brands-svg-icons"]
+  },
   images:{
     remotePatterns:[
       {
@@ -10,7 +13,7 @@ const nextConfig: NextConfig = {
         pathname: "/aida-public/**",
       }
     ]
-  }
+  },
 };
 
 export default nextConfig;

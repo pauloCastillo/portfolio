@@ -44,8 +44,7 @@ export default function AdminNavbar({ section }: Readonly<Admin>){
                 </Link>
             ))}
 
-            {/* DIVIDER <div className="my-2 h-0.5 bg-border-glass mx-3"></div>
-              * OTHER MENU SECTION  
+            {/* <div className="my-2 h-0.5 bg-border-glass mx-3"></div> 
             <div className="px-3 py-2 mb-1">
                 <span className="font-mono text-[10px] uppercase tracking-widest text-text-muted/60">System</span>
             </div> */}

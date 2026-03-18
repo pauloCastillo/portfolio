@@ -22,7 +22,7 @@ export default function NavbarLayout() {
           <li
             key={link}
             className={`hover:text-purple-600 transition-all ${
-              link === "Contact"
+              link === "Contacto"
                 ? "bg-purple-600 px-3 py-1 rounded-md font-bold"
                 : ""
             }`}
