@@ -1,9 +1,9 @@
 // import SidebarContainer from "@/app/admin/components/SidebarContainer";
 import MainContent from "../shared/components/MainContent";
-import "@/app/admin/styles/dashboard.css"
+import "@/admin/styles/dashboard.css"
 
-export default function DashboardPage(){ 
-  return(    
+export default function DashboardPage() {
+   return (
       <MainContent />
    )
 } 

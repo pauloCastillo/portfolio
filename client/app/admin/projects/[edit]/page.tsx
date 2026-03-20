@@ -1,14 +1,14 @@
 
-import Breadcrumb from "../components/ui/Breadcrumb";
+import Breadcrumb from "@/components/UI/Breadcrumb";
 import MarkdownEditor from "./components/MarkdownEditot";
 import Metadata from "./components/metadata";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
-export default function EditProject(){
-    return(
+export default function EditProject() {
+    return (
         <>
-    {/* <!-- Top Navigation (adapted from provided component) --> 
+            {/* <!-- Top Navigation (adapted from provided component) --> 
         <header className="flex-none z-50 glass-panel border-b border-surface-border">
         <div className="px-6 py-3 flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -41,49 +41,49 @@ export default function EditProject(){
             </div>
         </div>
     </header> */}
-    {/* <!-- Breadcrumb Bar --> */}
-    <Breadcrumb/>
-    {/* <!-- Main Workspace --> */}
-    <section className="flex-1 flex overflow-hidden relative">
-        {/* <!-- Background Grid Pattern --> */}
-        <div className="absolute inset-0 bg-[length:40px_40px] bg-grid-pattern opacity-5 pointer-events-none"></div>
-        {/* <!-- Left Panel: Input Console (Scrollable) --> */}
-        <div className="flex-1 overflow-y-auto p-8 lg:p-12 pb-32">
-            <div className="max-w-3xl mx-auto space-y-12">
-                {/* <!-- Project Metadata Section --> */}
-                <Metadata />
-                <hr className="border-surface-border" />
-                {/* <!-- Content Editor Section --> */}
-                <section className="space-y-6">
-                    <div className="flex items-center gap-2 text-primary font-mono text-xs tracking-widest opacity-70">
-                        <FontAwesomeIcon icon={faEdit} className="text-sm" />
-                        <span>| CASE_STUDY_CONTENT</span>
-                    </div>
-                    {/* <!-- Holographic Dropzone --> */}
-                    <div className="relative group cursor-pointer">
-                        <div
-                            className="absolute -inset-0.5 bg-gradient-to-r from-primary to-secondary rounded-xl blur opacity-10 group-hover:opacity-30 transition duration-500">
-                        </div>
-                        <div
-                            className="relative rounded-xl border-2 border-dashed border-gray-700 bg-void/50 hover:bg-void/80 hover:border-primary/50 transition-all duration-300 p-10 flex flex-col items-center justify-center gap-4 text-center">
-                            <div
-                                className="size-16 rounded-full bg-gray-800/50 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 group-hover:bg-primary/20">
-                                <span
-                                    className="material-symbols-outlined text-3xl text-gray-400 group-hover:text-primary transition-colors">cloud_upload</span>
+            {/* <!-- Breadcrumb Bar --> */}
+            <Breadcrumb />
+            {/* <!-- Main Workspace --> */}
+            <section className="flex-1 flex overflow-hidden relative">
+                {/* <!-- Background Grid Pattern --> */}
+                <div className="absolute inset-0 bg-[length:40px_40px] bg-grid-pattern opacity-5 pointer-events-none"></div>
+                {/* <!-- Left Panel: Input Console (Scrollable) --> */}
+                <div className="flex-1 overflow-y-auto p-8 lg:p-12 pb-32">
+                    <div className="max-w-3xl mx-auto space-y-12">
+                        {/* <!-- Project Metadata Section --> */}
+                        <Metadata />
+                        <hr className="border-surface-border" />
+                        {/* <!-- Content Editor Section --> */}
+                        <section className="space-y-6">
+                            <div className="flex items-center gap-2 text-primary font-mono text-xs tracking-widest opacity-70">
+                                <FontAwesomeIcon icon={faEdit} className="text-sm" />
+                                <span>| CASE_STUDY_CONTENT</span>
                             </div>
-                            <div>
-                                <h3 className="text-white font-display font-medium text-lg">Drop High-Res Assets</h3>
-                                <p className="text-gray-500 text-sm mt-1">Accepts PNG, JPG, WEBP (Max 25MB)</p>
+                            {/* <!-- Holographic Dropzone --> */}
+                            <div className="relative group cursor-pointer">
+                                <div
+                                    className="absolute -inset-0.5 bg-gradient-to-r from-primary to-secondary rounded-xl blur opacity-10 group-hover:opacity-30 transition duration-500">
+                                </div>
+                                <div
+                                    className="relative rounded-xl border-2 border-dashed border-gray-700 bg-void/50 hover:bg-void/80 hover:border-primary/50 transition-all duration-300 p-10 flex flex-col items-center justify-center gap-4 text-center">
+                                    <div
+                                        className="size-16 rounded-full bg-gray-800/50 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 group-hover:bg-primary/20">
+                                        <span
+                                            className="material-symbols-outlined text-3xl text-gray-400 group-hover:text-primary transition-colors">cloud_upload</span>
+                                    </div>
+                                    <div>
+                                        <h3 className="text-white font-display font-medium text-lg">Drop High-Res Assets</h3>
+                                        <p className="text-gray-500 text-sm mt-1">Accepts PNG, JPG, WEBP (Max 25MB)</p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                            {/* <!-- Markdown Editor --> */}
+                            <MarkdownEditor />
+                        </section>
                     </div>
-                    {/* <!-- Markdown Editor --> */}
-                    <MarkdownEditor />
-                </section>
-            </div>
-        </div>
-        {/* <!-- Right Panel: Live Preview (Sticky) --> */}
-        {/* <div
+                </div>
+                {/* <!-- Right Panel: Live Preview (Sticky) --> */}
+                {/* <div
             className="hidden xl:block w-[450px] flex-none border-l border-surface-border bg-black/20 backdrop-blur-sm relative">
             <div className="absolute inset-0 flex flex-col">
                 <div className="p-4 border-b border-surface-border flex items-center justify-between">
@@ -98,11 +98,11 @@ export default function EditProject(){
                     </div>
                 </div>
                 <div className="flex-1 overflow-y-auto p-6 flex flex-col items-center justify-center"> */}
-                    {/* <!-- Project Card Preview --> */}
-                    {/* <div
+                {/* <!-- Project Card Preview --> */}
+                {/* <div
                         className="w-full bg-gray-900 rounded-xl overflow-hidden border border-surface-border shadow-2xl relative group">
                         {/* <!-- Image --> */}
-                        {/* <div className="h-48 w-full bg-cover bg-center relative"
+                {/* <div className="h-48 w-full bg-cover bg-center relative"
                             data-alt="Abstract data dashboard interface visualization"
                             style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCuK1ZroafEvo_3gmnslroPSDxqYoIjitijZAp4h3s3VaNQuOBKt2rN7TWKSW3An9_kVU5F2JJfXtmO9PqTtVhrIX-Pk78JzgjHrPqdHz6fqKOG5Bf4zk3LVoYltcvsy65Ej0nY2yntYzbfBBMjQi0Hw6agjU_KirIAhDQNJODINHa8JR_ciidQILP6bRI47eIjM2hq_mmlnK0NpG7SD5IKZDqaTf_3M4FodLfX1zCtnbJRKvJztpJ_ifcABRtZJAGBklq6VxsehWpX");'>
                             <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent">
@@ -113,8 +113,8 @@ export default function EditProject(){
                                 LIVE
                             </div>
                         </div> */}
-                        {/* <!-- Content --> */}
-                        {/* <div className="p-5 space-y-4">
+                {/* <!-- Content --> */}
+                {/* <div className="p-5 space-y-4">
                             <div className="flex gap-2 mb-2">
                                 <span
                                     className="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded bg-cyan-900/30 text-cyan-400 border border-cyan-500/20">React</span>
@@ -134,8 +134,8 @@ export default function EditProject(){
                                 </button>
                             </div>
                         </div> */}
-                        {/* <!-- Hover Effect Border --> */}
-                        {/* <div
+                {/* <!-- Hover Effect Border --> */}
+                {/* <div
                             className="absolute inset-0 border border-transparent group-hover:border-primary/50 rounded-xl transition-colors pointer-events-none">
                         </div>
                     </div>
@@ -148,37 +148,37 @@ export default function EditProject(){
                 </div>
             </div>
         </div> */}
-        {/* <!-- Footer Action Bar (Floating) --> */}
-        <div className="absolute bottom-6 left-0 right-0 px-8 flex justify-center pointer-events-none">
-            <div
-                className="glass-panel px-6 py-3 rounded-2xl flex items-center gap-6 pointer-events-auto shadow-2xl border border-surface-border/50 backdrop-blur-xl">
-                <div className="flex items-center gap-2 pr-6 border-r border-white/10">
-                    <span className="relative flex h-2 w-2">
-                        <span
-                            className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
-                    </span>
-                    <span className="text-amber-500 text-xs font-mono font-medium tracking-wide">DRAFT - UNSAVED
-                        CHANGES</span>
+                {/* <!-- Footer Action Bar (Floating) --> */}
+                <div className="absolute bottom-6 left-0 right-0 px-8 flex justify-center pointer-events-none">
+                    <div
+                        className="glass-panel px-6 py-3 rounded-2xl flex items-center gap-6 pointer-events-auto shadow-2xl border border-surface-border/50 backdrop-blur-xl">
+                        <div className="flex items-center gap-2 pr-6 border-r border-white/10">
+                            <span className="relative flex h-2 w-2">
+                                <span
+                                    className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                            </span>
+                            <span className="text-amber-500 text-xs font-mono font-medium tracking-wide">DRAFT - UNSAVED
+                                CHANGES</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <button
+                                className="px-5 py-2 rounded-lg text-sm font-bold font-display text-gray-300 hover:text-white hover:bg-white/5 transition-all flex items-center gap-2">
+                                <span className="material-symbols-outlined text-[18px]">save</span>
+                                Save Draft
+                            </button>
+                            <button
+                                className="relative group px-6 py-2 rounded-lg text-sm font-bold font-display text-void bg-primary overflow-hidden transition-all hover:shadow-neon hover:scale-105">
+                                <div className="absolute inset-0 bg-white/20 group-hover:bg-transparent transition-colors"></div>
+                                <span className="relative flex items-center gap-2 z-10">
+                                    <span className="material-symbols-outlined text-[18px]">rocket_launch</span>
+                                    Execute Deploy
+                                </span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div className="flex items-center gap-3">
-                    <button
-                        className="px-5 py-2 rounded-lg text-sm font-bold font-display text-gray-300 hover:text-white hover:bg-white/5 transition-all flex items-center gap-2">
-                        <span className="material-symbols-outlined text-[18px]">save</span>
-                        Save Draft
-                    </button>
-                    <button
-                        className="relative group px-6 py-2 rounded-lg text-sm font-bold font-display text-void bg-primary overflow-hidden transition-all hover:shadow-neon hover:scale-105">
-                        <div className="absolute inset-0 bg-white/20 group-hover:bg-transparent transition-colors"></div>
-                        <span className="relative flex items-center gap-2 z-10">
-                            <span className="material-symbols-outlined text-[18px]">rocket_launch</span>
-                            Execute Deploy
-                        </span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-    </>
+            </section>
+        </>
     )
 }

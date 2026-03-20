@@ -35,17 +35,11 @@ export default function AdminLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
-      <body
-        className={`${displaytype.variable} ${monotype.variable} ${bodytype.variable} bg-void font-sans antialiased overflow-hidden selection:bg-cyan-500 selection:text-void`}
-      >
-        <div className="flex bg-void min-h-screen overflow-hidden">
-          <aside>
-            <SidebarContainer />
-          </aside>
-          <main className="flex-1 z-10 relative">{children}</main>
-        </div>
-      </body>
-    </html>
+    <div className="flex bg-void min-h-screen overflow-hidden">
+      <aside>
+        <SidebarContainer />
+      </aside>
+      <main className="flex-1 z-10 relative">{children}</main>
+    </div>
   );
 }

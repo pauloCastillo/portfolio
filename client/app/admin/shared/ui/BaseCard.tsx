@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
-import { cn } from "@/utils/utils";
+import { cn } from "~/utils/utils";
 
 type CardType = {
-  card:{
+  card: {
     title: string;
     value: number;
     suffix?: string;
@@ -24,7 +24,7 @@ export default function BaseCard({
         <span className="font-mono text-xs font-medium uppercase tracking-wider text-slate-300">
           {card.title}
         </span>
-        { card.icon !== undefined && <FontAwesomeIcon icon={card.icon} size="xl" className={cn("relative", card.iconClass)} /> }
+        {card.icon !== undefined && <FontAwesomeIcon icon={card.icon} size="xl" className={cn("relative", card.iconClass)} />}
       </div>
       <div className="flex items-end gap-2">
         <span className="text-4xl font-bold text-gradient-cyan">

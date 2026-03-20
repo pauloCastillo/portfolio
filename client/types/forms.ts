@@ -1,3 +1,5 @@
+import { ChangeEvent } from "react";
+
 export type FieldProps = {
   labelText: string;
   labelField: string;

@@ -48,16 +48,15 @@ export default function RootLayout({
 }>) {
 
   return (
-    <html lang="es">
-
+    <html>
       <body
         className={`${displaytype.variable} ${bodytype.variable} ${monotype.variable} antialiased `}
       >
 
-        <NavbarLayout /> 
+        <NavbarLayout />
 
         <main>{children}</main>
-        
+
         <AppFooter />
       </body>
     </html>
