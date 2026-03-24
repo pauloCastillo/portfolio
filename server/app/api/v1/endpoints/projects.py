@@ -4,22 +4,24 @@ from fastapi import APIRouter, status, Depends
 from sqlalchemy.orm import Session
 
 from app.db.schemas.project_dto import ProjectDTO_Response
-from app.db.config import get_db, Base, engine
+from app.db.config import get_db, metadata_obj_var
 from app.repositories.project_repository import ProjectRepository
 
-Base.metadata.create_all(bind=engine)
+metadata_obj_var
+
+db_depends = Annotated[Session, Depends(get_db)]
 
 router = APIRouter()
-service_project = ProjectRepository()
+service = ProjectRepository()
 
 @router.get("/", include_in_schema=False, name="projects")
-def read_projects(db:Annotated[Session, Depends(get_db)]):
-    return service_project.get_projects(db)
+def read_projects(db:db_depends):
+    return service.get_projects(db)
 
 @router.get("/{project_id}", include_in_schema=False, name="specific_project")
-def read_project(project_id: int, db:Annotated[Session, Depends(get_db)]):
-    return service_project.get_project(db, project_id)
+def read_project(project_id: int, db:db_depends):
+    return service.get_project(db, project_id)
 
 @router.post("/", response_model=ProjectDTO_Response, name="create_project", status_code=status.HTTP_201_CREATED)
-def create_project(project: ProjectDTO_Response, db:Annotated[Session, Depends(get_db)]):
-    return service_project.create_project(db, project)
+def create_project(project: ProjectDTO_Response, db:db_depends):
+    return service.create_project(db, project)

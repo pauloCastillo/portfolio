@@ -1,9 +1,7 @@
 from fastapi import HTTPException, status
 from sqlalchemy import select
 
-import app.db.models 
-
-models = app.db.models
+from app.db.models.projects import Project
 
 class ProjectRepository:
     
@@ -12,7 +10,7 @@ class ProjectRepository:
         if not db:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Database connection error")
         
-        result = db.execute(select(models.Project))
+        result = db.execute(select(Project))
         projects = result.scalars().all()
         if not projects:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No projects found")
@@ -23,7 +21,7 @@ class ProjectRepository:
         if not db:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Database connection error")
         
-        result = db.execute(select(models.Project).where(models.Project.id == project_id))
+        result = db.execute(select(Project).where(Project.id == project_id))
         project = result.scalars().first()
 
         if not project:
@@ -35,7 +33,7 @@ class ProjectRepository:
         if not db:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Database connection error")
         
-        new_project = models.Project(**project.model_dump())
+        new_project = Project(**project.model_dump())
         db.add(new_project)
         db.commit()
         db.refresh(new_project)

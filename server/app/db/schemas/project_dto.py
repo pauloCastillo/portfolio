@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field, ConfigDict, field_validator
 from datetime import datetime, UTC
 
 
-class Projects_Schema(BaseModel): 
+class Project_Schema(BaseModel): 
     title: str = Field(..., example="My Awesome Project")
     description: str = Field(..., example="A brief description of the project")
     image_file: str | None = Field(None, example="project_image.jpg")
@@ -13,10 +13,7 @@ class Projects_Schema(BaseModel):
     github_link: str = Field(..., example="https://github.com/user/project")
     tech_stack: str = Field(..., example="Python, React, PostgreSQL")
 
-class ProjectDTO_Create(Projects_Schema):
-    pass
-
-class ProjectDTO_Response(Projects_Schema):
+class ProjectDTO_Response(Project_Schema):
     model_config = ConfigDict(from_attributes=True)
 
     id: int = Field(..., example=1)
@@ -32,8 +29,8 @@ class ProjectDTO_Response(Projects_Schema):
             return f"public/media/{value}"
         return value
 
-class ProjectDTO_Update(Projects_Schema):
+class ProjectDTO_Update(Project_Schema):
     pass
 
-class ProjectDTO_Delete(Projects_Schema):
+class ProjectDTO_Delete(Project_Schema):
     pass
