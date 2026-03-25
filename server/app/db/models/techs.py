@@ -4,7 +4,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from datetime import datetime, UTC
 
-from ..config import Base
+from app.core.database import Base
 
 class Technology(Base):
     
@@ -15,10 +15,5 @@ class Technology(Base):
     icon_tech: Mapped[str] = mapped_column(String(255), nullable=True)
     update_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda:datetime.now(UTC))
     
-    @property
-    def image_path(self) -> str:
-        if self.icon_tech:
-            return f"/public/media/imgs/{self.image_file}"
-        return f"/public/media/imgs/default_iconTech.jpg"
 
     

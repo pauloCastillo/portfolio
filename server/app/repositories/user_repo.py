@@ -1,40 +1,29 @@
-from fastapi import HTTPException, status
-from sqlalchemy import select
-
+from app.domain.generic_repository import GenericRepository
 from app.db.models.users import User
 
-class UserRepository:
-    
-    @classmethod
-    def get_users(self, db):
-        if not db:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Database connection error")
-        
-        result = db.execute(select(User))
-        users = result.scalars().all()
-        if not users:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No users found")
-        return users
-    
-    @classmethod
-    def get_user(self, db, user_id: int):
-        if not db:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Database connection error")
-        
-        result = db.execute(select(User).where(User.id == user_id))
-        user = result.scalars().first()
 
-        if not user:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
-        return user
-    
-    @classmethod
-    def create_user(self, db, user):
-        if not db:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Database connection error")
-        
-        new_user = User(**user.model_dump())
-        db.add(new_user)
-        db.commit()
-        db.refresh(new_user)
-        return new_user
+class UserRepository(GenericRepository[User]):
+    """
+    Repository Pattern - Implementación específica para User.
+    """
+
+    def __init__(self):
+        super().__init__(User)
+
+    def get_by_email(self, db, email: str):
+        """Método específico del dominio para buscar usuario por email."""
+        from sqlalchemy import select
+
+        result = db.execute(
+            select(self.model).where(self.model.email == email)
+        )
+        return result.scalars().first()
+
+    def get_active_users(self, db):
+        """Método específico del dominio para obtener usuarios activos."""
+        from sqlalchemy import select
+
+        result = db.execute(
+            select(self.model).where(self.model.isActive == True)
+        )
+        return result.scalars().all()

@@ -3,25 +3,43 @@ from typing import Annotated
 from fastapi import APIRouter, status, Depends
 from sqlalchemy.orm import Session
 
-from app.db.schemas.tech_dto import TechDTO_Response
-from app.db.config import get_db, metadata_obj_var
-from app.repositories.tech_repo import TechRepository
+from app.db.schemas.tech_dto import TechCreate, TechResponse, TechUpdate
+from app.core.database import get_db
+from app.core.dependencies import get_tech_service
+from app.services.tech_service import TechService
 
-metadata_obj_var
 
 db_depends = Annotated[Session, Depends(get_db)]
+service_dep = Annotated[TechService, Depends(get_tech_service)]
 
 router = APIRouter()
-service = TechRepository()
 
-@router.get("/", include_in_schema=False, name="techs")
-def read_techs(db:db_depends):
-    return service.get_technologies(db)
 
-@router.get("/{tech_id}", include_in_schema=False, name="specific_tech")
-def read_user(tech_id: int, db:db_depends):
-    return service.get_technology(db, tech_id)
+@router.get("/", name="techs")
+def read_techs(db: db_depends, service: service_dep):
+    """Obtener todas las tecnologías."""
+    return service.get_all(db)
 
-@router.post("/", response_model=TechDTO_Response, name="create_tech", status_code=status.HTTP_201_CREATED)
-def create_user(tech: TechDTO_Response, db:db_depends):
-    return service.create_technology(db, tech)
+
+@router.get("/{tech_id}", name="specific_tech")
+def read_tech(tech_id: int, db: db_depends, service: service_dep):
+    """Obtener tecnología por ID."""
+    return service.get_by_id(db, tech_id)
+
+
+@router.post("/", response_model=TechResponse, name="create_tech", status_code=status.HTTP_201_CREATED)
+def create_tech(tech: TechCreate, db: db_depends, service: service_dep):
+    """Crear nueva tecnología."""
+    return service.create(db, tech)
+
+
+@router.put("/{tech_id}", response_model=TechResponse, name="update_tech")
+def update_tech(tech_id: int, tech: TechUpdate, db: db_depends, service: service_dep):
+    """Actualizar tecnología existente."""
+    return service.update(db, tech_id, tech)
+
+
+@router.delete("/{tech_id}", name="delete_tech", status_code=status.HTTP_204_NO_CONTENT)
+def delete_tech(tech_id: int, db: db_depends, service: service_dep):
+    """Eliminar tecnología."""
+    service.delete(db, tech_id)

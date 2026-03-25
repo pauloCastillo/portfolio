@@ -3,25 +3,49 @@ from typing import Annotated
 from fastapi import APIRouter, status, Depends
 from sqlalchemy.orm import Session
 
-from app.db.schemas.skill_dto import SkillDTO_Response
-from app.db.config import get_db, metadata_obj_var
-from app.repositories.skill_repo import SkillRepository
+from app.db.schemas.skill_dto import SkillCreate, SkillResponse, SkillUpdate
+from app.core.database import get_db
+from app.core.dependencies import get_skill_service
+from app.services.skill_service import SkillService
 
-metadata_obj_var
 
 db_depends = Annotated[Session, Depends(get_db)]
+service_dep = Annotated[SkillService, Depends(get_skill_service)]
 
 router = APIRouter()
-service = SkillRepository()
 
-@router.get("/", include_in_schema=False, name="skills")
-def read_techs(db:db_depends):
-    return service.get_skills(db)
 
-@router.get("/{skill_id}", include_in_schema=False, name="specific_skill")
-def read_user(skill_id: int, db:db_depends):
-    return service.get_skill(db, skill_id)
+@router.get("/", name="skills")
+def read_skills(db: db_depends, service: service_dep):
+    """Obtener todos los skills."""
+    return service.get_all(db)
 
-@router.post("/", response_model=SkillDTO_Response, name="create_skill", status_code=status.HTTP_201_CREATED)
-def create_user(skill: SkillDTO_Response, db:db_depends):
-    return service.create_skill(db, skill)
+
+@router.get("/level/{level}", name="skills_by_level")
+def read_skills_by_level(level: int, db: db_depends, service: service_dep):
+    """Obtener skills por nivel."""
+    return service.get_by_level(db, level)
+
+
+@router.get("/{skill_id}", name="specific_skill")
+def read_skill(skill_id: int, db: db_depends, service: service_dep):
+    """Obtener skill por ID."""
+    return service.get_by_id(db, skill_id)
+
+
+@router.post("/", response_model=SkillResponse, name="create_skill", status_code=status.HTTP_201_CREATED)
+def create_skill(skill: SkillCreate, db: db_depends, service: service_dep):
+    """Crear nuevo skill."""
+    return service.create(db, skill)
+
+
+@router.put("/{skill_id}", response_model=SkillResponse, name="update_skill")
+def update_skill(skill_id: int, skill: SkillUpdate, db: db_depends, service: service_dep):
+    """Actualizar skill existente."""
+    return service.update(db, skill_id, skill)
+
+
+@router.delete("/{skill_id}", name="delete_skill", status_code=status.HTTP_204_NO_CONTENT)
+def delete_skill(skill_id: int, db: db_depends, service: service_dep):
+    """Eliminar skill."""
+    service.delete(db, skill_id)

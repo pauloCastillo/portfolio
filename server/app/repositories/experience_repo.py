@@ -1,40 +1,33 @@
-from fastapi import HTTPException, status
-from sqlalchemy import select
-
+from app.domain.generic_repository import GenericRepository
 from app.db.models.experience import Experience
 
-class ExperienceRepository:
-    
-    @classmethod
-    def get_experiences(self, db):
-        if not db:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Database connection error")
-        
-        result = db.execute(select(Experience))
-        users = result.scalars().all()
-        if not users:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No users found")
-        return users
-    
-    @classmethod
-    def get_experience(self, db, experience_id: int):
-        if not db:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Database connection error")
-        
-        result = db.execute(select(Experience).where(Experience.id == experience_id))
-        user = result.scalars().first()
 
-        if not user:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
-        return user
-    
-    @classmethod
-    def create_experience(self, db, experience):
-        if not db:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Database connection error")
-        
-        new_experience = Experience(**experience.model_dump())
-        db.add(new_experience)
-        db.commit()
-        db.refresh(new_experience)
-        return new_experience
+class ExperienceRepository(GenericRepository[Experience]):
+    """
+    Repository Pattern - Implementación específica para Experience.
+    """
+
+    def __init__(self):
+        super().__init__(Experience)
+
+    def get_by_company(self, db, company: str):
+        """Método específico del dominio para buscar experiencias por compañía."""
+        from sqlalchemy import select
+
+        result = db.execute(
+            select(self.model).where(self.model.company == company)
+        )
+        return result.scalars().first()
+
+    def get_current_experiences(self, db):
+        """Método específico del dominio para obtener experiencias actuales."""
+        from sqlalchemy import select
+        from datetime import datetime
+
+        result = db.execute(
+            select(self.model).where(
+                (self.model.end_date == None) |
+                (self.model.end_date >= datetime.now())
+            )
+        )
+        return result.scalars().all()

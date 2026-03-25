@@ -3,25 +3,49 @@ from typing import Annotated
 from fastapi import APIRouter, status, Depends
 from sqlalchemy.orm import Session
 
-from app.db.schemas.experience_dto import ExperienceDTO_Response
-from app.db.config import get_db, metadata_obj_var
-from app.repositories.experience_repo import ExperienceRepository
+from app.db.schemas.experience_dto import ExperienceCreate, ExperienceResponse, ExperienceUpdate
+from app.core.database import get_db
+from app.core.dependencies import get_experience_service
+from app.services.experience_service import ExperienceService
 
-metadata_obj_var
 
 db_depends = Annotated[Session, Depends(get_db)]
+service_dep = Annotated[ExperienceService, Depends(get_experience_service)]
 
 router = APIRouter()
-service = ExperienceRepository()
 
-@router.get("/", include_in_schema=False, name="experiences")
-def read_techs(db:db_depends):
-    return service.get_experiences(db)
 
-@router.get("/{experience_id}", include_in_schema=False, name="specific_experience")
-def read_user(experience_id: int, db:db_depends):
-    return service.get_experience(db, experience_id)
+@router.get("/", name="experiences")
+def read_experiences(db: db_depends, service: service_dep):
+    """Obtener todas las experiencias."""
+    return service.get_all(db)
 
-@router.post("/", response_model=ExperienceDTO_Response, name="create_experience", status_code=status.HTTP_201_CREATED)
-def create_user(experience: ExperienceDTO_Response, db:db_depends):
-    return service.create_technology(db, experience)
+
+@router.get("/current", name="current_experiences")
+def read_current_experiences(db: db_depends, service: service_dep):
+    """Obtener experiencias actuales."""
+    return service.get_current_experiences(db)
+
+
+@router.get("/{experience_id}", name="specific_experience")
+def read_experience(experience_id: int, db: db_depends, service: service_dep):
+    """Obtener experiencia por ID."""
+    return service.get_by_id(db, experience_id)
+
+
+@router.post("/", response_model=ExperienceResponse, name="create_experience", status_code=status.HTTP_201_CREATED)
+def create_experience(experience: ExperienceCreate, db: db_depends, service: service_dep):
+    """Crear nueva experiencia."""
+    return service.create(db, experience)
+
+
+@router.put("/{experience_id}", response_model=ExperienceResponse, name="update_experience")
+def update_experience(experience_id: int, experience: ExperienceUpdate, db: db_depends, service: service_dep):
+    """Actualizar experiencia existente."""
+    return service.update(db, experience_id, experience)
+
+
+@router.delete("/{experience_id}", name="delete_experience", status_code=status.HTTP_204_NO_CONTENT)
+def delete_experience(experience_id: int, db: db_depends, service: service_dep):
+    """Eliminar experiencia."""
+    service.delete(db, experience_id)
