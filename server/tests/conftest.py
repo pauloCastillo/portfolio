@@ -2,12 +2,16 @@
 Pytest Configuration - Fixtures compartidas para todos los tests.
 """
 
+import os
+# Set environment variable for SECRET_KEY before importing the app
+os.environ["SECRET_KEY"] = "test-secret-key-for-testing"
+
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
-from app.core.database import Base
+from app.core.database import Base, get_db
 from app.db.models.users import User
 from app.db.models.projects import Project
 from app.db.models.posts import Post
@@ -17,6 +21,8 @@ from app.db.models.experience import Experience
 from fastapi.testclient import TestClient
 from main import app
 from uuid import uuid4
+
+from app.core.security.password import get_password_hash
 
 
 # Crear base de datos en memoria para tests
@@ -83,7 +89,7 @@ def client(db_session):
         finally:
             pass
 
-    app.dependency_overrides = {}
+    app.dependency_overrides[get_db] = override_get_db
     yield TestClient(app)
     app.dependency_overrides.clear()
 
@@ -91,16 +97,34 @@ def client(db_session):
 @pytest.fixture
 def test_user(db_session):
     """Fixture para crear usuario de prueba."""
+    hashed_password = get_password_hash("testpassword123")
     user = User(
         username="testuser",
         email="test@example.com",
-        password="hashed_password",
+        password=hashed_password,
         phone="+1234567890",
     )
     db_session.add(user)
     db_session.commit()
     db_session.refresh(user)
     return user
+
+
+@pytest.fixture
+def token(client, test_user):
+    """Fixture para obtener un token de autenticación para el usuario de prueba."""
+    response = client.post(
+        "/api/v1/auth/login",
+        json={"email": test_user.email, "password": "testpassword123"},
+    )
+    return response.json()["access_token"]
+
+
+@pytest.fixture
+def auth_client(client, token):
+    """Fixture para crear un cliente de test con autenticación."""
+    client.headers = {"Authorization": f"Bearer {token}"}
+    return client
 
 
 @pytest.fixture

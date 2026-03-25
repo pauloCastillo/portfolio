@@ -2,7 +2,6 @@
 Core Layer - Infraestructura y Configuración
 Configuración de base de datos y dependencias externas.
 """
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 from dotenv import load_dotenv
@@ -18,27 +17,15 @@ DB_NAME = os.getenv("NAME_DB")
 
 DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}?charset=utf8mb4&collation=utf8mb4_unicode_ci"
 
-engine = create_engine(DATABASE_URL, echo=False)
+engine = create_engine(DATABASE_URL, echo=True)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-
 class Base(DeclarativeBase):
-    """Clase base para modelos SQLAlchemy."""
     pass
 
-
 def get_db():
-    """
-    Dependency para obtener sesión de base de datos.
-    Sigue el patrón Generator Dependency.
-    """
-    db = SessionLocal()
-    try:
+    with SessionLocal() as db:
         yield db
-    finally:
-        db.close()
 
-
-# Crear tablas si no existen
 Base.metadata.create_all(bind=engine)

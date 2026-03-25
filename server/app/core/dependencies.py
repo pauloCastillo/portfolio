@@ -4,6 +4,10 @@ Factory para obtener servicios con inyección de dependencias.
 """
 
 from functools import lru_cache
+from typing import Annotated
+from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
+from sqlalchemy.orm import Session
 
 from app.services.project_service import ProjectService
 from app.services.user_service import UserService
@@ -11,6 +15,12 @@ from app.services.post_service import PostService
 from app.services.skill_service import SkillService
 from app.services.tech_service import TechService
 from app.services.experience_service import ExperienceService
+from app.core.database import get_db
+from app.core.security.jwt import verify_token
+from app.db.models.users import User
+
+# OAuth2 scheme for token extraction
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
 
 
 @lru_cache
@@ -50,3 +60,46 @@ def get_tech_service() -> TechService:
 def get_experience_service() -> ExperienceService:
     """Factory con cache para ExperienceService."""
     return ExperienceService()
+
+
+def get_current_user(
+    token: Annotated[str, Depends(oauth2_scheme)],
+    db: Annotated[Session, Depends(get_db)]
+) -> User:
+    """
+    Dependency to get current authenticated user from JWT token.
+    
+    Args:
+        token: JWT token from Authorization header
+        db: Database session
+        
+    Returns:
+        Current authenticated user
+        
+    Raises:
+        HTTPException: If token is invalid or user not found
+    """
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    
+    # Verify token
+    payload = verify_token(token)
+    if payload is None:
+        raise credentials_exception
+    
+    # Get user email from token
+    email: str = payload.get("sub")
+    if email is None:
+        raise credentials_exception
+    
+    # Get user from database
+    from app.services.user_service import UserService
+    user_service = UserService()
+    user = user_service.get_by_email(db, email)
+    if user is None:
+        raise credentials_exception
+    
+    return user

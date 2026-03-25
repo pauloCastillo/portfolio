@@ -13,7 +13,13 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     """Schema para crear usuario."""
-    password: str = Field(..., min_length=8, max_length=128, example="SecurePass123!")
+    password: str = Field(..., min_length=8, max_length=72, example="SecurePass123!")
+
+
+class UserLogin(BaseModel):
+    """Schema para inicio de sesión de usuario."""
+    email: EmailStr = Field(..., example="johndoe@gmail.com")
+    password: str = Field(..., min_length=8, max_length=72, example="SecurePass123!")
 
 
 class UserResponse(UserBase):
@@ -31,6 +37,12 @@ class UserResponse(UserBase):
         if value and not value.startswith("/public/media/"):
             return f"/public/media/{value}"
         return value
+
+
+class Token(BaseModel):
+    """Schema para token de acceso."""
+    access_token: str
+    token_type: str
 
 
 class UserUpdate(BaseModel):

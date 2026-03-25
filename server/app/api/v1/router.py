@@ -6,10 +6,12 @@ from .endpoints.posts import router as posts_router
 from .endpoints.skills import router as skills_router
 from .endpoints.techs import router as techs_router
 from .endpoints.experiences import router as experiences_router
+from .endpoints.auth import router as auth_router
 
 
 router = APIRouter()
 
+router.include_router(auth_router, prefix="/auth", tags=["auth"])
 router.include_router(projects_router, prefix="/projects", tags=["projects"])
 router.include_router(users_router, prefix="/users", tags=["users"])
 router.include_router(posts_router, prefix="/posts", tags=["posts"])
