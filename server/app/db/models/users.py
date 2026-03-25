@@ -1,7 +1,6 @@
 from uuid import uuid4
-from sqlalchemy import DateTime, String, Text, Boolean, Integer, ForeignKey
+from sqlalchemy import DateTime, String, Text, Boolean
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy.dialects.mysql import UUID as MySQLUUID
 
 from datetime import datetime, UTC
 
@@ -11,7 +10,7 @@ class User(Base):
 
     __tablename__ = "user"
 
-    id: Mapped[uuid4] = mapped_column(MySQLUUID(as_uuid=True), default=uuid4, primary_key=True, index=True)
+    id: Mapped[uuid4] = mapped_column(String, default=uuid4().hex, primary_key=True, index=True)
     username: Mapped[str] = mapped_column(String(255), nullable=False)
     email: Mapped[str] = mapped_column(String, nullable=False, unique=True)
     password: Mapped[str] = mapped_column(String(128), nullable=False)

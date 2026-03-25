@@ -1,6 +1,8 @@
 
-from sqlalchemy import DateTime, UUID, Integer, ForeignKey, String, Boolean, Text 
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from uuid import uuid4
+
+from sqlalchemy import DateTime, Integer, ForeignKey, String, Boolean, Text 
+from sqlalchemy.orm import Mapped, mapped_column
 
 from datetime import datetime, UTC
 
@@ -11,7 +13,7 @@ class Project(Base):
     __tablename__ = "project"
     
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    user_id: Mapped[uuid4] = mapped_column(MySQLUUID(as_uuid=True), default=uuid4, ForeignKey("user.id"), nullable=False, index=True)
+    user_id: Mapped[str] = mapped_column(String, ForeignKey("user.id"), nullable=False)
     title: Mapped[str] = mapped_column(String(255), nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False)
     image_file: Mapped[str | None] = mapped_column(String(200), nullable=True, default=None)

@@ -12,13 +12,12 @@ from pathlib import Path
 import uvicorn
 
 from app.api.v1.router import router
-from app.core.database import Base, engine
 
 # Configurar CORS para permitir solicitudes desde el cliente
 origins = [
     "http://localhost:3000",
     "http://localhost:8080",
-    "http://localhost:5173",
+    "http://localhost:3306",
 ]
 
 app = FastAPI(

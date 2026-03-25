@@ -10,7 +10,7 @@ class Experience(Base):
     __tablename__ = "experience"
     
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    user_id: Mapped[uuid4] = mapped_column(MySQLUUID(as_uuid=True), default=uuid4, ForeignKey("user.id"), nullable=False)
+    user_id: Mapped[str] = mapped_column(String, ForeignKey("user.id"), nullable=False)
     company: Mapped[str] = mapped_column(String(255), nullable=False)
     role: Mapped[str] = mapped_column(String(255), nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False)

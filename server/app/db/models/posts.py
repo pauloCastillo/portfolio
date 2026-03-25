@@ -11,7 +11,7 @@ class Post(Base):
     __tablename__ = "post"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    author_id: Mapped[uuid4] = mapped_column(MySQLUUID(as_uuid=True), default=uuid4, ForeignKey("user.id"), nullable=False, index=True)
+    author_id: Mapped[str] = mapped_column(String, ForeignKey("user.id"), nullable=False, index=True)
     title: Mapped[str] = mapped_column(String(255), nullable=False)
     content: Mapped[str] = mapped_column(Text, nullable=False)
     image_file: Mapped[str | None] = mapped_column(String(200), nullable=True)
