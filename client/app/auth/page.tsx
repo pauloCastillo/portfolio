@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Field from "@/components/UI/Form/Field";
-import { validateUserData } from "@/utils/validations";
+import { validateUserData } from "~/utils/validations";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation"
+import Login from "@/api/Login";
 
 export default function AdminPage(){ 
   const [user, setUser] = useState<{
@@ -13,7 +14,7 @@ export default function AdminPage(){
     password: string;
   }>({ email: "", password: "" });
   
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement| HTMLTextAreaElement>) => {
     setUser(()=>{
       return {
         ...user,
@@ -21,7 +22,7 @@ export default function AdminPage(){
       }
     });
   }
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement| HTMLTextAreaElement>) => {
     setUser(()=>{
       return {
         ...user,
@@ -32,11 +33,14 @@ export default function AdminPage(){
 
   const router = useRouter();
   
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement| HTMLTextAreaElement>) => {
     e.preventDefault();
 
     if(validateUserData(user)){
-      router.push("/admin");
+      const response = await Login(user);
+      if(response){
+        router.push("/admin/dashboard");
+      }
     } else {
       console.log("Validación fallida revise usuario o contraseña");
     }

@@ -15,7 +15,7 @@ import AnalyticsCard from "./components/AnalyticsCard";
 
 export default function AnalyticsCorePage() {
 
-  const randomdata = Math.floor(Math.random() * 40 + 60);
+  const randomdata = 80 * 40 + 60;
 
   return (
     <div className="flex min-h-screen bg-[#020815] text-slate-300 font-sans selection:bg-indigo-500/30">

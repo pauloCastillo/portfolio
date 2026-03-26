@@ -10,8 +10,16 @@
 !.yarn/releases
 !.yarn/versions
 
+package-lock.json
+yarn.lock
+
 # testing
-/coverage
+./coverage
+/_tests/
+/.agents/
+/.husky/
+/.jest/
+/playwright-mcp/
 
 # next.js
 /.next/

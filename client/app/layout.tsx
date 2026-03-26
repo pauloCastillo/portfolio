@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
 import NavbarLayout from "@/components/UI/Navbar";
@@ -20,10 +20,6 @@ const bodytype = Inter({
   subsets: ["latin"],
 });
 
-const monotype = JetBrains_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Kastify",
@@ -48,9 +44,9 @@ export default function RootLayout({
 }>) {
 
   return (
-    <html>
+    <html lang="es">
       <body
-        className={`${displaytype.variable} ${bodytype.variable} ${monotype.variable} antialiased `}
+        className={`${displaytype.variable} ${bodytype.variable} antialiased text-base font-body bg-void text-primary`}
       >
 
         <NavbarLayout />

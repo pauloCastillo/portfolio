@@ -3,7 +3,6 @@ import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { cn } from "~/utils/utils";
 
-import { useState } from "react";
 import { usePathname } from "next/navigation";
 
 type Items = {
