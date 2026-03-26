@@ -17,7 +17,6 @@ class TechResponse(TechBase):
     """Schema para respuesta de tecnología."""
     model_config = ConfigDict(from_attributes=True)
 
-    id: int = Field(..., example=1)
     updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
     @field_validator("icon_tech")

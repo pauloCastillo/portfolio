@@ -18,5 +18,5 @@ class Experience(Base):
     end_date: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     url: Mapped[str | None] = mapped_column(String(200), nullable=True)
     published: Mapped[bool] = mapped_column(Boolean, default=True)
-    update_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda:datetime.now(UTC))
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda:datetime.now(UTC))
     

@@ -1,5 +1,5 @@
-from uuid import UUID
-from pydantic import BaseModel, Field, ConfigDict, field_validator
+
+from pydantic import BaseModel, Field, ConfigDict, field_validator, UUID4
 from datetime import datetime, UTC
 
 
@@ -12,7 +12,7 @@ class PostBase(BaseModel):
 
 class PostCreate(PostBase):
     """Schema para crear post."""
-    author_id: UUID = Field(..., example="123e4567-e89b-12d3-a456-426614174000")
+    author_id: UUID4 = Field(..., example="123e4567-e89b-12d3-a456-426614174000")
     published: bool = Field(default=True, example=True)
 
 
@@ -20,8 +20,7 @@ class PostResponse(PostBase):
     """Schema para respuesta de post."""
     model_config = ConfigDict(from_attributes=True)
 
-    id: int = Field(..., example=1)
-    author_id: UUID = Field(..., example="123e4567-e89b-12d3-a456-426614174000")
+    author_id: UUID4 = Field(..., example="123e4567-e89b-12d3-a456-426614174000")
     published: bool = Field(default=True, example=True)
     published_date: datetime = Field(default_factory=lambda: datetime.now(UTC))
 

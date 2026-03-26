@@ -1,5 +1,5 @@
-from uuid import UUID
-from pydantic import BaseModel, Field, ConfigDict, field_validator
+
+from pydantic import BaseModel, Field, ConfigDict, field_validator, UUID4
 from datetime import datetime, UTC
 
 
@@ -23,7 +23,7 @@ class ExperienceBase(BaseModel):
 
 class ExperienceCreate(ExperienceBase):
     """Schema para crear experiencia."""
-    user_id: UUID = Field(..., example="123e4567-e89b-12d3-a456-426614174000")
+    user_id: UUID4 = Field(..., example="123e4567-e89b-12d3-a456-426614174000")
     published: bool = Field(default=True, example=True)
 
 
@@ -31,8 +31,7 @@ class ExperienceResponse(ExperienceBase):
     """Schema para respuesta de experiencia."""
     model_config = ConfigDict(from_attributes=True)
 
-    id: int = Field(..., example=1)
-    user_id: UUID = Field(..., example="123e4567-e89b-12d3-a456-426614174000")
+    user_id: UUID4 = Field(..., example="123e4567-e89b-12d3-a456-426614174000")
     published: bool = Field(default=True, example=True)
     updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 

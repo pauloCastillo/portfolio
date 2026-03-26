@@ -1,5 +1,4 @@
-from uuid import UUID
-from pydantic import BaseModel, Field, ConfigDict, field_validator, EmailStr
+from pydantic import UUID4, BaseModel, Field, ConfigDict, field_validator, EmailStr
 from datetime import datetime, UTC
 
 
@@ -13,20 +12,20 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     """Schema para crear usuario."""
-    password: str = Field(..., min_length=8, max_length=72, example="SecurePass123!")
+    password: str = Field(..., min_length=8, max_length=20, example="SecurePass123!")
 
 
 class UserLogin(BaseModel):
     """Schema para inicio de sesión de usuario."""
     email: EmailStr = Field(..., example="johndoe@gmail.com")
-    password: str = Field(..., min_length=8, max_length=72, example="SecurePass123!")
+    password: str = Field(..., min_length=8, max_length=20, example="SecurePass123!")
 
 
 class UserResponse(UserBase):
     """Schema para respuesta de usuario."""
     model_config = ConfigDict(from_attributes=True)
 
-    id: UUID = Field(default_factory=UUID)
+    id: UUID4 = Field(default_factory=UUID4.hex)
     isActive: bool = Field(default=True)
     last_login: datetime = Field(default_factory=lambda: datetime.now(UTC))
 

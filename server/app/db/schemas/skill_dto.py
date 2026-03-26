@@ -17,7 +17,6 @@ class SkillResponse(SkillBase):
     """Schema para respuesta de skill."""
     model_config = ConfigDict(from_attributes=True)
 
-    id: int = Field(..., example=1)
     updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
