@@ -1,29 +1,15 @@
+"use client";
+
 import BaseCard from "@/components/UI/BaseCard";
+import { useProjects } from "@/hooks/useProjects";
+import { Project } from "@/types/general";
 
 export default function ProjectsLayout() {
-  const projects = [
-    {
-      id: 1,
-      name: "Proyecto 1",
-      imageUrl: "/images/project1.svg",
-      description: "Descripción del proyecto 1",
-      stack: ["React", "Next.js", "TypeScript"],
-    },
-    {
-      id: 2,
-      name: "Proyecto 2",
-      imageUrl: "/images/project2.svg",
-      description: "Descripción del proyecto 2",
-      stack: ["React", "Next.js", "TypeScript"],
-    },
-    {
-      id: 3,
-      name: "Proyecto 3",
-      imageUrl: "/images/project3.svg",
-      description: "Descripción del proyecto 3",
-      stack: ["React", "Next.js", "TypeScript"],
-    },
-  ];
+  const { projects, isLoading, error } = useProjects();
+
+  if (isLoading) return <div>Cargando proyectos...</div>;
+  if (error) return <div>Error al cargar proyectos: {error.message}</div>;
+
   return (
     <div className="flex flex-col min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black p-8">
       <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-200">
@@ -35,7 +21,7 @@ export default function ProjectsLayout() {
         web.
       </p>
       <ul className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-        {projects.map((project) => (
+        {projects.map((project: Project) => (
           <BaseCard key={project.id} project={project} />
         ))}
       </ul>

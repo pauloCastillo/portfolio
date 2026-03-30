@@ -6,7 +6,8 @@ import { validateUserData } from "~/utils/validations";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation"
-import Login from "@/api/Login";
+import useAuth from "@/hooks/useAuth";
+import Loading from "@/loading";
 
 export default function AdminPage(){ 
   const [user, setUser] = useState<{
@@ -22,6 +23,7 @@ export default function AdminPage(){
       }
     });
   }
+
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement| HTMLTextAreaElement>) => {
     setUser(()=>{
       return {
@@ -33,16 +35,19 @@ export default function AdminPage(){
 
   const router = useRouter();
   
+  const { login, loading, error} = useAuth();
+  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement| HTMLTextAreaElement>) => {
     e.preventDefault();
-
     if(validateUserData(user)){
-      const response = await Login(user);
-      if(response){
+      const response = await login(user);
+      console.log(response);
+      if(response && !loading){
         router.push("/admin/dashboard");
       }
     } else {
-      console.log("Validación fallida revise usuario o contraseña");
+      const message = error;
+      console.log(message);
     }
   }
 
@@ -60,7 +65,12 @@ export default function AdminPage(){
  return(
     <div className="bg-void flex flex-col items-center justify-center h-screen">
       <Link href="/" className="flex items-center-safe bg-black p-5 rounded-lg text-white">
-        <Image src={"/vercel.svg"} alt="logo" width={45} height={45} />
+        <Image 
+          src={"/vercel.svg"} 
+          alt="logo" 
+          width={45}
+          height={45}
+        />
         <p className="text-xl">PortfolioLogo</p>
       </Link>
       <form onSubmit={handleSubmit} className="mt-6 w-full max-w-sm text-primary bg-glass-surface backdrop-blur-lg border border-border-glass rounded-lg p-6">
@@ -80,6 +90,7 @@ export default function AdminPage(){
           fieldControlMethod={handlePasswordChange}   
           fieldValue={user.password}      
         />
+        {loading && <Loading />}
         <button 
           className="w-full mt-4 hover:cursor-pointer bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200"
         >

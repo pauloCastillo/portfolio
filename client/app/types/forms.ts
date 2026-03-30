@@ -11,9 +11,3 @@ export type FieldProps = {
   placeholder: string;
 };
 
-export type UserContactProps = {
-  username: string;
-  email: string;
-  subject: string;
-  message: string;
-};

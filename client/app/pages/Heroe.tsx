@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import {
   faGithub,
   faInstagram,
@@ -9,10 +10,20 @@ import {
   faMedium,
   faTiktok,
 } from "@fortawesome/free-brands-svg-icons";
+import { siteConfig } from "@/config/siteConfig";
 
 library.add(faGithub, faInstagram, faLinkedin, faMedium, faTiktok);
 
 export default function HeroePage() {
+  // Create a mapping from social link names to icon objects
+  const iconMap: Record<string, IconDefinition> = {
+    faGithub,
+    faInstagram,
+    faLinkedin,
+    faMedium,
+    faTiktok,
+  };
+
   return (
     <div className="flex flex-col flex-1 text-2xl font-bold justify-center items-center h-screen">
       <p className="font-semibold text-2xl mb-0.5">
@@ -22,66 +33,20 @@ export default function HeroePage() {
         de alto rendimiento que resuelven problemas reales.
       </p>
       <ul className="flex justify-center items-center min-w-full mt-3">
-        <li className="mx-1">
-          <Link
-            href="https://github.com/pauloCastillo"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FontAwesomeIcon
-              icon={faGithub}
-              className="hover:cursor-pointer hover:transition-all hover:text-purple-500"
-            />
-          </Link>
-        </li>
-        <li className="mx-1">
-          <Link
-            href="https://www.linkedin.com/in/paulocastillomonroy"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FontAwesomeIcon
-              icon={faLinkedin}
-              className="hover:cursor-pointer hover:transition-all hover:text-purple-500"
-            />
-          </Link>
-        </li>
-        <li className="mx-1">
-          <Link
-            href="https://www.medium.com/@Paulo_Castillo"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FontAwesomeIcon
-              icon={faMedium}
-              className="hover:cursor-pointer hover:transition-all hover:text-purple-500"
-            />
-          </Link>
-        </li>
-        <li className="mx-1">
-          <Link
-            href="https://www.instagram.com/@yourprofile"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FontAwesomeIcon
-              icon={faInstagram}
-              className="hover:cursor-pointer hover:transition-all hover:text-purple-500"
-            />
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="https://www.tiktok.com/@yourprofile"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FontAwesomeIcon
-              icon={faTiktok}
-              className="hover:cursor-pointer hover:transition-all hover:text-purple-500"
-            />
-          </Link>
-        </li>
+        {siteConfig.socialLinks.map((social) => (
+          <li key={social.name} className="mx-1">
+            <Link
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon
+                icon={iconMap[social.icon]}
+                className="hover:cursor-pointer hover:transition-all hover:text-purple-500"
+              />
+            </Link>
+          </li>
+        ))}
       </ul>
     </div>
   );

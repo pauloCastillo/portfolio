@@ -1,4 +1,4 @@
-import type { FieldProps } from "~/types/forms";
+import type { FieldProps } from "@/types/forms";
 
 export default function Field({
   labelText,

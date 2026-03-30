@@ -2,7 +2,7 @@
 
 import { useState, ChangeEvent } from "react";
 import Field from "@/components/UI/Form/Field";
-import type { UserContactProps } from "@/types";
+import type { UserContactProps } from "@/types/user";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -43,6 +43,7 @@ export default function ContactMePage() {
       <form
         onSubmit={submitHandler}
         className="max-w-1/2 border-2 border-gray-300 rounded-md p-5 mt-6"
+        autoComplete="off"
       >
         <div className="flex w-full gap-4">
           <Field
