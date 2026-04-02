@@ -1,50 +1,43 @@
 "use client";
 
-import { api } from "@/api/config";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "~/store/store";
-import { setCredentials, logoutUser } from "~/store/features/authSlice";
+import { setError } from "~/store/features/errorSlice";
 import { useState, useCallback} from "react";
+import type { AuthLogin } from "@/types/user";
+import authService from "~/services/auth";
 
 export default function useAuth(){
     const dispatch : AppDispatch = useDispatch();
-    const token = useSelector((state: RootState) => state.auth.token);
+    const errorMessage = useSelector((state: RootState) => state.error.message);
 
     const [ loading, setLoading ] = useState(false);
-    const [ error, setError ] = useState<string | null>(null)
 
-    const login = useCallback(async(logindata:{email:string, password:string}) => {
+    const login = useCallback(async(logindata:AuthLogin) => {
+ 
         setLoading(true);
-        setError(null);
+        const auth = authService();
+        const response = await auth.handleLogin(logindata);
+
         try {
-            const response = await api.post("auth/login", logindata,{ headers:{
-                "Content-Type":"application/json"
-            }});
-            if(response.status === 200 && response.data.access_token){
-                dispatch(setCredentials({token:response.data.token, token_type:response.data.token_type}));
-                // Set cookie for middleware authentication
-                document.cookie = `access_token=${response.data.token}; path=/; max-age=${60*60*24*7};`; // 1 week
+            if(!response.success || response.status !== 200){
                 setLoading(false);
-                return true;
-            }else{
-                throw new Error("Invalid response from server!");
+                dispatch(setError("Login Failed! Please check your credentials and try again."));
             }
-        } catch (error) {
-            const message = error instanceof Error 
-            ? error.message
-            : "An unknown error occured durin login"
-            setError(message);
             setLoading(false);
-            return false
+            return response.success;
+        } catch (error) {
+            dispatch(setError("Server Error: " + (error instanceof Error ? error.message : "Unknown Error on the Server")));
+            setLoading(false);
+            return !response.success;
         }
     },[dispatch]);
 
-    const logout = useCallback(() => {
-        // Remove the token from Redux
-        dispatch(logoutUser());
-        // Remove the cookie
-        document.cookie = "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    }, [dispatch]);
+    // const logout = useCallback(async () => {
+    //     // Remove the token from Redux
+    //     dispatch(logoutUser());
+    //     // Remove the cookie
+    // }, [dispatch]);
 
-    return {token, login, logout, loading, error}
+    return {login, loading, errorMessage}
 }

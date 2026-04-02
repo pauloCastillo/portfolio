@@ -1,8 +1,18 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  redirects: async () => {
+    return [
+      {
+        source: "/admin",
+        destination: "/admin/dashboard",
+        permanent: true,
+      },
+    ];
+  },
   experimental:{
-    optimizePackageImports:["@fortawesome/free-brands-svg-icons"]
+    optimizePackageImports:["@fortawesome/free-brands-svg-icons"],
+    proxyClientMaxBodySize: "1mb",
   },
   images:{
     remotePatterns:[
