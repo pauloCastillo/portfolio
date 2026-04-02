@@ -7,10 +7,11 @@ class ProjectBase(BaseModel):
     """Schema base para Project - campos compartidos."""
     title: str = Field(..., min_length=1, max_length=255, example="My Awesome Project")
     description: str = Field(..., min_length=1, example="A brief description of the project")
+    content: str | None = Field(None, example="# Project Title\n\nMarkdown content here...")
     image_file: str | None = Field(None, example="project_image.jpg")
     project_link: str | None = Field(None, example="https://example.com/project")
     github_link: str | None = Field(None, example="https://github.com/user/project")
-    tech_stack: str = Field(..., example="Python, React, PostgreSQL")
+    tech_stack: str | None = Field(None, example="Python, React, PostgreSQL")
 
 
 class ProjectCreate(ProjectBase):
@@ -42,6 +43,7 @@ class ProjectUpdate(BaseModel):
     """Schema para actualizar proyecto - todos los campos opcionales."""
     title: str | None = Field(None, min_length=1, max_length=255)
     description: str | None = Field(None, min_length=1)
+    content: str | None = Field(None, description="Markdown content of the project")
     image_file: str | None = None
     project_link: str | None = None
     github_link: str | None = None
