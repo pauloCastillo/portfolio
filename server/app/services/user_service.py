@@ -1,6 +1,6 @@
-from app.services.base_service import BaseService
-from app.repositories.user_repo import UserRepository
-from app.core.security.password import get_password_hash, verify_password
+from services.base_service import BaseService
+from repositories.user_repo import UserRepository
+from core.security.password import get_password_hash, verify_password
 
 
 class UserService(BaseService[UserRepository]):
@@ -30,7 +30,7 @@ class UserService(BaseService[UserRepository]):
             data_dict = data.model_dump()
             data_dict['password'] = hashed_password
             # We need to reconstruct the data object since UserCreate doesn't have a constructor from dict
-            from app.db.schemas.user_dto import UserCreate
+            from db.schemas.user_dto import UserCreate
             hashed_data = UserCreate(**data_dict)
             return self.repository.create(db, hashed_data)
         return self.repository.create(db, data)

@@ -1,5 +1,5 @@
-from app.domain.generic_repository import GenericRepository
-from app.db.models.techs import Technology
+from domain.generic_repository import GenericRepository
+from db.models.techs import Technology
 
 
 class TechRepository(GenericRepository[Technology]):

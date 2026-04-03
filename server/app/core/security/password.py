@@ -1,5 +1,5 @@
 from passlib.context import CryptContext
-from app.core.config import get_settings
+from core.config import get_settings
 
 # Configurar el contexto de cryptografía para hashing de passwords
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

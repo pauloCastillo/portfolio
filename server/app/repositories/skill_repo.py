@@ -1,5 +1,5 @@
-from app.domain.generic_repository import GenericRepository
-from app.db.models.skills import Skill
+from domain.generic_repository import GenericRepository
+from db.models.skills import Skill
 
 
 class SkillRepository(GenericRepository[Skill]):

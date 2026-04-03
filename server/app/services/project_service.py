@@ -1,5 +1,5 @@
-from app.services.base_service import BaseService
-from app.repositories.project_repository import ProjectRepository
+from services.base_service import BaseService
+from repositories.project_repository import ProjectRepository
 
 
 class ProjectService(BaseService[ProjectRepository]):

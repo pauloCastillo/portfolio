@@ -9,15 +9,15 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 
-from app.services.project_service import ProjectService
-from app.services.user_service import UserService
-from app.services.post_service import PostService
-from app.services.skill_service import SkillService
-from app.services.tech_service import TechService
-from app.services.experience_service import ExperienceService
-from app.core.database import get_db
-from app.core.security.jwt import verify_token
-from app.db.models.users import User
+from services.project_service import ProjectService
+from services.user_service import UserService
+from services.post_service import PostService
+from services.skill_service import SkillService
+from services.tech_service import TechService
+from services.experience_service import ExperienceService
+from core.database import get_db
+from core.security.jwt import verify_token
+from db.models.users import User
 
 # OAuth2 scheme for token extraction
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
@@ -96,7 +96,7 @@ def get_current_user(
         raise credentials_exception
     
     # Get user from database
-    from app.services.user_service import UserService
+    from ..services.user_service import UserService
     user_service = UserService()
     user = user_service.get_by_email(db, email)
     if user is None:

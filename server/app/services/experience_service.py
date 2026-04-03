@@ -1,5 +1,5 @@
-from app.services.base_service import BaseService
-from app.repositories.experience_repo import ExperienceRepository
+from services.base_service import BaseService
+from repositories.experience_repo import ExperienceRepository
 
 
 class ExperienceService(BaseService[ExperienceRepository]):

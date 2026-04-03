@@ -1,5 +1,5 @@
-from app.services.base_service import BaseService
-from app.repositories.post_repo import PostRepository
+from services.base_service import BaseService
+from repositories.post_repo import PostRepository
 
 
 class PostService(BaseService[PostRepository]):

@@ -1,5 +1,5 @@
 from typing import Generic, TypeVar, List, Optional
-from app.domain.generic_repository import GenericRepository
+from domain.generic_repository import GenericRepository
 
 T = TypeVar("T")
 

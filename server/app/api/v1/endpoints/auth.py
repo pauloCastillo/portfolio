@@ -5,12 +5,12 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 
-from app.db.schemas.user_dto import UserLogin, Token
-from app.core.database import get_db
-from app.core.security.password import verify_password
-from app.core.security.jwt import create_access_token, verify_token
-from app.core.dependencies import get_user_service
-from app.services.user_service import UserService
+from db.schemas.user_dto import UserLogin, Token
+from core.database import get_db
+from core.security.password import verify_password
+from core.security.jwt import create_access_token, verify_token
+from core.dependencies import get_user_service
+from services.user_service import UserService
 
 # Esquema de respuesta para validación
 class TokenValidationResponse(BaseModel):

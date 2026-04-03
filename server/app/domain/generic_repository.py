@@ -2,7 +2,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import select
 from typing import Generic, TypeVar, List, Optional
 
-from app.domain.abc_repository import IRepository
+from domain.abc_repository import IRepository
 
 T = TypeVar("T")
 

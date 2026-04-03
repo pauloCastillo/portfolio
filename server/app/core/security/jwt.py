@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
 from typing import Optional
 from jose import JWTError, jwt
-from app.core.config import get_settings
-from app.db.models.users import User
+from core.config import get_settings
+from db.models.users import User
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     """

@@ -1,5 +1,5 @@
-from app.domain.generic_repository import GenericRepository
-from app.db.models.experience import Experience
+from domain.generic_repository import GenericRepository
+from db.models.experience import Experience
 
 
 class ExperienceRepository(GenericRepository[Experience]):

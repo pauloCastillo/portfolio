@@ -1,5 +1,5 @@
-from app.domain.generic_repository import GenericRepository
-from app.db.models.projects import Project
+from domain.generic_repository import GenericRepository
+from db.models.projects import Project
 
 
 class ProjectRepository(GenericRepository[Project]):

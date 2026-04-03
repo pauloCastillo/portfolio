@@ -3,11 +3,11 @@ from typing import Annotated
 from fastapi import APIRouter, status, Depends
 from sqlalchemy.orm import Session
 
-from app.db.schemas.experience_dto import ExperienceCreate, ExperienceResponse, ExperienceUpdate
-from app.core.database import get_db
-from app.core.dependencies import get_experience_service, get_current_user
-from app.services.experience_service import ExperienceService
-from app.db.models.users import User
+from db.schemas.experience_dto import ExperienceCreate, ExperienceResponse, ExperienceUpdate
+from core.database import get_db
+from core.dependencies import get_experience_service, get_current_user
+from services.experience_service import ExperienceService
+from db.models.users import User
 
 
 db_depends = Annotated[Session, Depends(get_db)]

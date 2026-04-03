@@ -1,5 +1,5 @@
-from app.domain.generic_repository import GenericRepository
-from app.db.models.posts import Post
+from domain.generic_repository import GenericRepository
+from db.models.posts import Post
 
 
 class PostRepository(GenericRepository[Post]):

@@ -1,5 +1,5 @@
-from app.services.base_service import BaseService
-from app.repositories.skill_repo import SkillRepository
+from services.base_service import BaseService
+from repositories.skill_repo import SkillRepository
 
 
 class SkillService(BaseService[SkillRepository]):

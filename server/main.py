@@ -10,6 +10,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 
 import uvicorn
+import sys 
+import os
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from app.api.v1.router import router
 

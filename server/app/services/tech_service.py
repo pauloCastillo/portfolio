@@ -1,5 +1,5 @@
-from app.services.base_service import BaseService
-from app.repositories.tech_repo import TechRepository
+from services.base_service import BaseService
+from repositories.tech_repo import TechRepository
 
 
 class TechService(BaseService[TechRepository]):

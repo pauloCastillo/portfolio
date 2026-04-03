@@ -3,11 +3,11 @@ from typing import Annotated
 from fastapi import APIRouter, status, Depends
 from sqlalchemy.orm import Session
 
-from app.db.schemas.post_dto import PostCreate, PostResponse, PostUpdate
-from app.core.database import get_db
-from app.services.post_service import PostService
-from app.core.dependencies import get_post_service, get_current_user
-from app.db.models.users import User
+from db.schemas.post_dto import PostCreate, PostResponse, PostUpdate
+from core.database import get_db
+from services.post_service import PostService
+from core.dependencies import get_post_service, get_current_user
+from db.models.users import User
 
 
 db_depends = Annotated[Session, Depends(get_db)]
