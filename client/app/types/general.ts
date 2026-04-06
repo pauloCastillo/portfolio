@@ -7,6 +7,7 @@ export type ChildrenType = {
 export type Project = {
     id: number;
     name: string;
+    title: string;
     imageUrl: string;
     description: string;
     stack: string[];

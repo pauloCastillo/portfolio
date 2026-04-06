@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Field from "@/components/UI/Form/Field";
 import { validateUserData } from "~/utils/validations";
 import Link from "next/link";
@@ -39,7 +40,7 @@ export default function AdminPage(){
   const { login, loading, errorMessage } = useAuth();
   
   // Get callback URL from query params to redirect after login
-  const searchParams = new URLSearchParams(globalThis.location.search);
+  const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/admin';
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement| HTMLTextAreaElement>) => {
