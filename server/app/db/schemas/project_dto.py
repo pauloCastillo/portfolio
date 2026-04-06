@@ -2,6 +2,8 @@ from uuid import UUID
 from pydantic import BaseModel, Field, ConfigDict, field_validator
 from datetime import datetime, UTC
 
+from pytest import mark
+
 
 class ProjectBase(BaseModel):
     """Schema base para Project - campos compartidos."""
@@ -41,7 +43,7 @@ class ProjectResponse(ProjectBase):
 
 class ProjectUpdate(BaseModel):
     """Schema para actualizar proyecto - todos los campos opcionales."""
-    title: str | None = Field(None, min_length=1, max_length=255)
+    title: str | None = Field(None, min_length=1, max_length=255, markdown_description="# Title of the project")
     description: str | None = Field(None, min_length=1)
     content: str | None = Field(None, description="Markdown content of the project")
     image_file: str | None = None

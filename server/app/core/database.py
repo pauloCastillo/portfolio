@@ -28,4 +28,4 @@ def get_db():
     with SessionLocal() as db:
         yield db
 
-Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine) 

@@ -5,19 +5,19 @@ Repository Tests - Tests unitarios para la capa de repositorios.
 import pytest
 from sqlalchemy import select
 
-from app.repositories.project_repository import ProjectRepository
-from app.repositories.user_repo import UserRepository
-from app.repositories.post_repo import PostRepository
-from app.repositories.skill_repo import SkillRepository
-from app.repositories.tech_repo import TechRepository
-from app.repositories.experience_repo import ExperienceRepository
+from repositories.project_repo import ProjectRepository
+from repositories.user_repo import UserRepository
+from repositories.post_repo import PostRepository
+from repositories.skill_repo import SkillRepository
+from repositories.tech_repo import TechRepository
+from repositories.experience_repo import ExperienceRepository
 
-from app.db.models.projects import Project
-from app.db.models.users import User
-from app.db.models.posts import Post
-from app.db.models.skills import Skill
-from app.db.models.techs import Technology
-from app.db.models.experience import Experience
+from db.models.projects import Project
+from db.models.users import User
+from db.models.posts import Post
+from db.models.skills import Skill
+from db.models.techs import Technology
+from db.models.experience import Experience
 
 
 class TestProjectRepository:

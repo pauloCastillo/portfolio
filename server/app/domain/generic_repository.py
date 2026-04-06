@@ -1,6 +1,6 @@
 from fastapi import HTTPException, status
 from sqlalchemy import select
-from typing import Generic, TypeVar, List, Optional
+from typing import TypeVar, List, Optional
 
 from domain.abc_repository import IRepository
 
