@@ -20,7 +20,6 @@ class ExperienceBase(BaseModel):
             raise ValueError("URL must start with http:// or https://")
         return value
 
-
 class ExperienceCreate(ExperienceBase):
     """Schema para crear experiencia."""
     user_id: UUID4 = Field(..., example="123e4567-e89b-12d3-a456-426614174000")

@@ -20,6 +20,7 @@ class SkillResponse(SkillBase):
     updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
+
 class SkillUpdate(BaseModel):
     """Schema para actualizar skill - todos los campos opcionales."""
     name: str | None = Field(None, min_length=1, max_length=255)

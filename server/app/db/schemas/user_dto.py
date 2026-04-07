@@ -37,7 +37,6 @@ class UserResponse(UserBase):
             return f"/public/media/{value}"
         return value
 
-
 class Token(BaseModel):
     """Schema para token de acceso."""
     access_token: str

@@ -22,8 +22,6 @@ from db.models.users import User
 # OAuth2 scheme for token extraction
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
 
-
-@lru_cache
 def get_project_service() -> ProjectService:
     """
     Factory con cache para ProjectService.
@@ -32,31 +30,26 @@ def get_project_service() -> ProjectService:
     return ProjectService()
 
 
-@lru_cache
 def get_user_service() -> UserService:
     """Factory con cache para UserService."""
     return UserService()
 
 
-@lru_cache
 def get_post_service() -> PostService:
     """Factory con cache para PostService."""
     return PostService()
 
 
-@lru_cache
 def get_skill_service() -> SkillService:
     """Factory con cache para SkillService."""
     return SkillService()
 
 
-@lru_cache
 def get_tech_service() -> TechService:
     """Factory con cache para TechService."""
     return TechService()
 
 
-@lru_cache
 def get_experience_service() -> ExperienceService:
     """Factory con cache para ExperienceService."""
     return ExperienceService()
@@ -85,21 +78,29 @@ def get_current_user(
         headers={"WWW-Authenticate": "Bearer"},
     )
     
-    # Verify token
-    payload = verify_token(token)
-    if payload is None:
-        raise credentials_exception
+    try:
+        # Verify token
+        payload = verify_token(token)
+
+        if payload is None:
+            raise credentials_exception    
     
-    # Get user email from token
-    email: str = payload.get("sub")
-    if email is None:
-        raise credentials_exception
-    
-    # Get user from database
-    from ..services.user_service import UserService
-    user_service = UserService()
-    user = user_service.get_by_email(db, email)
-    if user is None:
-        raise credentials_exception
-    
-    return user
+        # Get user email from token
+        email: str | None = payload.get("sub")
+        
+        if email is None:
+            raise credentials_exception
+        
+        # Get user from database
+        user_service = get_user_service()
+        user = user_service.get_by_email(db, email)
+
+        if user is None:
+            raise credentials_exception
+        
+        return user
+    except Exception as e:
+        raise HTTPException(
+            status_code = 500,
+            detail= str(e)
+        )
