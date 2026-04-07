@@ -2,7 +2,7 @@ import axios from "axios";
 import type { Project } from "@/types/general";
 
 export default function projectService() {
-    const getAllProjects = async (): Promise<Project[]> => {
+    const getAllProjects = async () : Promise<Project[]> => {
         try {
             const response = await axios.get<Project[]>('/api/admin/projects');
             return response.data;

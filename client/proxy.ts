@@ -16,9 +16,8 @@ export async function proxy(request: NextRequest) {
   if (pathname.startsWith('/admin')) {
     // Verificar si existe el token en las cookies
     const hasAccessToken = request.cookies.has('access_token')
-    const hasTokenType = request.cookies.has('token_type')
 
-    if (!hasAccessToken || !hasTokenType) {
+    if (!hasAccessToken) {
       // Redirigir a auth con callback URL para volver después del login
       const loginUrl = new URL('/auth', request.url)
       loginUrl.searchParams.set('callbackUrl', pathname)
@@ -27,7 +26,7 @@ export async function proxy(request: NextRequest) {
 
     // Obtener valores de las cookies
     const token = request.cookies.get('access_token')?.value || ''
-    const tokenType = request.cookies.get('token_type')?.value || ''
+    const tokenType = 'Bearer' // Tipo de token fijo para este caso
 
     // Validar el token contra el backend
     const isTokenValid = await validateToken(token, tokenType)

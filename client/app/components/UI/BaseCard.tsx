@@ -1,5 +1,5 @@
-import React from "react";
-import Button from "./Button";
+
+import Link from "next/link";
 import Image from "next/image";
 
 interface BaseCardProps {
@@ -29,7 +29,7 @@ export default function BaseCard({ project }: Readonly<BaseCardProps>) {
           {project.description}
         </p>
       </div>
-      <div className="mt-2 justify-center flex flex-wrap">
+      {/* <div className="mt-2 justify-center flex flex-wrap">
         {project.stack.map((tech) => (
           <span
             key={tech}
@@ -38,10 +38,13 @@ export default function BaseCard({ project }: Readonly<BaseCardProps>) {
             {tech}
           </span>
         ))}
-      </div>
-      <Button className="capitalize bg-orange-400 text-white mt-5 min-w-full rounded-md p-1.5 hover:cursor-pointer hover:bg-orange-500 hover:transition-colors">
+      </div> */}
+      <Link
+        href="/app/admin/projects/[slug]" 
+        className="capitalize bg-orange-400 text-white mt-5 min-w-full rounded-md p-1.5 hover:cursor-pointer hover:bg-orange-500 hover:transition-colors"
+      >
         ver caso de estudio
-      </Button>
+      </Link>
     </div>
   );
 }

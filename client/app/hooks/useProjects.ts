@@ -9,11 +9,13 @@ export function useProjects() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
+  const service = projectService();
+
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         setIsLoading(true);
-        const data = await projectService().getAllProjects();
+        const data = await service.getAllProjects();
         setProjects(data);
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Unknown error'));

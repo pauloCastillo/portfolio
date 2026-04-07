@@ -7,10 +7,12 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 type Project = {
-    imageUrl: string;
+    id: number;
+    image_file?: string | null;
     title: string;
     description: string;
-    stack: string[];
+    github_link?: string;
+    project_link?: string | null;
 }
 
 type ProjectCard = {
@@ -28,6 +30,12 @@ export default function Card({ projects }:Readonly<ProjectCard>){
         router.push("/admin/projects/view")
     }
 
+    const route = useRouter()
+
+    const projectHandlerView = ()=>{
+        route.push("projects/[slug]")
+    }
+
     return(
         <>
         {projects.map((project) => (
@@ -36,13 +44,24 @@ export default function Card({ projects }:Readonly<ProjectCard>){
                 className="glass-panel rounded-xl overflow-hidden group hover:border-primary/50 transition-all duration-500 hover:-translate-y-1 relative flex flex-col">
                 {/* <!-- Image Preview --> */}
                 <div className="relative h-48 overflow-hidden bg-void">
-                    <Image 
-                        src={project.imageUrl}
-                        alt={project.title}
-                        className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
-                        width={100}
-                        height={100}
-                    />
+                    {!project.image_file 
+                    ? 
+                        <Image 
+                            src={"/images/proyecto1.svg"}
+                            alt={project.title}
+                            className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
+                            width={100}
+                            height={100}
+                        />
+                    :
+                        <Image 
+                            src={`/images/proyecto2.svg`}
+                            alt={project.title}
+                            className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
+                            width={100}
+                            height={100}
+                        />
+                    }                
                     {/* bg-gradient-to-t  */}
                     <div
                         className="absolute inset-0 from-void via-transparent to-transparent opacity-90">
@@ -78,18 +97,21 @@ export default function Card({ projects }:Readonly<ProjectCard>){
                 </div>
                 {/* <!-- Content --> */}
                 <div className="p-5 flex flex-col flex-1">
-                    <div className="flex justify-between items-start mb-2 hover:cursor-pointer group">
+                    <div 
+                        className="flex justify-between items-start mb-2 hover:cursor-pointer group"
+                        onClick={projectHandlerView}
+                    >
                         <h3
                             className="text-xl font-display font-bold text-white group-hover:text-primary transition-colors">
                             {project.title}
-                        </h3>        
-                        <FontAwesomeIcon icon={faUpRightFromSquare} className="text-text-muted opacity-0 group-hover:opacity-50 transition-opacity text-sm" />         
+                        </h3>
+                        <FontAwesomeIcon icon={faUpRightFromSquare} className="text-text-muted opacity-0 group-hover:opacity-50 transition-opacity text-sm" />        
                     </div>
                     <p className="text-sm text-text-muted mb-4 font-body line-clamp-2">
                         {project.description}
                     </p>
                     {/* <!-- Tech Stack --> */}
-                    <div className="mt-auto flex flex-wrap gap-2">
+                    {/* <div className="mt-auto flex flex-wrap gap-2">
                         {project.stack.map((stack, index) => (
                             <span
                             key={index} 
@@ -98,7 +120,7 @@ export default function Card({ projects }:Readonly<ProjectCard>){
                             {stack}
                         </span>
                         ))}
-                    </div>
+                    </div> */}
                 </div>
             </div>
         ))}

@@ -33,17 +33,9 @@ export async function POST(request: NextRequest) {
     responseData.cookies.set('access_token', response.data.access_token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: 'lax',
       maxAge: 60 * 60 * 24 * 7, // 1 semana
-      path: '/admin', // Solo enviar cookie para rutas protegidas
-    })
-
-    responseData.cookies.set('token_type', response.data.token_type, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 60 * 60 * 24 * 7, // 1 semana
-      path: '/admin', // Solo enviar cookie para rutas protegidas
+      path: '/', // Solo enviar cookie para rutas protegidas
     })
     
     return responseData
