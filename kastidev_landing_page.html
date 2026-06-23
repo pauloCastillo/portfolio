@@ -1,0 +1,396 @@
+
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1f2e;
+    --surface2: #222840;
+    --cyan: #22d3ee;
+    --indigo: #6366f1;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --border: rgba(255,255,255,0.07);
+    --font-mono: 'Fira Code', monospace;
+    --font-sans: 'Inter', sans-serif;
+  }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); line-height: 1.7; }
+
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; background: rgba(15,17,23,0.92);
+    backdrop-filter: blur(12px); z-index: 100;
+  }
+  .nav-logo { font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--text); }
+  .nav-logo span { color: var(--cyan); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 14px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--cyan); }
+  .nav-cta {
+    font-family: var(--font-mono); font-size: 13px; color: var(--cyan);
+    border: 1px solid var(--cyan); padding: 8px 18px; border-radius: 6px;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .nav-cta:hover { background: rgba(34,211,238,0.1); }
+
+  section { padding: 5rem 2.5rem; max-width: 1100px; margin: 0 auto; }
+
+  .hero { padding-top: 7rem; padding-bottom: 7rem; }
+  .hero-eyebrow {
+    font-family: var(--font-mono); font-size: 13px; color: var(--cyan);
+    letter-spacing: 0.05em; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--cyan); }
+  .hero h1 {
+    font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 600; line-height: 1.08;
+    letter-spacing: -0.02em; margin-bottom: 1.5rem; max-width: 800px;
+  }
+  .hero h1 .accent { color: var(--cyan); }
+  .hero-sub {
+    font-size: 18px; color: var(--muted); max-width: 520px; margin-bottom: 2.5rem; line-height: 1.65;
+  }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    font-family: var(--font-mono); font-size: 14px; font-weight: 500;
+    background: var(--cyan); color: #0f1117; padding: 13px 28px;
+    border-radius: 8px; text-decoration: none; transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-ghost {
+    font-family: var(--font-mono); font-size: 14px; color: var(--text);
+    border: 1px solid var(--border); padding: 13px 28px;
+    border-radius: 8px; text-decoration: none; transition: border-color 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  .hero-code {
+    margin-top: 4rem;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem 2rem; max-width: 560px;
+    font-family: var(--font-mono); font-size: 13px; line-height: 1.9;
+  }
+  .hero-code .line-num { color: #3a4060; margin-right: 1.5rem; user-select: none; }
+  .c-cyan { color: var(--cyan); }
+  .c-indigo { color: var(--indigo); }
+  .c-str { color: #86efac; }
+  .c-muted { color: var(--muted); }
+  .code-bar {
+    display: flex; gap: 8px; margin-bottom: 1rem; padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .code-dot { width: 12px; height: 12px; border-radius: 50%; }
+
+  .section-label {
+    font-family: var(--font-mono); font-size: 12px; color: var(--cyan);
+    letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.75rem;
+  }
+  .section-title { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 600; letter-spacing: -0.01em; margin-bottom: 1rem; }
+  .section-desc { font-size: 16px; color: var(--muted); max-width: 500px; line-height: 1.7; margin-bottom: 3rem; }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  .stack-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+  .stack-pill {
+    font-family: var(--font-mono); font-size: 13px;
+    padding: 6px 16px; border-radius: 20px;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--muted); transition: all 0.2s; cursor: default;
+  }
+  .stack-pill.primary { color: var(--cyan); border-color: rgba(34,211,238,0.25); }
+  .stack-pill.secondary { color: var(--indigo); border-color: rgba(99,102,241,0.25); }
+  .stack-pill:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .project-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 1.75rem; transition: border-color 0.25s;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .project-card:hover { border-color: rgba(34,211,238,0.35); }
+  .project-card.featured { border-color: rgba(34,211,238,0.25); grid-column: span 2; }
+  .project-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .project-icon { font-size: 28px; color: var(--cyan); }
+  .project-link { font-family: var(--font-mono); font-size: 12px; color: var(--muted); text-decoration: none; }
+  .project-link:hover { color: var(--cyan); }
+  .project-title { font-size: 17px; font-weight: 600; color: var(--text); }
+  .project-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .project-tag {
+    font-family: var(--font-mono); font-size: 11px; color: var(--indigo);
+    background: rgba(99,102,241,0.1); padding: 3px 10px; border-radius: 4px;
+  }
+
+  .about-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: center; }
+  .avatar-block {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 2.5rem; text-align: center;
+  }
+  .avatar-circle {
+    width: 100px; height: 100px; border-radius: 50%;
+    background: var(--surface2); border: 2px solid var(--cyan);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 28px; font-weight: 700;
+    color: var(--cyan); margin: 0 auto 1rem;
+  }
+  .avatar-name { font-size: 18px; font-weight: 600; color: var(--text); }
+  .avatar-role { font-family: var(--font-mono); font-size: 13px; color: var(--cyan); margin-top: 4px; }
+  .avatar-location { font-size: 13px; color: var(--muted); margin-top: 8px; }
+  .avatar-stats { display: flex; justify-content: center; gap: 2rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  .stat-num { font-family: var(--font-mono); font-size: 22px; font-weight: 700; color: var(--text); }
+  .stat-label { font-size: 11px; color: var(--muted); }
+  .about-text p { font-size: 16px; color: var(--muted); line-height: 1.8; margin-bottom: 1.25rem; }
+  .about-text p:last-child { margin-bottom: 0; }
+  .about-text strong { color: var(--text); font-weight: 500; }
+
+  .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .value-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem;
+  }
+  .value-icon { font-size: 22px; color: var(--cyan); margin-bottom: 10px; }
+  .value-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .value-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  .contact-wrap {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: 3.5rem; text-align: center;
+  }
+  .contact-wrap h2 { font-size: 2rem; font-weight: 600; margin-bottom: 1rem; }
+  .contact-wrap p { color: var(--muted); margin-bottom: 2rem; max-width: 420px; margin-left: auto; margin-right: auto; }
+  .social-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 2rem; }
+  .social-link {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    text-decoration: none; border: 1px solid var(--border);
+    padding: 10px 20px; border-radius: 8px; transition: all 0.2s;
+  }
+  .social-link:hover { color: var(--cyan); border-color: rgba(34,211,238,0.4); }
+
+  footer {
+    border-top: 1px solid var(--border); padding: 2rem 2.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--font-mono); font-size: 12px; color: var(--muted);
+    max-width: 1100px; margin: 0 auto;
+  }
+  .cursor-blink {
+    display: inline-block; width: 2px; height: 16px;
+    background: var(--cyan); margin-left: 2px; vertical-align: middle;
+    animation: blink 1.1s step-end infinite;
+  }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+  @media (max-width: 700px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { display: none; }
+    section { padding: 3.5rem 1.25rem; }
+    .hero { padding-top: 4rem; padding-bottom: 4rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card.featured { grid-column: span 1; }
+    .about-grid { grid-template-columns: 1fr; }
+    .values-grid { grid-template-columns: 1fr; }
+    .contact-wrap { padding: 2rem 1.25rem; }
+    footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+
+<div style="background: var(--bg, #0f1117); min-height: 100vh;">
+
+<nav>
+  <div class="nav-logo">Kasti<span>dev</span></div>
+  <ul class="nav-links">
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#sobre-mi">Sobre mí</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="#contacto" class="nav-cta">Hablemos →</a>
+</nav>
+
+<section class="hero" id="inicio">
+  <div class="hero-eyebrow">Fullstack Developer</div>
+  <h1>
+    Construyo ideas<br>que <span class="accent">cobran vida</span><br>en código.
+  </h1>
+  <p class="hero-sub">
+    Aplicaciones web elegantes, eficientes y escalables. De la interfaz al servidor — y de vuelta al usuario.
+  </p>
+  <div class="hero-actions">
+    <a href="#proyectos" class="btn-primary">Ver proyectos</a>
+    <a href="#contacto" class="btn-ghost">Trabajemos juntos</a>
+  </div>
+
+  <div class="hero-code">
+    <div class="code-bar">
+      <div class="code-dot" style="background:#ef4444;"></div>
+      <div class="code-dot" style="background:#f59e0b;"></div>
+      <div class="code-dot" style="background:#22c55e;"></div>
+      <span style="font-size:12px; color: #3a4060; margin-left:8px;">kastidev.ts</span>
+    </div>
+    <div><span class="line-num">1</span><span class="c-cyan">const</span> <span style="color:#f1f5f9;">kastidev</span> = {</div>
+    <div><span class="line-num">2</span>&nbsp;&nbsp;role: <span class="c-str">"Fullstack Developer"</span>,</div>
+    <div><span class="line-num">3</span>&nbsp;&nbsp;stack: [<span class="c-str">"React"</span>, <span class="c-str">"Next.js"</span>, <span class="c-str">"Node"</span>],</div>
+    <div><span class="line-num">4</span>&nbsp;&nbsp;mobile: [<span class="c-str">"React Native"</span>, <span class="c-str">"Android"</span>],</div>
+    <div><span class="line-num">5</span>&nbsp;&nbsp;status: <span class="c-str">"always learning"</span> <span class="c-muted">+ <span class="c-str">" 🚀"</span></span>,</div>
+    <div><span class="line-num">6</span>}<span class="cursor-blink"></span></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="stack">
+  <div class="section-label">// tecnologías</div>
+  <h2 class="section-title">Stack & herramientas</h2>
+  <p class="section-desc">Las tecnologías con las que construyo día a día — desde el frontend hasta el backend y mobile.</p>
+  <div class="stack-grid">
+    <span class="stack-pill primary">JavaScript</span>
+    <span class="stack-pill primary">TypeScript</span>
+    <span class="stack-pill primary">React</span>
+    <span class="stack-pill primary">Next.js</span>
+    <span class="stack-pill primary">Node.js</span>
+    <span class="stack-pill primary">Vue</span>
+    <span class="stack-pill primary">Nuxt.js</span>
+    <span class="stack-pill primary">Python</span>
+    <span class="stack-pill secondary">React Native</span>
+    <span class="stack-pill secondary">Android</span>
+    <span class="stack-pill">PostgreSQL</span>
+    <span class="stack-pill">REST APIs</span>
+    <span class="stack-pill">Git</span>
+    <span class="stack-pill">Docker</span>
+    <span class="stack-pill">Open Source</span>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="proyectos">
+  <div class="section-label">// proyectos</div>
+  <h2 class="section-title">Lo que he construido</h2>
+  <p class="section-desc">Una selección de proyectos donde el detalle importa tanto como la funcionalidad.</p>
+  <div class="projects-grid">
+    <div class="project-card featured">
+      <div class="project-top">
+        <div class="project-icon"><i class="ti ti-layout-dashboard" aria-hidden="true"></i></div>
+        <a href="#" class="project-link">ver proyecto ↗</a>
+      </div>
+      <div class="project-title">App de gestión fullstack</div>
+      <div class="project-desc">Plataforma completa con autenticación, dashboard en tiempo real y API REST. Construida pensando en escalabilidad desde el día uno.</div>
+      <div class="project-tags">
+        <span class="project-tag">Next.js</span>
+        <span class="project-tag">Node.js</span>
+        <span class="project-tag">PostgreSQL</span>
+        <span class="project-tag">TypeScript</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-icon"><i class="ti ti-device-mobile" aria-hidden="true"></i></div>
+        <a href="#" class="project-link">GitHub ↗</a>
+      </div>
+      <div class="project-title">App móvil con React Native</div>
+      <div class="project-desc">Aplicación cross-platform con UX nativa, sincronización offline y notificaciones push.</div>
+      <div class="project-tags">
+        <span class="project-tag">React Native</span>
+        <span class="project-tag">TypeScript</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-icon"><i class="ti ti-api" aria-hidden="true"></i></div>
+        <a href="#" class="project-link">GitHub ↗</a>
+      </div>
+      <div class="project-title">API REST con Python</div>
+      <div class="project-desc">Backend modular y documentado. Diseño enfocado en rendimiento y mantenibilidad a largo plazo.</div>
+      <div class="project-tags">
+        <span class="project-tag">Python</span>
+        <span class="project-tag">FastAPI</span>
+        <span class="project-tag">Docker</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="sobre-mi">
+  <div class="section-label">// sobre mí</div>
+  <div class="about-grid">
+    <div class="avatar-block">
+      <div class="avatar-circle">PC</div>
+      <div class="avatar-name">Paulo Castillo</div>
+      <div class="avatar-role">@kastidev</div>
+      <div class="avatar-location">
+        <i class="ti ti-map-pin" style="font-size:14px; vertical-align:-2px;" aria-hidden="true"></i>
+        Bolivia · remoto disponible
+      </div>
+      <div class="avatar-stats">
+        <div>
+          <div class="stat-num">3+</div>
+          <div class="stat-label">años de experiencia</div>
+        </div>
+        <div>
+          <div class="stat-num">10+</div>
+          <div class="stat-label">proyectos entregados</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-text">
+      <p>Mi viaje en tecnología comenzó con un simple <strong>"Hola Mundo"</strong> y evolucionó hacia un amor profundo por resolver problemas complejos y construir experiencias de usuario que realmente importan.</p>
+      <p>Soy desarrollador <strong>fullstack</strong> con especial pasión por el frontend elegante y el backend sólido. Trabajo bien en equipos multidisciplinarios y disfruto cada desafío técnico como una oportunidad de aprender.</p>
+      <p>Cuando no programo, contribuyo a <strong>proyectos open source</strong>, comparto conocimiento con la comunidad dev y exploro lo que viene después en este fascinante mundo tech.</p>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top: 1rem;">
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value-icon"><i class="ti ti-code" aria-hidden="true"></i></div>
+      <div class="value-title">Código limpio</div>
+      <div class="value-desc">No solo que funcione — que sea mantenible, legible y escalable en el tiempo.</div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon"><i class="ti ti-users" aria-hidden="true"></i></div>
+      <div class="value-title">Comunidad primero</div>
+      <div class="value-desc">Aprendo en público, comparto lo que descubro y creo que el conocimiento se multiplica al compartirse.</div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon"><i class="ti ti-refresh" aria-hidden="true"></i></div>
+      <div class="value-title">Mejora continua</div>
+      <div class="value-desc">Cada proyecto es una oportunidad de ser mejor developer que el día anterior.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="contacto">
+  <div class="contact-wrap">
+    <div class="section-label" style="margin-bottom:1rem;">// contacto</div>
+    <h2>¿Tienes un proyecto en mente?</h2>
+    <p>Ya sea freelance, colaboración o simplemente charlar de tech — escríbeme y hablamos.</p>
+    <a href="mailto:hola@kastidev.dev" class="btn-primary" style="display:inline-block;">hola@kastidev.dev</a>
+    <div class="social-links">
+      <a href="https://github.com/kastidev" class="social-link">
+        <i class="ti ti-brand-github" style="font-size:16px;" aria-hidden="true"></i> GitHub
+      </a>
+      <a href="https://linkedin.com/in/kastidev" class="social-link">
+        <i class="ti ti-brand-linkedin" style="font-size:16px;" aria-hidden="true"></i> LinkedIn
+      </a>
+      <a href="https://youtube.com/@kastidev" class="social-link">
+        <i class="ti ti-brand-youtube" style="font-size:16px;" aria-hidden="true"></i> YouTube
+      </a>
+      <a href="https://tiktok.com/@kastidev" class="social-link">
+        <i class="ti ti-brand-tiktok" style="font-size:16px;" aria-hidden="true"></i> TikTok
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Kasti<span style="color:#22d3ee;">dev</span> · 2025</span>
+  <span style="font-family: 'Fira Code', monospace;">// Escribo código limpio, construyo ideas reales.</span>
+</footer>
+
+</div>
