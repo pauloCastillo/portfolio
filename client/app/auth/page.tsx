@@ -5,7 +5,6 @@ import { useSearchParams } from "next/navigation";
 import Field from "@/components/UI/Form/Field";
 import { validateUserData } from "~/utils/validations";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation"
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "~/store/store";
@@ -52,7 +51,6 @@ export default function AdminPage(){
       }
     } else {
       const message = errorMessage;
-      console.log(message);
       dispatch(setError(message || "Invalid user data! Please check your email and password."));
     }
   }
@@ -70,14 +68,8 @@ export default function AdminPage(){
 
  return(
     <div className="bg-void flex flex-col items-center justify-center h-screen">
-      <Link href="/" className="flex items-center-safe bg-black p-5 rounded-lg text-white">
-        <Image 
-          src={"/vercel.svg"} 
-          alt="logo" 
-          width={45}
-          height={45}
-        />
-        <p className="text-xl">PortfolioLogo</p>
+      <Link href="/" className="font-mono text-lg font-bold text-text no-underline">
+        Kasti<span className="text-cyan">dev</span>
       </Link>
       <form onSubmit={handleSubmit} className="mt-6 w-full max-w-sm text-primary bg-glass-surface backdrop-blur-lg border border-border-glass rounded-lg p-6">
         <Field 

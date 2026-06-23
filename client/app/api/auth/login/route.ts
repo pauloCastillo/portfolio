@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     })
     
     return responseData
-  } catch (error:Error) {
+  } catch (error: any) {
     console.error('Error en login:', error)
     
     return NextResponse.json(

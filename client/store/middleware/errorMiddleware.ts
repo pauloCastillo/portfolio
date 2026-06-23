@@ -1,13 +1,13 @@
 import { Middleware } from "@reduxjs/toolkit";
-import { useErrorHandler } from "~/services/errorHandler";
+import { store } from "~/store/store";
+import { setError } from "~/store/features/errorSlice";
 
 export const errorMiddleware: Middleware = () => (next) => (action) => {
-    const { handleError } = useErrorHandler();   
     try {
         return next(action);
     } catch (error) {
         if (error instanceof Error) {
-            handleError(error);
+            store.dispatch(setError(error.message));
         }
         throw error;
     }
