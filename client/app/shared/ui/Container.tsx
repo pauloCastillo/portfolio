@@ -9,7 +9,7 @@ interface ContainerProps {
 
 export default function Container({ children, className = "", as: Tag = "section", id }: ContainerProps) {
   return (
-    <Tag id={id} className={`max-w-[1100px] mx-auto px-10 py-20 ${className}`}>
+    <Tag id={id} className={`max-w-[1100px] mx-auto px-10 max-md:px-5 py-20 max-md:py-14 ${className}`}>
       {children}
     </Tag>
   );

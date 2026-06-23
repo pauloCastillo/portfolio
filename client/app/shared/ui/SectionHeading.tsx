@@ -14,7 +14,7 @@ export default function SectionHeading({ label, title, description }: SectionHea
         {title}
       </h2>
       {description && (
-        <p className="text-base text-muted max-w-1/2 leading-relaxed mb-12">
+        <p className="text-base text-muted max-w-full md:max-w-1/2 leading-relaxed mb-12">
           {description}
         </p>
       )}

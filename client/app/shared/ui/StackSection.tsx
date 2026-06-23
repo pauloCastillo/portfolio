@@ -60,7 +60,7 @@ export default function StackSection() {
   };
 
   return (
-    <AnimatedSection stagger className="max-w-full mx-auto px-10 py-20">
+    <AnimatedSection id="stack" stagger className="max-w-full mx-auto px-10 max-md:px-5 py-20">
       <SectionHeading
         label="// tecnologías"
         title="Stack & herramientas"
@@ -71,7 +71,7 @@ export default function StackSection() {
           <MotionDiv key={skill.name} variants={staggerVariants}>
             <span className={`${pillStyle(skill.variant)} flex items-center`}>
               {skill.icon && 
-                <FontAwesomeIcon icon={skill.icon} size="xl" className="mr-2" />
+                <FontAwesomeIcon icon={skill.icon} size="xl" className="mr-2 max-md:mr-1.5 max-md:text-lg" />
               }
               {skill.name}
             </span>

@@ -59,3 +59,83 @@ body {
   0%, 100% { background-position: 0% 0%; }
   50% { background-position: 100% 100%; }
 }
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-left {
+  from { opacity: 0; transform: translateX(60px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-right {
+  from { opacity: 0; transform: translateX(-60px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(60px); clip-path: inset(0 0 100% 0); }
+  to { opacity: 1; transform: translateY(0); clip-path: inset(0 0 0 0); }
+}
+
+.scroll-reveal {
+  animation: fade-in linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 100%;
+}
+
+.scroll-scale {
+  animation: scale-in linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 100%;
+}
+
+.scroll-slide-left {
+  animation: slide-left linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 100%;
+}
+
+.scroll-slide-right {
+  animation: slide-right linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 100%;
+}
+
+.scroll-reveal-up {
+  animation: reveal-up linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal,
+  .scroll-scale,
+  .scroll-slide-left,
+  .scroll-slide-right,
+  .scroll-reveal-up {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+::view-transition-old(root) {
+  animation: 300ms cubic-bezier(0.25, 0.1, 0.25, 1) both fade-out;
+}
+
+::view-transition-new(root) {
+  animation: 500ms cubic-bezier(0.25, 0.1, 0.25, 1) both fade-in;
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}

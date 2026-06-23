@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import Field from "@/components/UI/Form/Field";
+import Field from "@/shared/Form/Field";
 import { validateUserData } from "~/utils/validations";
 import Link from "next/link";
 import { useRouter } from "next/navigation"

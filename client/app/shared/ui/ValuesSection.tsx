@@ -22,7 +22,7 @@ const values = [
 
 export default function ValuesSection() {
   return (
-    <AnimatedSection stagger className="max-w-full mx-auto px-10 pb-20 pt-4">
+    <AnimatedSection stagger className="max-w-full mx-auto px-10 max-md:px-5 pb-20 pt-4">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {values.map((v) => (
           <MotionDiv

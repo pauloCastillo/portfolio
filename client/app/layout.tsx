@@ -24,6 +24,11 @@ const bodytype = Inter({
 });
 
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
   title: "Kastify",
   keywords: [

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Field from "@/components/UI/Form/Field";
+import Field from "@/shared/Form/Field";
 import axios from "axios";
 
 export default function RecoverPage() {
