@@ -10,8 +10,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 
 import uvicorn
+import sys
 
-from app.api.v1.router import router
+# Ensure app/ is on the path so bare imports (from core.xxx, from services.xxx) work
+sys.path.insert(0, str(Path(__file__).resolve().parent / "app"))
+
+from api.v1.router import router
 
 # Configurar CORS para permitir solicitudes desde el cliente
 origins = [

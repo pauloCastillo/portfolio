@@ -3,26 +3,36 @@ Pytest Configuration - Fixtures compartidas para todos los tests.
 """
 
 import os
-# Set environment variable for SECRET_KEY before importing the app
+import sys
+from pathlib import Path
+
+# Set environment variables for Settings before importing the app
 os.environ["SECRET_KEY"] = "test-secret-key-for-testing"
+os.environ["ALGORITHM"] = "HS256"
+os.environ["ACCESS_TOKEN_EXPIRE_MINUTES"] = "30"
+
+# Add app/ to path so bare imports (from core.xxx, from services.xxx) work
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "app"))
 
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
-from app.core.database import Base, get_db
-from app.db.models.users import User
-from app.db.models.projects import Project
-from app.db.models.posts import Post
-from app.db.models.skills import Skill
-from app.db.models.techs import Technology
-from app.db.models.experience import Experience
+from core.database import Base, get_db
+from db.models.users import User
+from db.models.projects import Project
+from db.models.posts import Post
+from db.models.skills import Skill
+from db.models.techs import Technology
+from db.models.experience import Experience
 from fastapi.testclient import TestClient
 from main import app
 from uuid import uuid4
 
-from app.core.security.password import get_password_hash
+from core.security.password import get_password_hash
+from core.dependencies import get_email_service
+from services.email_service import EmailService
 
 
 # Crear base de datos en memoria para tests
@@ -57,6 +67,15 @@ class GUID(TypeDecorator):
             return value
         return uuid.UUID(value)
 
+class MockEmailService(EmailService):
+    """EmailService que no envía correos reales (mock para tests)."""
+    def __init__(self):
+        pass
+
+    async def send_password_reset_email(self, email: str, name: str, reset_url: str):
+        return None
+
+
 TestingSessionLocal = sessionmaker(
     autocommit=False,
     autoflush=False,
@@ -90,6 +109,12 @@ def client(db_session):
             pass
 
     app.dependency_overrides[get_db] = override_get_db
+
+    def override_get_email_service():
+        return MockEmailService()
+
+    app.dependency_overrides[get_email_service] = override_get_email_service
+
     yield TestClient(app)
     app.dependency_overrides.clear()
 
@@ -140,7 +165,6 @@ def test_project(db_session, test_user):
         user_id=test_user.id,
         title="Test Project",
         description="Test Description",
-        tech_stack="Python, FastAPI",
     )
     db_session.add(project)
     db_session.commit()

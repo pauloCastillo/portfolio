@@ -1,3 +1,5 @@
+from datetime import datetime, UTC
+
 from domain.generic_repository import GenericRepository
 from db.models.users import User
 
@@ -27,3 +29,15 @@ class UserRepository(GenericRepository[User]):
             select(self.model).where(self.model.isActive == True)
         )
         return result.scalars().all()
+
+    def get_by_reset_token_hash(self, db, token_hash: str):
+        """Buscar usuario por hash de token de reseteo (no expirado)."""
+        from sqlalchemy import select
+
+        result = db.execute(
+            select(self.model).where(
+                self.model.reset_token_hash == token_hash,
+                self.model.reset_token_expires_at > datetime.now(UTC)
+            )
+        )
+        return result.scalars().first()

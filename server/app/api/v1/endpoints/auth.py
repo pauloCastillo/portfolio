@@ -1,16 +1,18 @@
 from datetime import timedelta
 from typing import Optional
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 
-from db.schemas.user_dto import UserLogin, Token
+from db.schemas.user_dto import UserLogin, Token, ForgotPasswordRequest, ResetPasswordRequest
 from core.database import get_db
 from core.security.password import verify_password
 from core.security.jwt import create_access_token, verify_token
-from core.dependencies import get_user_service
+from core.dependencies import get_user_service, get_email_service
+from core.config import get_settings
 from services.user_service import UserService
+from services.email_service import EmailService
 
 # Esquema de respuesta para validación
 class TokenValidationResponse(BaseModel):
@@ -52,6 +54,57 @@ def login_for_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
     return {"access_token": access_token, "token_type": "bearer"}
+
+
+@router.post("/forgot-password")
+async def forgot_password(
+    request: ForgotPasswordRequest,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db),
+    user_service: UserService = Depends(get_user_service),
+    email_service: EmailService = Depends(get_email_service),
+):
+    """
+    Solicitar reseteo de contraseña.
+
+    Envía un email con un enlace de reseteo si el email está registrado.
+    Siempre retorna la misma respuesta para prevenir enumeración de usuarios.
+    """
+    result = user_service.initiate_password_reset(db, request.email)
+
+    if result:
+        settings = get_settings()
+        reset_url = f"{settings.frontend_url}/auth/reset?token={result.token}"
+        background_tasks.add_task(
+            email_service.send_password_reset_email,
+            email=result.email,
+            name=result.username,
+            reset_url=reset_url,
+        )
+
+    return {
+        "message": "If an account exists with this email, a reset link has been sent."
+    }
+
+
+@router.post("/reset-password")
+def reset_password(
+    request: ResetPasswordRequest,
+    db: Session = Depends(get_db),
+    user_service: UserService = Depends(get_user_service),
+):
+    """
+    Resetear contraseña usando un token válido.
+    """
+    success = user_service.reset_password(db, request.token, request.new_password)
+
+    if not success:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid or expired reset token",
+        )
+
+    return {"message": "Password reset successful"}
 
 
 @router.post("/validate", response_model=TokenValidationResponse)

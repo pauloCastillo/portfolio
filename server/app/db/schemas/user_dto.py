@@ -50,3 +50,14 @@ class UserUpdate(BaseModel):
     phone: str | None = Field(None, min_length=10, max_length=20)
     avatar_url: str | None = None
     isActive: bool | None = None
+
+
+class ForgotPasswordRequest(BaseModel):
+    """Schema para solicitar reseteo de contraseña."""
+    email: EmailStr
+
+
+class ResetPasswordRequest(BaseModel):
+    """Schema para ejecutar el reseteo de contraseña."""
+    token: str = Field(..., min_length=1)
+    new_password: str = Field(..., min_length=8, max_length=20)

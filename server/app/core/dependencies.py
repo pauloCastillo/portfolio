@@ -15,8 +15,10 @@ from services.post_service import PostService
 from services.skill_service import SkillService
 from services.tech_service import TechService
 from services.experience_service import ExperienceService
+from services.email_service import EmailService
 from core.database import get_db
 from core.security.jwt import verify_token
+from core.config import get_settings
 from db.models.users import User
 
 # OAuth2 scheme for token extraction
@@ -53,6 +55,12 @@ def get_tech_service() -> TechService:
 def get_experience_service() -> ExperienceService:
     """Factory con cache para ExperienceService."""
     return ExperienceService()
+
+
+def get_email_service() -> EmailService:
+    """Factory para EmailService."""
+    settings = get_settings()
+    return EmailService(settings)
 
 
 def get_current_user(
