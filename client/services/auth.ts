@@ -29,5 +29,18 @@ export default function authService() {
         }
     };
 
-    return { handleLogin, logout };
+    const recoverPassword = async (email: string): Promise<AuthResponse> => {
+        try {
+            const response = await axios.post('/api/auth/recover', { email });
+            return { success: true, status: response.status, error: null };
+        } catch (error: any) {
+            return {
+                success: false,
+                status: error.response?.status || 500,
+                error: error.response?.data?.error || 'Error al enviar correo de recuperación'
+            };
+        }
+    };
+
+    return { handleLogin, logout, recoverPassword };
 }

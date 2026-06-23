@@ -1,6 +1,6 @@
 
-import Loader from "@/components/UI/Loader";
-import Skeleton from "@/components/UI/Skeleton";
+import Loader from "@/shared/ui/Loader";
+import Skeleton from "@/shared/ui/Skeleton";
 import type { LoadingProps } from "@/types/loading";
 
 export default function Loading({

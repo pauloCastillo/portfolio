@@ -3,24 +3,20 @@ export const siteConfig = {
   description: "Desarrollador especializado en aplicaciones web y móviles escalables.",
   mainNav: [
     {
-      title: "Home",
-      href: "/",
+      title: "Stack",
+      href: "#stack",
     },
     {
       title: "Proyectos",
-      href: "#projects",
+      href: "#proyectos",
     },
     {
-      title: "Servicios",
-      href: "#services",
-    },
-    {
-      title: "Sobre Mí",
-      href: "#about",
+      title: "Sobre mí",
+      href: "#sobre-mi",
     },
     {
       title: "Contacto",
-      href: "#contact",
+      href: "#contacto",
     },
   ],
   socialLinks: [

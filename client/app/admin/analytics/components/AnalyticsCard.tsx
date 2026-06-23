@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons"
-import { ChildrenType } from "~/types/general";
+import { ChildrenType } from "@/types/general";
 
 type AnalyticsCardProps = ChildrenType & {
     title: string;

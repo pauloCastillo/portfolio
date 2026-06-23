@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
-import { Signal } from "~/types/admin";
+import { Signal } from "@/types/admin";
 
 interface ListPanelProps {
     signals: Signal[];

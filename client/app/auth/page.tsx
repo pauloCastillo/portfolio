@@ -88,6 +88,9 @@ export default function AdminPage(){
           fieldControlMethod={handlePasswordChange}   
           fieldValue={user.password}      
         />
+        <Link href="/auth/recover" className="block text-cyan text-sm mt-2 text-center no-underline hover:underline">
+          ¿olvidaste tu contraseña?
+        </Link>
         {loading && <Loading />}
         <button 
           className="w-full mt-4 hover:cursor-pointer bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200"

@@ -7,7 +7,7 @@ const words = ["cobran vida", "se despliegan", "escalan", "innovan"];
 
 export default function HeroePage() {
   return (
-    <section className="max-w-full mx-auto px-10 pt-28 pb-28">
+    <section suppressHydrationWarning className="max-w-full mx-auto px-10 pt-28 pb-28">
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -95,7 +95,7 @@ export default function HeroePage() {
         </div>
         <div>
           <span className="text-[#3a4060] mr-6 select-none">7</span>
-          {'}'}<span className="inline-block w- h-4 bg-cyan ml-1 align-middle animate-[blink_1.1s_step-end_infinite]" />
+          {'}'}<span className="inline-block w-0.5 h-5 bg-gradient-to-cyan from-cyan to-indigo ml-1 align-middle" style={{ animation: 'blink 1.1s step-end infinite, gradient-shift 3s ease-in-out infinite', backgroundSize: '200% 200%' }} />
         </div>
       </motion.div>
     </section>

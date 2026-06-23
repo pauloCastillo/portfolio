@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter, Fira_Code } from "next/font/google";
 import "./globals.css";
 
-import NavbarLayout from "@/components/UI/Navbar";
-import AppFooter from "@/components/UI/AppFooter";
+import NavbarLayout from "@/shared/ui/Navbar";
+import AppFooter from "@/components/AppFooter";
 
 import { config } from "@fortawesome/fontawesome-svg-core"
 import "@fortawesome/fontawesome-svg-core/styles.css"
@@ -11,14 +11,16 @@ import { StoreProvider } from "~/store/provider";
 
 config.autoAddCss = false;
 
-const displaytype = Space_Grotesk({
-  variable: "--font-display",
+const mono = Fira_Code({
+  variable: "--font-mono",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const bodytype = Inter({
   variable: "--font-body",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 
@@ -47,7 +49,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body
-        className={`${displaytype.variable} ${bodytype.variable} antialiased text-base font-body bg-void text-primary`}
+        className={`${mono.variable} ${bodytype.variable} antialiased text-base font-body bg-void text-text`}
       >
         <StoreProvider>
           <NavbarLayout />

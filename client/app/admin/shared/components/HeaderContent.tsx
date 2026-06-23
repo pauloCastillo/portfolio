@@ -1,4 +1,4 @@
-import type { ChildrenType } from "~/types/general"
+import type { ChildrenType } from "@/types/general"
 
 export default function HeaderContent({ children }: Readonly<ChildrenType>) {
     return (
