@@ -30,7 +30,7 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Kastify",
+  title: "Kastidev - Portfolio",
   keywords: [
     "desarrollo de aplicaciones web y móviles",
     "development of web and mobile apps",

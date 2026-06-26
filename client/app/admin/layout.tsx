@@ -8,7 +8,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css"
 config.autoAddCss = false;
 
 export const metadata: Metadata = {
-  title: "Kastify - Admin",
+  title: "Kastidev - Admin",
   keywords: ["administracion"],
   description: "Administrativa",
 };

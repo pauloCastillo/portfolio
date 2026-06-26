@@ -65,9 +65,9 @@ export default function SidebarContainer() {
       <div className="h-20 flex items-center px-6 border-b border-border-glass bg-void/50 backdrop-blur-md">
         <div className="flex items-center gap-3 group cursor-pointer">
           <div className="w-2 h-2 rounded-full bg-primary shadow-glow group-hover:scale-125 transition-transform duration-300"></div>
-          <h1 className="font-mono text-xl font-bold tracking-tighter text-primary group-hover:text-white transition-colors duration-300">
-            DEV <span className="text-white/40 text-sm mx-1">/</span> OS
-          </h1>
+            <h1 className="font-mono text-lg font-bold text-text no-underline shrink-0 bg-transparent border-none cursor-pointer">
+              Kasti<span className="text-cyan">dev</span>
+            </h1>
         </div>
       </div>
 

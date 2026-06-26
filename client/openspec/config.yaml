@@ -1,20 +1,70 @@
 schema: spec-driven
 
-# Project context (optional)
-# This is shown to AI when creating artifacts.
-# Add your tech stack, conventions, style guides, domain knowledge, etc.
-# Example:
-#   context: |
-#     Tech stack: TypeScript, React, Node.js
-#     We use conventional commits
-#     Domain: e-commerce platform
+context: |
+  Domain: Portfolio website with admin panel (Kastidev)
 
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always include a "Non-goals" section
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+  Tech Stack:
+    - React 19.2.7
+    - Next.js ^16.2.9 (App Router)
+    - TypeScript ^6.0 (strict mode, bundler moduleResolution)
+    - Yarn (package manager)
+    - Redux Toolkit + React Redux (state management)
+    - Axios (HTTP client)
+    - TailwindCSS v4 (styling, with @tailwindcss/postcss)
+    - Framer Motion (animations)
+    - Zod v4 (validation)
+    - Font Awesome (icons: free-solid, free-regular, free-brands)
+    - iron-session (server-side session auth)
+    - clsx + tailwind-merge (classname utilities)
+    - Vitest + @testing-library/react (testing)
+    - ESLint + eslint-config-next (linting)
+
+  Structure:
+    - app/ — App Router pages, layouts, API routes (app/api/)
+    - app/admin/ — Admin panel (dashboard, analytics, blog, projects, config, signal-feed)
+    - app/auth/ — Authentication (login, recover)
+    - app/components/ — Public section components (sections/, AppFooter)
+    - app/shared/ui/ — Reusable UI: Button, Navbar, Heroe, StackSection, Cards, Loader, etc.
+    - app/shared/Form/ — Form components (Field)
+    - app/shared/modals/ — Modal components (ErrorModal)
+    - app/shared/breadcrumb/ — Breadcrumb navigation
+    - app/hooks/ — Custom hooks (useAuth, useProjects)
+    - app/types/ — TypeScript type definitions (admin, forms, general, loading, user)
+    - app/config/ — Site configuration (siteConfig)
+    - store/ — Redux store, slices (authSlice, errorSlice, toastSlice), middleware, provider
+    - services/ — API service layer (auth, project)
+    - utils/ — Helper functions, validations
+    - _tests/ — Test files
+    - proxy.ts — API proxy configuration (root)
+
+  Import Aliases:
+    - @/ -> ./app/*
+    - ~/ -> ./*
+
+  Conventions:
+    - Components: PascalCase, export default function ComponentName()
+    - Hooks: camelCase with use prefix, export default function useXxx()
+    - Types/Interfaces: PascalCase, named export (export type Xxx = ...)
+    - Props: typed inline as type XxxProps = { ... }
+    - Client Components: marked with "use client" directive
+    - Server Components: default, no directive
+    - Services: factory function pattern, default export
+    - Redux slices: camelCase + "Slice" suffix (authSlice.ts)
+    - No class components — functional components only
+    - Conventional commits (implied by project conventions)
+
+rules:
+  proposal:
+    - Include affected sections (app/, store/, services/, etc.)
+    - Note if the change affects both public and admin areas
+  specs:
+    - Use Given/When/Then format for scenarios
+    - Reference existing specs in openspec/specs/ before inventing new patterns
+  test:
+    - Write tests FIRST (TDD) — define expected behavior before implementation
+    - Test files go in _tests/ mirroring the source path
+    - Use Vitest + @testing-library/react for component tests
+    - Cover: happy path, error states, edge cases, loading states
+  tasks:
+    - Break into chunks of max 1 hour
+    - Include test file paths when applicable

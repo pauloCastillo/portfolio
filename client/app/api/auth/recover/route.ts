@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const response = await api.post(`auth/recover`, { email }, {
+    const response = await api.post(`auth/forgot-password`, { email }, {
       headers: { 'Content-Type': 'application/json' },
     })
 

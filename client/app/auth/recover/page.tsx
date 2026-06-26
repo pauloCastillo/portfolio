@@ -16,6 +16,7 @@ export default function RecoverPage() {
 
     try {
       const response = await axios.post("/api/auth/recover", { email });
+      console.log(response);
       if (response.status === 200) {
         setSent(true);
       }

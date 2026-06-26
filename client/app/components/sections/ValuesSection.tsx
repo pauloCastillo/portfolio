@@ -3,7 +3,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCode, faUsers, faRocket } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { ScrollReveal, StaggerContainer, StaggerItem } from "@/shared/ui/ScrollReveal";
+import { StaggerContainer, StaggerItem } from "@/shared/ui/ScrollReveal";
 
 library.add(faCode, faUsers, faRocket);
 
@@ -27,7 +27,7 @@ const values = [
 
 export default function ValuesSection() {
   return (
-    <section id="valores" className="max-w-[1100px] mx-auto px-10 max-md:px-5 py-20 max-md:py-14">
+    <section id="valores" className="max-w-full mx-auto px-10 max-md:px-5 py-20 max-md:py-14">
       <StaggerContainer>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {values.map((value) => (
