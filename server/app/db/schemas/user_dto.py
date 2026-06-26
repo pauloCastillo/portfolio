@@ -12,13 +12,18 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     """Schema para crear usuario."""
-    password: str = Field(..., min_length=8, max_length=20, example="SecurePass123!")
+    password: str = Field(..., min_length=6, max_length=30, example="SecurePass123!")
+
+
+class UserCreateStored(UserBase):
+    """Schema para almacenar usuario con password hasheado."""
+    password: str = Field(..., min_length=60, max_length=128, example="$2b$12$...")
 
 
 class UserLogin(BaseModel):
     """Schema para inicio de sesión de usuario."""
     email: EmailStr = Field(..., example="johndoe@gmail.com")
-    password: str = Field(..., min_length=8, max_length=20, example="SecurePass123!")
+    password: str = Field(..., min_length=6, max_length=30, example="SecurePass123!")
 
 
 class UserResponse(UserBase):
@@ -60,4 +65,4 @@ class ForgotPasswordRequest(BaseModel):
 class ResetPasswordRequest(BaseModel):
     """Schema para ejecutar el reseteo de contraseña."""
     token: str = Field(..., min_length=1)
-    new_password: str = Field(..., min_length=8, max_length=20)
+    new_password: str = Field(..., min_length=6, max_length=30)

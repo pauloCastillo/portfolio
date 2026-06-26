@@ -33,18 +33,12 @@ class UserService(BaseService[UserRepository]):
         return self.repository.get_by_email(db, email)
 
     def create(self, db, data):
-        """
-        Crear nuevo usuario con hashing de contraseña.
-        """
-        # Hash the password before creating the user
         if hasattr(data, 'password') and data.password:
             hashed_password = get_password_hash(data.password)
-            # Create a copy of the data with the hashed password
-            data_dict = data.model_dump()
+            data_dict = data.model_dump(exclude={'password'})
             data_dict['password'] = hashed_password
-            # We need to reconstruct the data object since UserCreate doesn't have a constructor from dict
-            from db.schemas.user_dto import UserCreate
-            hashed_data = UserCreate(**data_dict)
+            from db.schemas.user_dto import UserCreateStored
+            hashed_data = UserCreateStored(**data_dict)
             return self.repository.create(db, hashed_data)
         return self.repository.create(db, data)
 
@@ -64,7 +58,7 @@ class UserService(BaseService[UserRepository]):
         if not user:
             return None
         if not verify_password(password, user.password):
-            return None
+            return None 
         return user
 
     def initiate_password_reset(self, db, email: str) -> ResetTokenResult | None:

@@ -1,28 +1,34 @@
-from pydantic_settings import BaseSettings
-import os
-from dotenv import load_dotenv
+from functools import lru_cache
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
-load_dotenv(".env.local")
 
 class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env.local",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
+
     # JWT settings
-    secret_key: str = os.getenv("SECRET_KEY")
-    algorithm: str = os.getenv("ALGORITHM")
-    access_token_expire_minutes: int = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")
+    secret_key: str
+    algorithm: str = "HS256"
+    access_token_expire_minutes: int = 30
 
     # Email settings (SMTP via Resend)
-    mail_host: str = os.getenv("MAIL_HOST")
-    mail_port: int = os.getenv("MAIL_PORT")
-    mail_username: str = os.getenv("MAIL_USERNAME")
-    mail_password: str = os.getenv("MAIL_PASSWORD")
-    mail_from: str = os.getenv("MAIL_FROM")
-    mail_from_name: str = os.getenv("MAIL_FROM_NAME", "Portfolio")
+    mail_host: str
+    mail_port: int = 587
+    mail_username: str
+    mail_password: str
+    mail_from: str
+    mail_from_name: str = "Portfolio"
 
     # Frontend URL for reset links
-    frontend_url: str = os.getenv("FRONTEND_URL", "http://localhost:3000")
+    frontend_url: str = "http://localhost:3000"
 
     # Reset token config
-    reset_token_expire_minutes: int = os.getenv("RESET_TOKEN_EXPIRE_MINUTES", 15)
+    reset_token_expire_minutes: int = 15
 
+
+@lru_cache
 def get_settings() -> Settings:
     return Settings()
