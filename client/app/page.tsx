@@ -4,6 +4,7 @@ import ProjectsSection from "@/components/sections/ProjectsSection";
 import ValuesSection from "@/components/sections/ValuesSection";
 import AboutSection from "@/components/sections/AboutSection";
 import ContactSection from "@/components/sections/ContactSection";
+import BlogSection from "@/components/sections/BlogSection";
 
 export default function HomePage() {
   return (
@@ -17,6 +18,8 @@ export default function HomePage() {
       <ValuesSection />
       <hr className="border-t border-border" />
       <AboutSection />
+      <hr className="border-t border-border" />
+      <BlogSection />
       <hr className="border-t border-border" />
       <ContactSection />
     </>

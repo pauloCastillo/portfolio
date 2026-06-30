@@ -6,27 +6,18 @@ export async function GET() {
   try {
     const authHeaders = await getAuthorizationHeaders();
     if (!authHeaders.Authorization?.split(' ')[1]) {
-      return NextResponse.json(
-        { error: 'No autorizado' },
-        { status: 401 }
-      )
+      return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
     }
 
-    const response = await api.get("projects/", {
-      headers: authHeaders
-    })
-
+    const response = await api.get("experiences/", { headers: authHeaders })
     return NextResponse.json(response.data, { status: response.status })
   } catch (error: any) {
-    console.error('Error al obtener los proyectos:', error)
-    if (error.response) {
-      console.error('Error response:', error.response.data, 'Status:', error.response.status)
-    }
+    console.error('Error al obtener experiencias:', error)
     return NextResponse.json(
-      { error: 'Error al obtener los proyectos' },
-      { status: 500 }
+      { error: 'Error al obtener experiencias' },
+      { status: error.response?.status || 500 }
     )
-   }
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -37,13 +28,12 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const response = await api.post("projects/", body, { headers: authHeaders })
-
+    const response = await api.post("experiences/", body, { headers: authHeaders })
     return NextResponse.json(response.data, { status: response.status })
   } catch (error: any) {
-    console.error('Error al crear proyecto:', error)
+    console.error('Error al crear experiencia:', error)
     return NextResponse.json(
-      { error: 'Error al crear proyecto' },
+      { error: 'Error al crear experiencia' },
       { status: error.response?.status || 500 }
     )
   }

@@ -7,7 +7,7 @@ import {
   faSignOut,
   faDashboard,
   faLayerGroup,
-  faComment,
+
   faEdit,
   faChartBar,
   faGear,
@@ -29,12 +29,6 @@ export default function SidebarContainer() {
         title: "Projects",
         href: "/admin/projects",
         icon: faLayerGroup,
-        iconClass: "text-primary",
-      },
-      {
-        title: "Signal Feed",
-        href: "/admin/signal-feed",
-        icon: faComment,
         iconClass: "text-primary",
       },
       {

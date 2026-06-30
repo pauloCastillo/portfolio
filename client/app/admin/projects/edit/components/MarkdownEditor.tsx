@@ -2,26 +2,32 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBold, faItalic, faLink, faCode, faImage, faSave, faRocket } from "@fortawesome/free-solid-svg-icons"
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 
 type MarkdownEditorProps = {
   value?: string
+  onChange?: (markdown: string) => void
   onSave: (markdown: string) => void
   onExecuteDeploy: (markdown: string) => void
 }
 
 export default function MarkdownEditor({
   value = "",
+  onChange,
   onSave,
   onExecuteDeploy}: Readonly<MarkdownEditorProps>) {
   const [markdown, setMarkdown] = useState(value)
   const [lineCount, setLineCount] = useState(1)
   const textareaRef = useRef<HTMLTextAreaElement | null>(null)
 
+  useEffect(() => {
+    setMarkdown(value)
+  }, [value])
+
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = e.target.value
     setMarkdown(newValue)
-    // Calculate line count: split by newline and count the lines
+    onChange?.(newValue)
     const lines = newValue.split('\n')
     setLineCount(lines.length)
   }
@@ -36,7 +42,6 @@ export default function MarkdownEditor({
     const after = textarea.value.substring(end)
 
     textarea.value = before + text + after
-    // Place cursor after the inserted text
     const cursorPos = start + text.length
     textarea.selectionStart = cursorPos
     textarea.selectionEnd = cursorPos
@@ -55,7 +60,6 @@ export default function MarkdownEditor({
       insertAtCursor(`**${selected}**`)
     } else {
       insertAtCursor('**bold text**')
-      // Place cursor between the asterisks
       textarea.selectionStart = start + 2
       textarea.selectionEnd = start + 2
     }
@@ -73,7 +77,6 @@ export default function MarkdownEditor({
       insertAtCursor(`*${selected}*`)
     } else {
       insertAtCursor('*italic text*')
-      // Place cursor between the asterisks
       textarea.selectionStart = start + 1
       textarea.selectionEnd = start + 1
     }
@@ -89,13 +92,11 @@ export default function MarkdownEditor({
 
     if (selected) {
       insertAtCursor(`[${selected}](http://)`)
-      // Place cursor in the URL
       const urlStart = start + `[${selected}](`.length
       textarea.selectionStart = urlStart
       textarea.selectionEnd = urlStart
     } else {
       insertAtCursor('[link text](http://)')
-      // Place cursor in the URL
       const urlStart = start + '[link text]('.length
       textarea.selectionStart = urlStart
       textarea.selectionEnd = urlStart
@@ -112,13 +113,11 @@ export default function MarkdownEditor({
 
     if (selected) {
       insertAtCursor(`![${selected}](http://)`)
-      // Place cursor in the URL
       const urlStart = start + `![${selected}](`.length
       textarea.selectionStart = urlStart
       textarea.selectionEnd = urlStart
     } else {
       insertAtCursor('![alt text](http://)')
-      // Place cursor in the URL
       const urlStart = start + '![alt text]('.length
       textarea.selectionStart = urlStart
       textarea.selectionEnd = urlStart
@@ -176,7 +175,6 @@ export default function MarkdownEditor({
                 insertAtCursor(`\`\`\`\n${selected}\n\`\`\``)
               } else {
                 insertAtCursor('\`\`\`\n\n\`\`\`')
-                // Place cursor on the first line inside the code block
                 textarea.selectionStart = start + 4
                 textarea.selectionEnd = start + 4
               }
@@ -191,7 +189,6 @@ export default function MarkdownEditor({
           >
             <FontAwesomeIcon icon={faImage} className="text-sm transition-colors text-primary" />
           </button>
-          {/* Save and Execute Deploy buttons */}
           <button
             className="p-1.5 rounded hover:bg-white/10 text-gray-400 hover:text-white hover:cursor-pointer transition-colors hover:shadow-neon"
             title="Save"
@@ -210,22 +207,18 @@ export default function MarkdownEditor({
           </button>
         </div>
         <span className="text-xs font-mono text-gray-600">MARKDOWN_MODE</span>
-        {/* Line counter display */}
         <span className="text-xs font-mono text-gray-600">{lineCount} lines</span>
       </div>
       <div className="flex-1 flex relative">
-        {/* Line Numbers */}
         <div
           className="w-12 bg-black/20 text-right pr-3 pt-4 text-gray-700 font-mono text-sm select-none border-r border-surface-border hidden sm:block"
         >
-          {/* Generate line numbers dynamically */}
           {Array.from({ length: lineCount }, (_, i) => (
             <div key={i}>
               {String(i + 1).padStart(2, '0')} <br />
             </div>
           ))}
         </div>
-        {/* Text Area */}
         <textarea
           ref={textareaRef}
           className="flex-1 bg-transparent border-none focus:ring-0 p-4 text-gray-300 font-mono text-sm leading-relaxed resize-none"

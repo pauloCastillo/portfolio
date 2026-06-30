@@ -3,9 +3,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCode, faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { useProjects } from "@/hooks/useProjects";
+import { useState, useEffect } from "react";
 import type { Project } from "@/types/general";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/shared/ui/ScrollReveal";
+import projectService from "~/services/project";
 
 library.add(faCode, faArrowUpRightFromSquare);
 
@@ -28,7 +29,22 @@ function ErrorState() {
 }
 
 export default function ProjectsSection() {
-  const { projects, isLoading, error } = useProjects();
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await projectService().getPublishedProjects();
+        setProjects(data);
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error("Unknown error"));
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, []);
 
   if (isLoading) return <LoadingSkeleton />;
   if (error) return <ErrorState />;
@@ -69,21 +85,23 @@ export default function ProjectsSection() {
                   </span>
                 </div>
                 <h3 className="text-[17px] font-semibold text-text">
-                  {project.title || project.name}
+                  {project.title}
                 </h3>
                 <p className="text-sm text-muted leading-[1.6]">
                   {project.description}
                 </p>
-                <div className="flex flex-wrap gap-1.5 mt-auto">
-                  {project.stack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="font-mono text-[11px] text-indigo bg-[rgba(99,102,241,0.1)] px-[10px] py-[3px] rounded"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+                {project.tech_stack && (
+                  <div className="flex flex-wrap gap-1.5 mt-auto">
+                    {project.tech_stack.split(", ").map((tech) => (
+                      <span
+                        key={tech}
+                        className="font-mono text-[11px] text-indigo bg-[rgba(99,102,241,0.1)] px-[10px] py-[3px] rounded"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             </StaggerItem>
           ))}
