@@ -1,6 +1,7 @@
 from typing import Annotated
+from pathlib import Path
 
-from fastapi import APIRouter, status, Depends
+from fastapi import APIRouter, status, Depends, UploadFile, File, HTTPException
 from sqlalchemy.orm import Session
 
 from db.schemas.project_dto import ProjectCreate, ProjectResponse, ProjectUpdate
@@ -25,15 +26,37 @@ def read_projects(db: db_depends, service: service_dep, current_user: current_us
 
 
 @router.get("/published", name="published_projects")
-def read_published_projects(db: db_depends, service: service_dep, current_user: current_user_dep):
-    """Obtener solo proyectos publicados."""
+def read_published_projects(db: db_depends, service: service_dep):
+    """Obtener solo proyectos publicados. Endpoint público."""
     return service.get_published_projects(db)
 
 
 @router.get("/{project_id}", name="specific_project")
-def read_project(project_id: int, db: db_depends, service: service_dep, current_user: current_user_dep):
-    """Obtener proyecto por ID."""
+def read_project(project_id: int, db: db_depends, service: service_dep):
+    """Obtener proyecto por ID. Endpoint público."""
     return service.get_by_id(db, project_id)
+
+
+UPLOAD_DIR = Path(__file__).resolve().parent.parent.parent.parent.parent / "public" / "media"
+
+
+@router.post("/upload/image", name="upload_image", status_code=status.HTTP_201_CREATED)
+def upload_image(current_user: current_user_dep, file: UploadFile = File(...)):
+    """Subir imagen de proyecto."""
+    if file.content_type not in ["image/png", "image/jpeg", "image/jpg", "image/webp", "image/svg+xml"]:
+        raise HTTPException(status_code=400, detail="Invalid image type")
+    if file.size and file.size > 30 * 1024 * 1024:
+        raise HTTPException(status_code=400, detail="File too large (max 30MB)")
+
+    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+    filename = f"{Path(file.filename).stem}_{int(__import__('time').time())}{Path(file.filename).suffix}"
+    filepath = UPLOAD_DIR / filename
+
+    with open(filepath, "wb") as f:
+        content = file.file.read()
+        f.write(content)
+
+    return {"filename": filename, "path": f"/public/media/{filename}"}
 
 
 @router.post("/", response_model=ProjectResponse, name="create_project", status_code=status.HTTP_201_CREATED)

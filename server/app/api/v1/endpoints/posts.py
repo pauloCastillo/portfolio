@@ -25,14 +25,14 @@ def read_posts(db: db_depends, service: service_dep, current_user: current_user_
 
 
 @router.get("/published", name="published_posts")
-def read_published_posts(db: db_depends, service: service_dep, current_user: current_user_dep):
-    """Obtener solo posts publicados."""
+def read_published_posts(db: db_depends, service: service_dep):
+    """Obtener solo posts publicados. Endpoint público."""
     return service.get_published_posts(db)
 
 
 @router.get("/{post_id}", name="specific_post")
-def read_post(post_id: int, db: db_depends, service: service_dep, current_user: current_user_dep):
-    """Obtener post por ID."""
+def read_post(post_id: int, db: db_depends, service: service_dep):
+    """Obtener post por ID. Endpoint público."""
     return service.get_by_id(db, post_id)
 
 

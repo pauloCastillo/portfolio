@@ -19,6 +19,8 @@ class Project(Base):
     image_file: Mapped[str | None] = mapped_column(String(200), nullable=True, default=None)
     project_link: Mapped[str | None] = mapped_column(String(200), nullable=True)
     github_link: Mapped[str | None] = mapped_column(String(200), nullable=True)
+    content: Mapped[str | None] = mapped_column(Text, nullable=True, default=None)
+    tech_stack: Mapped[str | None] = mapped_column(String(500), nullable=True, default=None)
     published: Mapped[bool] = mapped_column(Boolean, default=False)
     published_date: Mapped[datetime] = mapped_column(DateTime, default=datetime.now(UTC))
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.now(UTC), onupdate=datetime.now(UTC))
