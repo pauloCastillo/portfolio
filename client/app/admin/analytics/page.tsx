@@ -18,10 +18,10 @@ export default function AnalyticsCorePage() {
   const randomdata = 80 * 40 + 60;
 
   return (
-    <div className="flex min-h-screen bg-[#020815] text-slate-300 font-sans selection:bg-indigo-500/30">
+    <div className="flex min-h-screen bg-admin-void text-slate-300 font-sans selection:bg-indigo-500/30">
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col h-full overflow-hidden bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-indigo-950/20 via-[#020815] to-[#020815] relative p-4 md:p-8">
+      <main className="flex-1 flex flex-col h-full overflow-hidden bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-indigo-950/20 via-admin-void to-admin-void relative p-4 md:p-8">
 
         {/* Background Grids */}
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 pointer-events-none mix-blend-overlay"></div>
@@ -64,8 +64,8 @@ export default function AnalyticsCorePage() {
             icon={faEarthAmericas}
           >
             {/* Mocked World Map Area */}
-            <div className="h-64 rounded-xl border border-indigo-500/10 bg-[#020815]/50 flex items-center justify-center relative overflow-hidden">
-              <div className="absolute inset-0 bg-[#050D20] opacity-80" />
+            <div className="h-64 rounded-xl border border-indigo-500/10 bg-admin-void/50 flex items-center justify-center relative overflow-hidden">
+              <div className="absolute inset-0 bg-admin-surface-2 opacity-80" />
               <svg viewBox="0 0 1000 500" className="w-full h-full absolute inset-0 opacity-20">
                 {/* Simplified map dots overlay... */}
                 <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
@@ -117,7 +117,7 @@ export default function AnalyticsCorePage() {
             description="RETENTION & ACQUISITION STREAM"
             icon={faChartLine}
           >
-            <div className="h-48 rounded-xl border border-emerald-500/10 bg-[#020815]/50 flex items-end p-4 gap-2">
+            <div className="h-48 rounded-xl border border-emerald-500/10 bg-admin-void/50 flex items-end p-4 gap-2">
               {/* Mock Bar Chart */}
               {[40, 60, 45, 80, 55, 90, 75, 100, 65, 85, 70, 95].map((h, i) => (
                 <div key={i} className="flex-1 flex flex-col justify-end group/bar relative">

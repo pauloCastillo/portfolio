@@ -64,9 +64,9 @@ export default function HeroePage() {
         className="mt-16 bg-surface border border-border rounded-xl p-6 max-md:p-4 max-w-full md:max-w-1/2 font-mono text-[13px] max-md:text-[11px] leading-[1.9] overflow-x-auto"
       >
         <div className="flex gap-2 mb-4 pb-4 border-b border-border">
-          <span className="w-3 h-3 rounded-full bg-[#ef4444]" />
-          <span className="w-3 h-3 rounded-full bg-[#f59e0b]" />
-          <span className="w-3 h-3 rounded-full bg-[#22c55e]" />
+          <span className="w-3 h-3 rounded-full bg-error" />
+          <span className="w-3 h-3 rounded-full bg-warning" />
+          <span className="w-3 h-3 rounded-full bg-success" />
           <span className="text-[12px] max-md:text-[10px] text-[#3a4060] ml-2">kastidev.ts</span>
         </div>
         <div>

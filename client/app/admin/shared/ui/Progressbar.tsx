@@ -5,7 +5,7 @@ export default function Progressbar({ label, val, color }: { label: string, val:
                 <span className="text-slate-300">{label}</span>
                 <span className="font-mono text-slate-400">{val}%</span>
             </div>
-            <div className="w-full h-2 rounded-full bg-[#020815] border border-slate-800/80 overflow-hidden flex">
+            <div className="w-full h-2 rounded-full bg-admin-void border border-slate-800/80 overflow-hidden flex">
                 <div className={`h-full ${color} rounded-full`} style={{ width: `${val}%` }} />
             </div>
         </div>

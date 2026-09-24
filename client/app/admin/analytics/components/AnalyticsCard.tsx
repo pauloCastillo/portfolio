@@ -15,7 +15,7 @@ export default function AnalyticsCard({
     children
 }: AnalyticsCardProps) {
     return (
-        <div className="xl:col-span-2 bg-[#0A1128]/60 backdrop-blur-xl border border-indigo-500/10 rounded-2xl p-6 relative overflow-hidden group">
+        <div className="xl:col-span-2 bg-admin-surface/60 backdrop-blur-xl border border-indigo-500/10 rounded-2xl p-6 relative overflow-hidden group">
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                 <FontAwesomeIcon icon={icon} className="text-8xl text-indigo-400" />
             </div>

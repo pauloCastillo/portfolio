@@ -12,6 +12,12 @@
   --success: #22c55e;
   --warning: #f59e0b;
   --error: #ef4444;
+  /* admin palette — evita bg-[#020815] hardcodeado */
+  --admin-void: #020815;
+  --admin-surface: #0a1128;
+  --admin-surface-2: #050d20;
+  /* alias para compatibilidad con font-display usado en admin/blog */
+  --font-display: "Inter", sans-serif;
 }
 
 @theme inline {
@@ -26,7 +32,11 @@
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-error: var(--error);
+  --color-admin-void: var(--admin-void);
+  --color-admin-surface: var(--admin-surface);
+  --color-admin-surface-2: var(--admin-surface-2);
   --font-body: "Inter", sans-serif;
+  --font-display: var(--font-display);
   --font-mono: "Fira Code", monospace;
 }
 
