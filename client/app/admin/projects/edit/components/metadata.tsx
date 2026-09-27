@@ -7,12 +7,16 @@ type MetadataProps = {
   title: string;
   description: string;
   techStack: string[];
+  projectLink: string;
+  githubLink: string;
   onTitleChange: (v: string) => void;
   onDescriptionChange: (v: string) => void;
   onTechStackChange: (v: string[]) => void;
+  onProjectLinkChange: (v: string) => void;
+  onGithubLinkChange: (v: string) => void;
 };
 
-export default function Metadata({ title, description, techStack, onTitleChange, onDescriptionChange, onTechStackChange }: MetadataProps) {
+export default function Metadata({ title, description, techStack, projectLink, githubLink, onTitleChange, onDescriptionChange, onTechStackChange, onProjectLinkChange, onGithubLinkChange }: MetadataProps) {
   const [inputValue, setInputValue] = useState("");
 
   const addTech = () => {
@@ -65,6 +69,25 @@ export default function Metadata({ title, description, techStack, onTitleChange,
               onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addTech(); } }}
             />
           </div>
+        </div>
+      </div>
+      <div className="space-y-3">
+        <label className="block text-xs font-mono text-gray-500 uppercase tracking-wider">Project Links</label>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <input
+            className="glass-panel rounded-lg px-4 py-2.5 text-sm font-mono text-white placeholder-gray-600 border border-transparent focus:border-primary focus:outline-none transition-colors"
+            placeholder="https://mi-proyecto.com"
+            type="url"
+            value={projectLink}
+            onChange={(e) => onProjectLinkChange(e.target.value)}
+          />
+          <input
+            className="glass-panel rounded-lg px-4 py-2.5 text-sm font-mono text-white placeholder-gray-600 border border-transparent focus:border-primary focus:outline-none transition-colors"
+            placeholder="https://github.com/usuario/repo"
+            type="url"
+            value={githubLink}
+            onChange={(e) => onGithubLinkChange(e.target.value)}
+          />
         </div>
       </div>
     </section>

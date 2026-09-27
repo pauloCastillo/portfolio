@@ -2,6 +2,8 @@
 Endpoint Tests - Tests de integración para los endpoints de la API.
 """
 
+from uuid import uuid4
+
 import pytest
 from fastapi import status
 
@@ -43,6 +45,36 @@ class TestProjectEndpoints:
         assert response.status_code == status.HTTP_201_CREATED
         data = response.json()
         assert data["title"] == "New Project"
+
+    def test_create_project_without_user_id_uses_session_owner(self, auth_client, test_user):
+        """Test que POST /projects sin user_id asigna el dueño de la sesión."""
+        payload = {
+            "title": "Ownerless Project",
+            "description": "Sin user_id",
+            "published": False,
+        }
+        response = auth_client.post("/api/v1/projects/", json=payload)
+        assert response.status_code == status.HTTP_201_CREATED
+        data = response.json()
+        assert data["user_id"] == str(test_user.id)
+
+    def test_create_project_ignores_client_user_id(self, auth_client, test_user):
+        """Test que POST /projects ignora el user_id enviado por el cliente."""
+        payload = {
+            "user_id": str(uuid4()),
+            "title": "Spoofed Project",
+            "description": "user_id ajeno",
+        }
+        response = auth_client.post("/api/v1/projects/", json=payload)
+        assert response.status_code == status.HTTP_201_CREATED
+        data = response.json()
+        assert data["user_id"] == str(test_user.id)
+
+    def test_create_project_unauthenticated(self, client):
+        """Test que POST /projects sin credenciales responde 401."""
+        payload = {"title": "No Auth", "description": "Sin token"}
+        response = client.post("/api/v1/projects/", json=payload)
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     def test_update_project(self, auth_client, test_project):
         """Test que PUT /projects/{id} actualiza proyecto."""
@@ -191,6 +223,36 @@ class TestPostEndpoints:
         assert response.status_code == status.HTTP_201_CREATED
         data = response.json()
         assert data["title"] == "New Post"
+
+    def test_create_post_without_author_id_uses_session_author(self, auth_client, test_user):
+        """Test que POST /posts sin author_id asigna el autor de la sesión."""
+        payload = {
+            "title": "Authorless Post",
+            "content": "Sin author_id",
+            "published": False,
+        }
+        response = auth_client.post("/api/v1/posts/", json=payload)
+        assert response.status_code == status.HTTP_201_CREATED
+        data = response.json()
+        assert data["author_id"] == str(test_user.id)
+
+    def test_create_post_ignores_client_author_id(self, auth_client, test_user):
+        """Test que POST /posts ignora el author_id enviado por el cliente."""
+        payload = {
+            "author_id": str(uuid4()),
+            "title": "Spoofed Post",
+            "content": "author_id ajeno",
+        }
+        response = auth_client.post("/api/v1/posts/", json=payload)
+        assert response.status_code == status.HTTP_201_CREATED
+        data = response.json()
+        assert data["author_id"] == str(test_user.id)
+
+    def test_create_post_unauthenticated(self, client):
+        """Test que POST /posts sin credenciales responde 401."""
+        payload = {"title": "No Auth", "content": "Sin token"}
+        response = client.post("/api/v1/posts/", json=payload)
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
 
 class TestSkillEndpoints:

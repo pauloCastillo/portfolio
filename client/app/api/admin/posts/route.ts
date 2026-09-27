@@ -33,7 +33,10 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     console.error('Error al crear post:', error)
     return NextResponse.json(
-      { error: 'Error al crear post' },
+      {
+        error: 'Error al crear post',
+        detail: error.response?.data?.detail ?? null,
+      },
       { status: error.response?.status || 500 }
     )
   }

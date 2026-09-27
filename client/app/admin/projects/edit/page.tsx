@@ -109,6 +109,35 @@ export default function EditProject() {
   const handleDragLeave = () => setIsDragging(false);
   const openFileDialog = () => fileInputRef.current?.click();
 
+  const validateRequired = (): string | null => {
+    if (!title.trim()) return "El título es obligatorio.";
+    if (!description.trim()) return "La descripción es obligatoria.";
+    return null;
+  };
+
+  const formatValidationDetail = (detail: any): string | null => {
+    if (!detail) return null;
+    if (typeof detail === "string") return detail;
+    if (Array.isArray(detail)) {
+      const parts = detail.map((d: any) => {
+        const loc = Array.isArray(d?.loc) ? d.loc[d.loc.length - 1] : d?.loc;
+        return `${loc ?? "campo"}: ${d?.msg ?? "inválido"}`;
+      });
+      return parts.join("; ");
+    }
+    return null;
+  };
+
+  const resolveActionError = (e: any, fallback: string): string => {
+    if (!e?.response)
+      return "Error de red o tiempo de espera. Revisa tu conexión e inténtalo de nuevo.";
+    if (e.response.status === 401)
+      return "Sesión expirada. Vuelve a iniciar sesión.";
+    if (e.response.status === 422)
+      return `Error de validación: ${formatValidationDetail(e.response.data?.detail) ?? "revisa los campos"}.`;
+    return fallback;
+  };
+
   const buildPayload = async () => {
     let imageFileStr = imagePreview;
     if (imageFile) {
@@ -133,6 +162,11 @@ export default function EditProject() {
   };
 
   const handleSave = async () => {
+    const missing = validateRequired();
+    if (missing) {
+      dispatch(setError(missing));
+      return;
+    }
     setIsSaving(true);
     try {
       const payload = await buildPayload();
@@ -146,13 +180,19 @@ export default function EditProject() {
       dispatch(setError(""));
       router.push("/admin/projects");
     } catch (e: any) {
-      dispatch(setError("Error al guardar proyecto"));
+      dispatch(setError(resolveActionError(e, "Error al guardar proyecto")));
+      if (e?.response?.status === 401) router.push("/auth");
     } finally {
       setIsSaving(false);
     }
   };
 
   const handleExecuteDeploy = async () => {
+    const missing = validateRequired();
+    if (missing) {
+      dispatch(setError(missing));
+      return;
+    }
     setIsDeploying(true);
     try {
       const payload = await buildPayload();
@@ -168,7 +208,8 @@ export default function EditProject() {
       dispatch(setError(""));
       router.push("/admin/projects");
     } catch (e: any) {
-      dispatch(setError("Error al desplegar proyecto"));
+      dispatch(setError(resolveActionError(e, "Error al desplegar proyecto")));
+      if (e?.response?.status === 401) router.push("/auth");
     } finally {
       setIsDeploying(false);
     }
@@ -187,9 +228,13 @@ export default function EditProject() {
               title={title}
               description={description}
               techStack={techStack}
+              projectLink={projectLink}
+              githubLink={githubLink}
               onTitleChange={setTitle}
               onDescriptionChange={setDescription}
               onTechStackChange={setTechStack}
+              onProjectLinkChange={setProjectLink}
+              onGithubLinkChange={setGithubLink}
             />
             <hr className="border-surface-border" />
             <section className="space-y-6">

@@ -15,6 +15,8 @@ export async function POST(request: Request) {
         ...authHeaders,
         'Content-Type': 'multipart/form-data',
       },
+      // Los uploads (hasta 30MB) necesitan mucho más que el timeout base.
+      timeout: 60000,
     })
 
     return NextResponse.json(response.data, { status: response.status })

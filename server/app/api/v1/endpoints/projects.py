@@ -61,7 +61,14 @@ def upload_image(current_user: current_user_dep, file: UploadFile = File(...)):
 
 @router.post("/", response_model=ProjectResponse, name="create_project", status_code=status.HTTP_201_CREATED)
 def create_project(project: ProjectCreate, db: db_depends, service: service_dep, current_user: current_user_dep):
-    """Crear nuevo proyecto."""
+    """Crear nuevo proyecto.
+
+    El propietario se deriva siempre de la sesión y cualquier `user_id`
+    enviado por el cliente se ignora. Se asigna como `str` (sin revalidación
+    de pydantic en asignación) para que el repositorio persista el mismo tipo
+    que la columna `String` espera.
+    """
+    project.user_id = str(current_user.id)
     return service.create(db, project)
 
 

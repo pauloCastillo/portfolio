@@ -11,9 +11,24 @@ class PostBase(BaseModel):
 
 
 class PostCreate(PostBase):
-    """Schema para crear post."""
-    author_id: UUID4 = Field(..., example="123e4567-e89b-12d3-a456-426614174000")
+    """Schema para crear post.
+
+    `author_id` es opcional en el contrato cliente-servidor: el endpoint lo
+    resuelve siempre desde la sesión (`current_user`) e ignora el valor
+    que envíe el cliente. Se normaliza a `str` porque la columna
+    (`String` FK) y el repositorio (`Model(**data.model_dump())`) esperan
+    texto plano, no objetos `UUID`.
+    """
+    author_id: str | None = Field(default=None, example="123e4567-e89b-12d3-a456-426614174000")
     published: bool = Field(default=True, example=True)
+
+    @field_validator("author_id", mode="before")
+    @classmethod
+    def coerce_author_id(cls, value: UUID4 | str | None) -> str | None:
+        """Acepta `UUID` o `str` y normaliza siempre a `str`."""
+        if value is None:
+            return None
+        return str(value)
 
 
 class PostResponse(PostBase):

@@ -17,9 +17,24 @@ class ProjectBase(BaseModel):
 
 
 class ProjectCreate(ProjectBase):
-    """Schema para crear proyecto."""
-    user_id: UUID = Field(..., example="123e4567-e89b-12d3-a456-426614174000")
+    """Schema para crear proyecto.
+
+    `user_id` es opcional en el contrato cliente-servidor: el endpoint lo
+    resuelve siempre desde la sesión (`current_user`) e ignora el valor
+    que envíe el cliente. Se normaliza a `str` porque las columnas
+    (`String` FK) y el repositorio (`Model(**data.model_dump())`) esperan
+    texto plano, no objetos `UUID`.
+    """
+    user_id: str | None = Field(default=None, example="123e4567-e89b-12d3-a456-426614174000")
     published: bool = Field(default=True, example=True)
+
+    @field_validator("user_id", mode="before")
+    @classmethod
+    def coerce_user_id(cls, value: UUID | str | None) -> str | None:
+        """Acepta `UUID` o `str` y normaliza siempre a `str`."""
+        if value is None:
+            return None
+        return str(value)
 
 
 class ProjectResponse(ProjectBase):

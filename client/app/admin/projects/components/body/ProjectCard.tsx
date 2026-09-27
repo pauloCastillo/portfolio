@@ -41,7 +41,7 @@ export default function Card({ projects }: Readonly<ProjectCard>) {
                             />
                         ) : (
                             <Image
-                                src={"/images/proyecto1.svg"}
+                                src={"/images/project1.svg"}
                                 alt={project.title}
                                 className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
                                 width={400}

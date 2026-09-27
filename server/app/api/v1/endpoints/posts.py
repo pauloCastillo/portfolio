@@ -38,7 +38,13 @@ def read_post(post_id: int, db: db_depends, service: service_dep):
 
 @router.post("/", response_model=PostResponse, name="create_post", status_code=status.HTTP_201_CREATED)
 def create_post(post: PostCreate, db: db_depends, service: service_dep, current_user: current_user_dep):
-    """Crear nuevo post."""
+    """Crear nuevo post.
+
+    El autor se deriva siempre de la sesión y cualquier `author_id`
+    enviado por el cliente se ignora. Se asigna como `str` para que el
+    repositorio persista el mismo tipo que la columna `String` espera.
+    """
+    post.author_id = str(current_user.id)
     return service.create(db, post)
 
 

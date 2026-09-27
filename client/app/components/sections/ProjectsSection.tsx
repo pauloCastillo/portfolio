@@ -3,6 +3,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCode, faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import Image from "next/image";
 import { useState, useEffect, useMemo } from "react";
 import type { Project } from "@/types/general";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/shared/ui/ScrollReveal";
@@ -10,6 +11,33 @@ import projectService from "~/services/project";
 import { useLocale } from "~/lib/LocaleProvider";
 
 library.add(faCode, faArrowUpRightFromSquare);
+
+function toAbsoluteUrl(url: string): string {
+  const trimmed = url.trim();
+  return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+}
+
+function ProjectCardLink({
+  href,
+  className,
+  children,
+}: {
+  href: string | null;
+  className: string;
+  children: React.ReactNode;
+}) {
+  if (!href) return <div className={className}>{children}</div>;
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={className}
+    >
+      {children}
+    </a>
+  );
+}
 
 function LoadingSkeleton({ label, message }: { label: string; message: string }) {
   return (
@@ -71,13 +99,35 @@ export default function ProjectsSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {projects.map((project: Project, index: number) => (
             <StaggerItem key={project.id}>
-              <div
+              <ProjectCardLink
+                href={
+                  project.project_link?.trim()
+                    ? toAbsoluteUrl(project.project_link)
+                    : null
+                }
                 className={`flex flex-col gap-3 bg-surface border rounded-xl p-7 transition-all duration-300 ${
                   index === 0
                     ? "md:col-span-2 border-[rgba(34,211,238,0.25)]"
                     : "border-border"
+                } ${
+                  project.project_link?.trim()
+                    ? "cursor-pointer hover:-translate-y-1 hover:border-cyan/40"
+                    : ""
                 }`}
               >
+                <div
+                  className={`relative overflow-hidden rounded-lg bg-void ${
+                    index === 0 ? "h-44 md:h-64" : "h-44"
+                  }`}
+                >
+                  <Image
+                    src={project.image_file || "/images/project1.svg"}
+                    alt={project.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
+                  />
+                </div>
                 <div className="flex items-center justify-between">
                   <FontAwesomeIcon
                     icon={faCode}
@@ -104,9 +154,9 @@ export default function ProjectsSection() {
                         {tech}
                       </span>
                     ))}
-                  </div>
-                )}
-              </div>
+                    </div>
+                  )}
+              </ProjectCardLink>
             </StaggerItem>
           ))}
         </div>
