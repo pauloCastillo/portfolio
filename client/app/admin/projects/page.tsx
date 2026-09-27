@@ -2,6 +2,7 @@
 
 import ProjectsContent from "./components/body/Content";
 import Searchbar from "./components/header/Searchbar";
+import { ProjectsFilterProvider } from "./components/ProjectsFilterContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
@@ -13,6 +14,7 @@ export default function ProjectsPage() {
 
     return (
         <section>
+            <ProjectsFilterProvider>
             <HeaderContent>
                 <>
                     <h2 className="font-display font-bold text-2xl text-white tracking-tight">
@@ -30,6 +32,7 @@ export default function ProjectsPage() {
                 </>
             </HeaderContent>
             <ProjectsContent />
+            </ProjectsFilterProvider>
         </section>
     )
 }

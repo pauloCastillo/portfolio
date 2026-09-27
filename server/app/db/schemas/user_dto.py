@@ -6,7 +6,7 @@ class UserBase(BaseModel):
     """Schema base para User - campos compartidos."""
     username: str = Field(..., min_length=1, max_length=255, example="john_doe")
     email: EmailStr = Field(..., example="johndoe@gmail.com")
-    phone: str = Field(..., min_length=10, max_length=20, example="+1234567890")
+    phone: str | None = Field(None, min_length=10, max_length=20, example="+1234567890")
     avatar_url: str | None = Field(None, example="avatar.jpg")
 
 

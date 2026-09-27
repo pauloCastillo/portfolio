@@ -1,22 +1,26 @@
 "use client";
 
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 import type { RootState, AppDispatch } from "~/store/store";
 import { setError } from "~/store/features/errorSlice";
-import { useState, useCallback} from "react";
+import { logoutUser } from "~/store/features/authSlice";
+import { useState, useCallback, useMemo } from "react";
 import type { AuthLogin } from "@/types/user";
 import authService from "~/services/auth";
 
 export default function useAuth(){
     const dispatch : AppDispatch = useDispatch();
+    const router = useRouter();
     const errorMessage = useSelector((state: RootState) => state.error.message);
 
     const [ loading, setLoading ] = useState(false);
 
+    const auth = useMemo(() => authService(), []);
+
     const login = useCallback(async(logindata:AuthLogin) => {
- 
+
         setLoading(true);
-        const auth = authService();
         const response = await auth.handleLogin(logindata);
 
         try {
@@ -31,13 +35,20 @@ export default function useAuth(){
             setLoading(false);
             return !response.success;
         }
-    },[dispatch]);
+    },[dispatch, auth]);
 
-    // const logout = useCallback(async () => {
-    //     // Remove the token from Redux
-    //     dispatch(logoutUser());
-    //     // Remove the cookie
-    // }, [dispatch]);
+    const logout = useCallback(async () => {
+        setLoading(true);
+        try {
+            // Destroy the server-side session cookie
+            await auth.logout();
+        } finally {
+            // Clear client-side credentials even if the request fails
+            dispatch(logoutUser());
+            setLoading(false);
+            router.push("/auth");
+        }
+    }, [dispatch, router, auth]);
 
-    return {login, loading, errorMessage}
+    return {login, logout, loading, errorMessage}
 }

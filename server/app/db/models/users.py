@@ -14,7 +14,7 @@ class User(Base):
     username: Mapped[str] = mapped_column(String(255), nullable=False)
     email: Mapped[str] = mapped_column(String, nullable=False, unique=True)
     password: Mapped[str] = mapped_column(String(128), nullable=False)
-    phone: Mapped[str] = mapped_column(String(20), nullable=False)
+    phone: Mapped[str | None] = mapped_column(String(20), nullable=True)
     bio: Mapped[str] = mapped_column(Text, nullable=True, deferred=True)
     isActive: Mapped[bool] = mapped_column(Boolean, default=True)
     avatar_url: Mapped[str] = mapped_column(String(200), nullable=True)

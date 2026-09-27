@@ -37,7 +37,9 @@ def login_for_access_token(
     OAuth2 compatible token login, get an access token for future requests.
     """
     user = user_service.get_by_email(db, user_login.email)
-    if not user:
+    # Usuarios desactivados se rechazan igual que credenciales invalidas
+    # (sin distinguir, para no revelar que la cuenta existe).
+    if not user or not user.isActive:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",

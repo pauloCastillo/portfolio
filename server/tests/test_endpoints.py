@@ -82,19 +82,62 @@ class TestUserEndpoints:
         response = auth_client.get("/api/v1/users/9999")
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
-    def test_create_user(self, client):
-        """Test que POST /users crea nuevo usuario."""
+    def test_create_user(self, auth_client):
+        """Test que POST /users crea nuevo usuario (requiere auth)."""
         payload = {
             "username": "newuser",
             "email": "new@example.com",
             "password": "securepassword123",
             "phone": "+1234567890",
         }
-        response = client.post("/api/v1/users/", json=payload)
+        response = auth_client.post("/api/v1/users/", json=payload)
         assert response.status_code == status.HTTP_201_CREATED
         data = response.json()
         assert data["username"] == "newuser"
         assert data["email"] == "new@example.com"
+
+    def test_create_user_without_phone(self, auth_client):
+        """Test que POST /users acepta payload sin phone (phone opcional)."""
+        payload = {
+            "username": "nophone",
+            "email": "nophone@example.com",
+            "password": "123456",
+        }
+        response = auth_client.post("/api/v1/users/", json=payload)
+        assert response.status_code == status.HTTP_201_CREATED
+        data = response.json()
+        assert data["username"] == "nophone"
+        assert data["phone"] is None
+
+    def test_login_inactive_user_rejected(self, client, test_user, db_session):
+        """Test que POST /auth/login rechaza usuarios desactivados con 401."""
+        test_user.isActive = False
+        db_session.commit()
+        response = client.post(
+            "/api/v1/auth/login",
+            json={"email": test_user.email, "password": "testpassword123"},
+        )
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+    def test_inactive_user_api_rejected(self, client, test_user, db_session, token):
+        """Test que un token existente deja de autorizar tras desactivar."""
+        test_user.isActive = False
+        db_session.commit()
+        response = client.get(
+            "/api/v1/users/",
+            headers={"Authorization": f"Bearer {token}"},
+        )
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+    def test_create_user_unauthenticated(self, client):
+        """Test que POST /users sin token retorna 401/403."""
+        payload = {
+            "username": "anon",
+            "email": "anon@example.com",
+            "password": "123456",
+        }
+        response = client.post("/api/v1/users/", json=payload)
+        assert response.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
 
     def test_update_user(self, auth_client, test_user):
         """Test que PUT /users/{id} actualiza usuario."""

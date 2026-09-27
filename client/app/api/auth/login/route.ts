@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
 import { api } from '@/api/config'
 import type { NextRequest } from 'next/server'
+import { getSession } from '~/lib/session'
 
 export async function POST(request: NextRequest) {
-  
   try {
     const { email, password } = await request.json()
 
@@ -22,29 +22,21 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    // Establecer cookies seguras con el token y tipo de token
-    const responseData = NextResponse.json({
-      token: response.data.access_token,
-      tokenType: response.data.token_type,
-    })
+    // Guardar tokens en sesión cifrada (iron-session). No se expone
+    // ningún token en el body: la cookie httpOnly es el único transporte.
+    const session = await getSession()
+    session.accessToken = response.data.access_token ?? response.data.accessToken
+    const refreshToken: string | undefined =
+      response.data.refresh_token ?? response.data.refreshToken
+    if (refreshToken) session.refreshToken = refreshToken
+    await session.save()
 
-
-    // Configurar cookies httpOnly para máxima seguridad
-    responseData.cookies.set('access_token', response.data.access_token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 7, // 1 semana
-      path: '/', // Solo enviar cookie para rutas protegidas
-    })
-    
-    return responseData
+    return NextResponse.json({ ok: true })
   } catch (error: any) {
-    
     return NextResponse.json(
-      { 
-        error: error.response?.data?.message || 
-               'Error en el inicio de sesión' 
+      {
+        error: error.response?.data?.message ||
+               'Error en el inicio de sesión'
       },
       { status: error.response?.status || 500 }
     )

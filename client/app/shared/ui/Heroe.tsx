@@ -2,10 +2,10 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Typewriter from "./Typewriter";
-
-const words = ["cobran vida", "se despliegan", "escalan", "innovan"];
+import { useLocale } from "~/lib/LocaleProvider";
 
 export default function HeroePage() {
+  const { t } = useLocale();
   return (
     <section id="heroe" className="max-w-full mx-auto px-10 max-md:px-5 pt-28 max-md:pt-20 pb-28 max-md:pb-20">
       <motion.div
@@ -15,7 +15,7 @@ export default function HeroePage() {
         className="font-mono text-[13px] text-cyan tracking-wider mb-6 flex items-center gap-4"
       >
         <span className="block w-8 h-px bg-cyan" />
-        Fullstack Developer
+        {t.hero.role}
       </motion.div>
 
       <motion.h1
@@ -24,8 +24,8 @@ export default function HeroePage() {
         transition={{ duration: 0.5, ease: "easeOut", delay: 0.15 }}
         className="text-[clamp(2rem,6vw,4.5rem)] font-semibold leading-[1.08] tracking-[-0.02em] mb-6 max-w-full"
       >
-        Construyo ideas<br />que <Typewriter words={words} className="text-cyan" />
-        <br />para tu proyecto.
+        {t.hero.titleStart}<br />{t.hero.titleMid} <Typewriter words={t.hero.words} className="text-cyan" />
+        <br />{t.hero.titleEnd}
       </motion.h1>
 
       <motion.p
@@ -34,7 +34,7 @@ export default function HeroePage() {
         transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
         className="text-base max-md:text-sm text-muted max-w-full md:max-w-1/2 mb-10 leading-relaxed"
       >
-        Aplicaciones web elegantes, eficientes y escalables. De la interfaz al servidor — y de vuelta al usuario.
+        {t.hero.description}
       </motion.p>
 
       <motion.div
@@ -47,13 +47,13 @@ export default function HeroePage() {
           href="#proyectos"
           className="font-mono text-sm font-medium bg-cyan text-[#0f1117] px-7 py-3 rounded-lg no-underline transition-opacity duration-200 hover:opacity-85"
         >
-          Ver proyectos
+          {t.hero.ctaProjects}
         </Link>
         <Link
           href="#contacto"
           className="font-mono text-sm text-text border border-border px-7 py-3 rounded-lg no-underline transition-colors duration-200 hover:border-cyan hover:text-cyan"
         >
-          Trabajemos juntos
+          {t.hero.ctaContact}
         </Link>
       </motion.div>
 

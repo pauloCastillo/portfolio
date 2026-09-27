@@ -6,10 +6,10 @@
     var(--color-glass-surface),
     var(--color-glass-border)
   );
-  --color-cyan: "#06B6D4";
-  --color-purple: "#A855F7";
-  --color-emerald: "#10B981";
-  --color-amber: "#F59E0B";
+  --color-cyan: #06B6D4;
+  --color-purple: #A855F7;
+  --color-emerald: #10B981;
+  --color-amber: #F59E0B;
   --color-neon: linear-gradient(
     145deg,
     var(--color-cyan),
@@ -19,12 +19,9 @@
   );
   --box-shadow-glow-cyan: 0 0 15px rgba(6, 182, 212, 0.3);
   --box-shadow-glow-emerald: 0 0 10px rgba(16, 185, 129, 0.3);
-  --box-shadow-glow-neon: 0 0 15px
-    linear-gradient(
-      145deg,
-      var(--box-shadow-glow-cyan),
-      var(--box-shadow-glow-emerald)
-    );
+  /* box-shadow no acepta gradients: glow en capas con los mismos tonos */
+  --box-shadow-glow-neon: 0 0 15px rgba(6, 182, 212, 0.3),
+    0 0 30px rgba(168, 85, 247, 0.2);
 }
 
 @theme inline {
@@ -36,7 +33,10 @@
   --color-purple: var(--color-purple);
   --color-amber: var(--color-amber);
   --color-neon: var(--color-neon);
-  --color-neon-cyan:var(--color-neon, --color-cyan)
+  /* Sólido (no el gradient --color-neon): se usa con modificadores de opacidad
+     (bg-neon-cyan/5, border-neon-cyan/30) que color-mix no puede aplicar a gradients.
+     Además faltaba el ";" de cierre, lo que invalidaba esta declaración y la siguiente. */
+  --color-neon-cyan: var(--color-cyan);
 
   --box-shadow-glow-cyan: var(--box-shadow-glow-cyan);
   --box-shadow-glow-emerald: var(--box-shadow-glow-emerald);

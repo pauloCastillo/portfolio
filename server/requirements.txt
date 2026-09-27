@@ -1,0 +1,13 @@
+# Production dependencies (versiones fijadas según .venv actual)
+fastapi==0.138.0
+uvicorn[standard]==0.49.0
+sqlalchemy==2.0.51
+pymysql==1.2.0
+pydantic==2.13.4
+pydantic-settings==2.14.2
+python-dotenv==1.2.2
+bcrypt==5.0.0
+python-jose[cryptography]==3.5.0
+fastapi-mail==1.6.5
+email-validator==2.3.0
+python-multipart==0.0.32

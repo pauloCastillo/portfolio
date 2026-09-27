@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import AdminNavbar from "./AdminNavbar";
+import useAuth from "@/hooks/useAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSignOut,
@@ -9,12 +10,14 @@ import {
   faLayerGroup,
 
   faEdit,
+  faUsers,
   faChartBar,
   faGear,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function SidebarContainer() {
   const ImageLink = "/assets/imgs/fotoCV.jpg";
+  const { logout } = useAuth();
 
   const adminSection = {
     title: "Main Menu",
@@ -35,6 +38,12 @@ export default function SidebarContainer() {
         title: "Blog",
         href: "/admin/blog",
         icon: faEdit,
+        iconClass: "text-primary",
+      },
+      {
+        title: "Users",
+        href: "/admin/users",
+        icon: faUsers,
         iconClass: "text-primary",
       },
       {
@@ -93,14 +102,20 @@ export default function SidebarContainer() {
               System Admin
             </span>
           </div>
-          {/* Settings Icon (Hidden by default, visible on hover) */}
-          <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+          {/* Sign out (Hidden by default, visible on hover) */}
+          <button
+            type="button"
+            title="Cerrar sesión"
+            aria-label="Cerrar sesión"
+            onClick={() => void logout()}
+            className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity hover:text-white cursor-pointer"
+          >
             <FontAwesomeIcon
               icon={faSignOut}
               className="text-text-muted"
               style={{ fontSize: "16px" }}
             />
-          </div>
+          </button>
         </div>
         {/* Connection Status  */}
         <div className="flex items-center justify-center gap-2 mt-3 opacity-40">

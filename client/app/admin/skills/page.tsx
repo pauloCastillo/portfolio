@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd, faTrash } from "@fortawesome/free-solid-svg-icons";
 import HeaderContent from "@/admin/shared/components/HeaderContent";
@@ -12,11 +12,11 @@ export default function SkillsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ name: "", level: 50 });
-  const service = skillService();
+  const service = useMemo(() => skillService(), []);
 
   useEffect(() => {
     service.getAll().then(setItems).finally(() => setIsLoading(false));
-  }, []);
+  }, [service]);
 
   const handleCreate = async () => {
     await service.create(form);

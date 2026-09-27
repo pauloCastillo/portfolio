@@ -1,6 +1,7 @@
 "use client";
 import SectionHeading from "./SectionHeading";
 import AnimatedSection, { MotionDiv, staggerVariants } from "./AnimatedSection";
+import { useLocale } from "~/lib/LocaleProvider";
 import {
   faHtml5,
   faCss3,
@@ -52,6 +53,7 @@ const skills = [
 ];
 
 export default function StackSection() {
+  const { t } = useLocale();
   const pillStyle = (variant: string) => {
     const base = "font-mono text-[13px] px-4 py-1.5 rounded-full border cursor-default transition-all duration-200";
     if (variant === "primary") return `${base} text-cyan border-[rgba(34,211,238,0.25)] bg-surface hover:border-cyan hover:text-cyan`;
@@ -62,9 +64,9 @@ export default function StackSection() {
   return (
     <AnimatedSection id="stack" stagger className="max-w-full mx-auto px-10 max-md:px-5 py-20">
       <SectionHeading
-        label="// tecnologías"
-        title="Stack & herramientas"
-        description="Las tecnologías con las que construyo día a día — desde el frontend hasta el backend y mobile."
+        label={t.stack.label}
+        title={t.stack.title}
+        description={t.stack.description}
       />
       <div className="flex flex-wrap gap-2.5">
         {skills.map((skill) => (

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd, faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import HeaderContent from "@/admin/shared/components/HeaderContent";
@@ -10,11 +10,11 @@ import type { Post } from "@/types/general";
 export default function BlogPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const service = postService();
+  const service = useMemo(() => postService(), []);
 
   useEffect(() => {
     service.getAllPosts().then(setPosts).finally(() => setIsLoading(false));
-  }, []);
+  }, [service]);
 
   const handleDelete = async (id: number) => {
     if (!confirm("Delete this post?")) return;

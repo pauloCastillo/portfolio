@@ -15,7 +15,7 @@ import sys
 # Ensure app/ is on the path so bare imports (from core.xxx, from services.xxx) work
 sys.path.insert(0, str(Path(__file__).resolve().parent / "app"))
 
-from api.v1.router import router
+from app.api.v1.router import router
 
 # Configurar CORS para permitir solicitudes desde el cliente
 origins = [
@@ -53,7 +53,7 @@ app.include_router(router, prefix="/api/v1")
 
 # Health check endpoint
 @app.get("/health", tags=["health"])
-def health_check():
+def health_check(): 
     """Verificar estado del servidor."""
     return {"status": "healthy", "version": "1.0.0"}
 

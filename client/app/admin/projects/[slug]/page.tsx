@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react"
+import { Fragment, useEffect, useMemo, useState } from "react"
 import ProjectHeader from "./components/ProjectHeader";
 import SocialShare from "./components/SocialShare";
 import ProjectImage from "./components/ProjectImage";
@@ -17,13 +17,15 @@ export default function ProjectDetails({
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const service = useMemo(() => projectService(), []);
+
   useEffect(() => {
     (async () => {
       try {
         const { slug } = await params;
         const id = parseInt(slug);
         if (isNaN(id)) { setLoading(false); return; }
-        const data = await projectService().getProjectById(id);
+        const data = await service.getProjectById(id);
         setProject(data);
       } catch {
         // not found
@@ -31,7 +33,7 @@ export default function ProjectDetails({
         setLoading(false);
       }
     })();
-  }, [params]);
+  }, [params, service]);
 
   if (loading) return <Loading />;
   if (!project) return <div className="p-8 text-center text-muted">Project not found</div>;
@@ -62,7 +64,7 @@ export default function ProjectDetails({
             day: "numeric", month: "short", year: "numeric"
           }).toUpperCase()}
         />
-        <SocialShare />
+        <SocialShare title={project.title} />
         {project.image_file && (
           <ProjectImage src={project.image_file} alt={project.title} />
         )}

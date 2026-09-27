@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Project } from "@/types/general";
 import projectService from "~/services/project";
 
@@ -9,7 +9,7 @@ export function useProjects() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
-  const service = projectService();
+  const service = useMemo(() => projectService(), []);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -25,7 +25,7 @@ export function useProjects() {
     };
 
     fetchProjects();
-  }, []);
+  }, [service]);
 
   return { projects, isLoading, error };
 }

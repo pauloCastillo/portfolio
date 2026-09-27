@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Post } from "@/types/general";
 import postService from "~/services/post";
 
@@ -9,7 +9,7 @@ export function usePosts() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
-  const service = postService();
+  const service = useMemo(() => postService(), []);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -25,7 +25,7 @@ export function usePosts() {
     };
 
     fetchPosts();
-  }, []);
+  }, [service]);
 
   return { posts, isLoading, error };
 }
@@ -35,7 +35,7 @@ export function usePublishedPosts() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
-  const service = postService();
+  const service = useMemo(() => postService(), []);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -51,7 +51,7 @@ export function usePublishedPosts() {
     };
 
     fetchPosts();
-  }, []);
+  }, [service]);
 
   return { posts, isLoading, error };
 }

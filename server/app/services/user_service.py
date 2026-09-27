@@ -103,7 +103,14 @@ class UserService(BaseService[UserRepository]):
         token_hash = hashlib.sha256(token.encode()).hexdigest()
         user = self.repository.get_by_reset_token_hash(db, token_hash)
 
-        if not user:
+        if not user or user.reset_token_expires_at is None:
+            return False
+
+        # Verificar expiración (tolerante a datetimes naive de MySQL/SQLite)
+        expires_at = user.reset_token_expires_at
+        if expires_at.tzinfo is None:
+            expires_at = expires_at.replace(tzinfo=UTC)
+        if expires_at < datetime.now(UTC):
             return False
 
         hashed_password = get_password_hash(new_password)

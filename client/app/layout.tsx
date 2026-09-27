@@ -8,6 +8,7 @@ import AppFooter from "@/components/AppFooter";
 import { config } from "@fortawesome/fontawesome-svg-core"
 import "@fortawesome/fontawesome-svg-core/styles.css"
 import { StoreProvider } from "~/store/provider";
+import { LocaleProvider } from "~/lib/LocaleProvider";
 
 config.autoAddCss = false;
 
@@ -57,9 +58,11 @@ export default function RootLayout({
         className={`${mono.variable} ${bodytype.variable} antialiased text-base font-body bg-void text-text`}
       >
         <StoreProvider>
-          <NavbarLayout />
-          <main>{children}</main>
-          <AppFooter />
+          <LocaleProvider>
+            <NavbarLayout />
+            <main>{children}</main>
+            <AppFooter />
+          </LocaleProvider>
         </StoreProvider>
       </body>
     </html>

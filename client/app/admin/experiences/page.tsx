@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd, faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import HeaderContent from "@/admin/shared/components/HeaderContent";
@@ -12,11 +12,11 @@ export default function ExperiencesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ company: "", role: "", description: "", start_date: "", end_date: "", url: "" });
-  const service = experienceService();
+  const service = useMemo(() => experienceService(), []);
 
   useEffect(() => {
     service.getAll().then(setItems).finally(() => setIsLoading(false));
-  }, []);
+  }, [service]);
 
   const handleCreate = async () => {
     await service.create({ ...form, published: true } as any);

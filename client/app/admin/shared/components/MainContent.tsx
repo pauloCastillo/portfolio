@@ -2,7 +2,7 @@
 
 import { faEye, faUser, faRocket } from "@fortawesome/free-solid-svg-icons";
 import HeaderContent from "./HeaderContent";
-import BaseCard from "../ui/BaseCard";
+import MetricsCard from "../ui/MetricsCard";
 import MainChart from "../ui/MainChart";
 
 const cards = [
@@ -74,7 +74,7 @@ export default function MainContent() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-20 mb-5">
         {cards.map((card) => (
-          <BaseCard
+          <MetricsCard
             key={card.id}
             card={card}
           />

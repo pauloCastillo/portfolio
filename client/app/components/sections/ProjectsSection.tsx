@@ -3,40 +3,44 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCode, faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import type { Project } from "@/types/general";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/shared/ui/ScrollReveal";
 import projectService from "~/services/project";
+import { useLocale } from "~/lib/LocaleProvider";
 
 library.add(faCode, faArrowUpRightFromSquare);
 
-function LoadingSkeleton() {
+function LoadingSkeleton({ label, message }: { label: string; message: string }) {
   return (
     <section id="proyectos" className="max-w-[1100px] mx-auto px-10 max-md:px-5 py-20 max-md:py-14">
-      <p className="font-mono text-xs text-cyan uppercase tracking-[0.08em] mb-3">// proyectos</p>
-      <p className="text-muted">Cargando proyectos...</p>
+      <p className="font-mono text-xs text-cyan uppercase tracking-[0.08em] mb-3">{label}</p>
+      <p className="text-muted">{message}</p>
     </section>
   );
 }
 
-function ErrorState() {
+function ErrorState({ label, message }: { label: string; message: string }) {
   return (
     <section id="proyectos" className="max-w-[1100px] mx-auto px-10 max-md:px-5 py-20 max-md:py-14">
-      <p className="font-mono text-xs text-cyan uppercase tracking-[0.08em] mb-3">// proyectos</p>
-      <p className="text-muted">Error al cargar proyectos.</p>
+      <p className="font-mono text-xs text-cyan uppercase tracking-[0.08em] mb-3">{label}</p>
+      <p className="text-muted">{message}</p>
     </section>
   );
 }
 
 export default function ProjectsSection() {
+  const { t } = useLocale();
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
+  const service = useMemo(() => projectService(), []);
+
   useEffect(() => {
     (async () => {
       try {
-        const data = await projectService().getPublishedProjects();
+        const data = await service.getPublishedProjects();
         setProjects(data);
       } catch (err) {
         setError(err instanceof Error ? err : new Error("Unknown error"));
@@ -44,22 +48,22 @@ export default function ProjectsSection() {
         setIsLoading(false);
       }
     })();
-  }, []);
+  }, [service]);
 
-  if (isLoading) return <LoadingSkeleton />;
-  if (error) return <ErrorState />;
+  if (isLoading) return <LoadingSkeleton label={t.projects.label} message={t.projects.loading} />;
+  if (error) return <ErrorState label={t.projects.label} message={t.projects.error} />;
 
   return (
     <section id="proyectos" className="max-w-[1100px] mx-auto px-10 max-md:px-5 py-20 max-md:py-14">
       <ScrollReveal>
         <p className="font-mono text-xs text-cyan uppercase tracking-[0.08em] mb-3">
-          // proyectos
+          {t.projects.label}
         </p>
         <h2 className="text-[clamp(1.6rem,3vw,2.2rem)] font-semibold tracking-[-0.01em] mb-4">
-          Proyectos destacados
+          {t.projects.title}
         </h2>
         <p className="text-base text-muted max-w-[500px] leading-relaxed mb-12">
-          Una muestra de los proyectos que he construido — cada uno con su propia historia y desafíos.
+          {t.projects.description}
         </p>
       </ScrollReveal>
 
@@ -81,7 +85,7 @@ export default function ProjectsSection() {
                   />
                   <span className="font-mono text-xs text-muted">
                     <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="mr-1" />
-                    ver proyecto ↗
+                    {t.projects.viewProject}
                   </span>
                 </div>
                 <h3 className="text-[17px] font-semibold text-text">

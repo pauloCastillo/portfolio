@@ -1,23 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import postService from "~/services/post";
 import type { Post } from "@/types/general";
+import { useLocale } from "~/lib/LocaleProvider";
 
 export default function BlogPage() {
+  const { t } = useLocale();
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const service = postService();
+  const service = useMemo(() => postService(), []);
 
   useEffect(() => {
     service.getPublishedPosts().then(setPosts).finally(() => setIsLoading(false));
-  }, []);
+  }, [service]);
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-20">
-      <h1 className="font-display text-4xl font-bold text-white mb-2">Blog</h1>
-      <p className="text-muted font-mono text-sm mb-12">Thoughts, tutorials, and discoveries.</p>
+      <h1 className="font-display text-4xl font-bold text-white mb-2">{t.blogPage.title}</h1>
+      <p className="text-muted font-mono text-sm mb-12">{t.blogPage.description}</p>
 
       {isLoading ? (
         <div className="space-y-4">
@@ -26,7 +28,7 @@ export default function BlogPage() {
           ))}
         </div>
       ) : posts.length === 0 ? (
-        <p className="text-muted font-mono text-sm">No posts yet. Stay tuned.</p>
+        <p className="text-muted font-mono text-sm">{t.blogPage.empty}</p>
       ) : (
         <div className="space-y-6">
           {posts.map(post => (

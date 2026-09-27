@@ -1,20 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { ScrollReveal } from "@/shared/ui/ScrollReveal";
 import SectionHeading from "@/shared/ui/SectionHeading";
 import postService from "~/services/post";
 import type { Post } from "@/types/general";
+import { useLocale } from "~/lib/LocaleProvider";
 
 export default function BlogSection() {
+  const { t } = useLocale();
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const service = postService();
+  const service = useMemo(() => postService(), []);
 
   useEffect(() => {
     service.getPublishedPosts().then(data => setPosts(data.slice(0, 3))).finally(() => setIsLoading(false));
-  }, []);
+  }, [service]);
 
   if (!isLoading && posts.length === 0) return null;
 
@@ -22,9 +24,9 @@ export default function BlogSection() {
     <section className="max-w-full mx-auto px-10 max-md:px-5 py-20 max-md:py-14">
       <ScrollReveal>
         <SectionHeading
-          label="// blog"
-          title="Latest Posts"
-          description="Thoughts, tutorials, and discoveries."
+          label={t.blog.label}
+          title={t.blog.title}
+          description={t.blog.description}
         />
       </ScrollReveal>
       <div className="space-y-4 max-w-3xl">
@@ -45,7 +47,7 @@ export default function BlogSection() {
       </div>
       <div className="mt-8">
         <Link href="/blog" className="font-mono text-sm text-primary hover:underline">
-          View All Posts →
+          {t.blog.viewAll}
         </Link>
       </div>
     </section>

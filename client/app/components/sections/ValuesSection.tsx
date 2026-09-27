@@ -4,28 +4,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCode, faUsers, faRocket } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { StaggerContainer, StaggerItem } from "@/shared/ui/ScrollReveal";
+import { useLocale } from "~/lib/LocaleProvider";
 
 library.add(faCode, faUsers, faRocket);
 
-const values = [
-  {
-    icon: faCode,
-    title: "Código limpio",
-    description: "No solo que funcione — que sea mantenible, legible y escalable. Cada línea cuenta.",
-  },
-  {
-    icon: faUsers,
-    title: "Comunidad primero",
-    description: "Aprendo en público, comparto lo que descubro y contribuyo para que todxs crezcamos.",
-  },
-  {
-    icon: faRocket,
-    title: "Mejora continua",
-    description: "Cada proyecto es una oportunidad de ser mejor developer que ayer. Siempre en evolución.",
-  },
-];
-
 export default function ValuesSection() {
+  const { t } = useLocale();
+
+  const values = [
+    { icon: faCode, ...t.values.clean },
+    { icon: faUsers, ...t.values.community },
+    { icon: faRocket, ...t.values.growth },
+  ];
+
   return (
     <section id="valores" className="max-w-full mx-auto px-10 max-md:px-5 py-20 max-md:py-14">
       <StaggerContainer>

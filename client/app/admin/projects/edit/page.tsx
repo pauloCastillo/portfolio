@@ -6,7 +6,7 @@ import Metadata from "./components/metadata";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faCloudUpload, faRocket, faSave, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Loading from "@/loading";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { setError } from "~/store/features/errorSlice";
 import { AppDispatch } from "~/store/store";
@@ -35,7 +35,7 @@ export default function EditProject() {
 
   const dispatch = useDispatch<AppDispatch>();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const service = projectService();
+  const service = useMemo(() => projectService(), []);
 
   useEffect(() => {
     if (!projectId) return;
@@ -58,7 +58,7 @@ export default function EditProject() {
         setIsLoading(false);
       }
     })();
-  }, [projectId]);
+  }, [projectId, service]);
 
   const validTypes = [
     "image/png",

@@ -3,9 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { siteConfig } from "@/config/siteConfig";
+import { useLocale } from "~/lib/LocaleProvider";
+import { LOCALES } from "~/lib/i18n";
 
 export default function NavbarLayout() {
   const pathname = usePathname();
+  const { locale, setLocale, t } = useLocale();
   const [activeSection, setActiveSection] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -83,7 +86,7 @@ export default function NavbarLayout() {
                   animate={{ color: isActive ? "#22d3ee" : "#94a3b8" }}
                   transition={{ duration: 0.3 }}
                 >
-                  {navItem.title}
+                  {t.nav[navItem.key]}
                 </motion.span>
                 {isActive && (
                   <motion.span
@@ -99,6 +102,27 @@ export default function NavbarLayout() {
       </ul>
 
       <div className="flex items-center gap-3">
+        <div
+          role="group"
+          aria-label={t.locale.label}
+          className="hidden md:flex items-center rounded-md border border-border overflow-hidden"
+        >
+          {LOCALES.map((option) => (
+            <button
+              key={option}
+              type="button"
+              onClick={() => setLocale(option)}
+              aria-pressed={locale === option}
+              className={`px-2.5 py-2 font-mono text-[11px] tracking-wider transition-colors cursor-pointer ${
+                locale === option
+                  ? "text-void bg-cyan font-bold"
+                  : "text-muted hover:text-white"
+              }`}
+            >
+              {t.locale[option]}
+            </button>
+          ))}
+        </div>
         <a
           href="#contacto"
           onClick={(e) => {
@@ -107,13 +131,13 @@ export default function NavbarLayout() {
           }}
           className="font-mono text-[13px] text-cyan no-underline border border-cyan px-5 max-md:px-4 py-2 rounded-md transition-colors duration-200 hover:bg-[rgba(34,211,238,0.1)] whitespace-nowrap"
         >
-          Hablemos →
+          {t.nav.cta}
         </a>
 
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="md:hidden flex flex-col gap-1.5 bg-transparent border-none cursor-pointer p-2"
-          aria-label="Toggle navigation menu"
+          aria-label={t.nav.menuLabel}
         >
           <motion.span
             animate={mobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
@@ -156,11 +180,32 @@ export default function NavbarLayout() {
                       isActive ? "text-cyan" : "text-muted"
                     }`}
                   >
-                    {navItem.title}
+                    {t.nav[navItem.key]}
                   </button>
                 </motion.div>
               );
             })}
+            <div
+              role="group"
+              aria-label={t.locale.label}
+              className="flex items-center gap-2 mt-4"
+            >
+              {LOCALES.map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => setLocale(option)}
+                  aria-pressed={locale === option}
+                  className={`px-3 py-1.5 rounded-md font-mono text-xs tracking-wider border transition-colors cursor-pointer ${
+                    locale === option
+                      ? "text-void bg-cyan border-cyan font-bold"
+                      : "text-muted border-border hover:text-white"
+                  }`}
+                >
+                  {t.locale[option]}
+                </button>
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import HeaderContent from "@/admin/shared/components/HeaderContent";
 import postService from "~/services/post";
 
@@ -21,6 +21,8 @@ export default function ConfigPage() {
   const [platforms, setPlatforms] = useState({ linkedin: false, twitter: false });
   const [publishing, setPublishing] = useState(false);
 
+  const service = useMemo(() => postService(), []);
+
   const handleSaveConfig = () => {
     localStorage.setItem("site_config", JSON.stringify(form));
     setSaved(true);
@@ -31,7 +33,7 @@ export default function ConfigPage() {
     if (!title.trim() || !content.trim()) return;
     setPublishing(true);
     try {
-      await postService().createPost({ title, content, published: true } as any);
+      await service.createPost({ title, content, published: true } as any);
       if (platforms.linkedin) {
         window.open(`https://linkedin.com/share?text=${encodeURIComponent(title + "\n\n" + content)}`, "_blank");
       }

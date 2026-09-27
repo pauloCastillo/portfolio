@@ -86,29 +86,24 @@ def get_current_user(
         headers={"WWW-Authenticate": "Bearer"},
     )
     
-    try:
-        # Verify token
-        payload = verify_token(token)
+    # Verify token
+    payload = verify_token(token)
 
-        if payload is None:
-            raise credentials_exception    
-    
-        # Get user email from token
-        email: str | None = payload.get("sub")
-        
-        if email is None:
-            raise credentials_exception
-        
-        # Get user from database
-        user_service = get_user_service()
-        user = user_service.get_by_email(db, email)
+    if payload is None:
+        raise credentials_exception
 
-        if user is None:
-            raise credentials_exception
-        
-        return user
-    except Exception as e:
-        raise HTTPException(
-            status_code = 500,
-            detail= str(e)
-        )
+    # Get user email from token
+    email: str | None = payload.get("sub")
+
+    if email is None:
+        raise credentials_exception
+
+    # Get user from database
+    user_service = get_user_service()
+    user = user_service.get_by_email(db, email)
+
+    # Tokens de usuarios desactivados dejan de ser validos para la API
+    if user is None or not user.isActive:
+        raise credentials_exception
+
+    return user
