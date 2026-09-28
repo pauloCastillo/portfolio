@@ -41,7 +41,7 @@ function ProjectCardLink({
 
 function LoadingSkeleton({ label, message }: { label: string; message: string }) {
   return (
-    <section id="proyectos" className="max-w-[1100px] mx-auto px-10 max-md:px-5 py-20 max-md:py-14">
+    <section id="proyectos" className="max-w-275 mx-auto px-10 max-md:px-5 py-20 max-md:py-14">
       <p className="font-mono text-xs text-cyan uppercase tracking-[0.08em] mb-3">{label}</p>
       <p className="text-muted">{message}</p>
     </section>
@@ -50,7 +50,7 @@ function LoadingSkeleton({ label, message }: { label: string; message: string })
 
 function ErrorState({ label, message }: { label: string; message: string }) {
   return (
-    <section id="proyectos" className="max-w-[1100px] mx-auto px-10 max-md:px-5 py-20 max-md:py-14">
+    <section id="proyectos" className="max-w-275 mx-auto px-10 max-md:px-5 py-20 max-md:py-14">
       <p className="font-mono text-xs text-cyan uppercase tracking-[0.08em] mb-3">{label}</p>
       <p className="text-muted">{message}</p>
     </section>
@@ -82,7 +82,7 @@ export default function ProjectsSection() {
   if (error) return <ErrorState label={t.projects.label} message={t.projects.error} />;
 
   return (
-    <section id="proyectos" className="max-w-[1100px] mx-auto px-8 max-md:px-5 py-20 max-md:py-14">
+    <section id="proyectos" className="max-w-275 mx-auto px-8 max-md:px-5 py-20 max-md:py-14">
       <ScrollReveal>
         <p className="font-mono text-xs text-cyan uppercase tracking-[0.08em] mb-3">
           {t.projects.label}
@@ -90,7 +90,7 @@ export default function ProjectsSection() {
         <h2 className="text-[clamp(1.6rem,3vw,2.2rem)] font-semibold tracking-[-0.01em] mb-4">
           {t.projects.title}
         </h2>
-        <p className="text-base text-muted max-w-[500px] leading-relaxed mb-12">
+        <p className="text-base text-muted max-w-125 leading-relaxed mb-12">
           {t.projects.description}
         </p>
       </ScrollReveal>
@@ -149,7 +149,7 @@ export default function ProjectsSection() {
                     {project.tech_stack.split(", ").map((tech) => (
                       <span
                         key={tech}
-                        className="font-mono text-[11px] text-indigo bg-[rgba(99,102,241,0.1)] px-[10px] py-[3px] rounded"
+                        className="font-mono text-[11px] text-indigo bg-[rgba(99,102,241,0.1)] px-2.5 py-0.75 rounded"
                       >
                         {tech}
                       </span>
