@@ -1,21 +1,17 @@
 "use client";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBold, faItalic, faLink, faCode, faImage, faSave, faRocket } from "@fortawesome/free-solid-svg-icons"
+import { faBold, faItalic, faLink, faCode, faImage } from "@fortawesome/free-solid-svg-icons"
 import { useState, useRef, useEffect } from "react"
 
 type MarkdownEditorProps = {
   value?: string
   onChange?: (markdown: string) => void
-  onSave: (markdown: string) => void
-  onExecuteDeploy: (markdown: string) => void
 }
 
 export default function MarkdownEditor({
   value = "",
-  onChange,
-  onSave,
-  onExecuteDeploy}: Readonly<MarkdownEditorProps>) {
+  onChange}: Readonly<MarkdownEditorProps>) {
   const [markdown, setMarkdown] = useState(value)
   const [lineCount, setLineCount] = useState(1)
   const textareaRef = useRef<HTMLTextAreaElement | null>(null)
@@ -38,14 +34,19 @@ export default function MarkdownEditor({
 
     const start = textarea.selectionStart
     const end = textarea.selectionEnd
-    const before = textarea.value.substring(0, start)
-    const after = textarea.value.substring(end)
+    const current = textarea.value
+    const updated = current.substring(0, start) + text + current.substring(end)
 
-    textarea.value = before + text + after
+    // Escribe en el DOM para preservar el cursor y sincroniza el estado
+    // para que el padre reciba la inserción vía onChange.
+    textarea.value = updated
     const cursorPos = start + text.length
     textarea.selectionStart = cursorPos
     textarea.selectionEnd = cursorPos
     textarea.focus()
+    setMarkdown(updated)
+    onChange?.(updated)
+    setLineCount(updated.split('\n').length)
   }
 
   const handleBold = () => {
@@ -124,12 +125,21 @@ export default function MarkdownEditor({
     }
   }
 
-  const handleSave = () => {
-    onSave(markdown)
-  }
+  const handleCodeBlock = () => {
+    const textarea = textareaRef.current
+    if (!textarea) return
 
-  const handleExecuteDeploy = () => {
-    onExecuteDeploy(markdown)
+    const start = textarea.selectionStart
+    const end = textarea.selectionEnd
+    const selected = textarea.value.substring(start, end)
+
+    if (selected) {
+      insertAtCursor(`\`\`\`\n${selected}\n\`\`\``)
+    } else {
+      insertAtCursor('\`\`\`\n\n\`\`\`')
+      textarea.selectionStart = start + 4
+      textarea.selectionEnd = start + 4
+    }
   }
 
   return (
@@ -163,22 +173,7 @@ export default function MarkdownEditor({
           <button
             className="p-1.5 rounded hover:bg-white/10 text-gray-400 hover:text-white hover:cursor-pointer transition-colors"
             title="Code Block"
-            onClick={() => {
-              const textarea = textareaRef.current
-              if (!textarea) return
-
-              const start = textarea.selectionStart
-              const end = textarea.selectionEnd
-              const selected = textarea.value.substring(start, end)
-
-              if (selected) {
-                insertAtCursor(`\`\`\`\n${selected}\n\`\`\``)
-              } else {
-                insertAtCursor('\`\`\`\n\n\`\`\`')
-                textarea.selectionStart = start + 4
-                textarea.selectionEnd = start + 4
-              }
-            }}
+            onClick={handleCodeBlock}
           >
             <FontAwesomeIcon icon={faCode} className="text-sm transition-colors text-primary" />
           </button>
@@ -188,22 +183,6 @@ export default function MarkdownEditor({
             onClick={handleImage}
           >
             <FontAwesomeIcon icon={faImage} className="text-sm transition-colors text-primary" />
-          </button>
-          <button
-            className="p-1.5 rounded hover:bg-white/10 text-gray-400 hover:text-white hover:cursor-pointer transition-colors hover:shadow-neon"
-            title="Save"
-            onClick={handleSave}
-          >
-            <FontAwesomeIcon icon={faSave} className="text-sm transition-colors text-primary" />
-            Save
-          </button>
-          <button
-            className="p-1.5 rounded hover:bg-white/10 text-gray-400 hover:text-white hover:cursor-pointer transition-colors hover:shadow-neon"
-            title="Execute Deploy"
-            onClick={handleExecuteDeploy}
-          >
-            <FontAwesomeIcon icon={faRocket} className="text-sm transition-colors text-primary" />
-            Execute Deploy
           </button>
         </div>
         <span className="text-xs font-mono text-gray-600">MARKDOWN_MODE</span>

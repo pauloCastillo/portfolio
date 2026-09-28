@@ -26,6 +26,11 @@ export const siteConfig = {
       title: "Contacto",
       href: "#contacto",
     },
+    {
+      key: "blog",
+      title: "Blog",
+      href: "/blog",
+    },
   ] satisfies Array<{ key: NavKey; title: string; href: string }>,
   socialLinks: [
     {

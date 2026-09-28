@@ -82,7 +82,7 @@ export default function ProjectsSection() {
   if (error) return <ErrorState label={t.projects.label} message={t.projects.error} />;
 
   return (
-    <section id="proyectos" className="max-w-[1100px] mx-auto px-10 max-md:px-5 py-20 max-md:py-14">
+    <section id="proyectos" className="max-w-[1100px] mx-auto px-8 max-md:px-5 py-20 max-md:py-14">
       <ScrollReveal>
         <p className="font-mono text-xs text-cyan uppercase tracking-[0.08em] mb-3">
           {t.projects.label}

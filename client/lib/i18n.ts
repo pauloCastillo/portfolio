@@ -22,10 +22,12 @@ export function isLocale(value: unknown): value is Locale {
 
 const es = {
   nav: {
+    home: "Inicio",
     stack: "Stack",
     projects: "Proyectos",
     about: "Sobre mí",
     contact: "Contacto",
+    blog: "Blog",
     cta: "Hablemos →",
     menuLabel: "Abrir o cerrar el menú de navegación",
   },
@@ -143,10 +145,12 @@ export type NavKey = keyof Dictionary["nav"];
 
 const en: Dictionary = {
   nav: {
+    home: "Home",
     stack: "Stack",
     projects: "Projects",
     about: "About",
     contact: "Contact",
+    blog: "Blog",
     cta: "Let's talk →",
     menuLabel: "Toggle navigation menu",
   },

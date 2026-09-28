@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import ProjectHeader from "./components/ProjectHeader";
 import SocialShare from "./components/SocialShare";
 import ProjectImage from "./components/ProjectImage";
@@ -38,22 +38,6 @@ export default function ProjectDetails({
   if (loading) return <Loading />;
   if (!project) return <div className="p-8 text-center text-muted">Project not found</div>;
 
-  // Convert markdown content to paragraphs for display
-  const contentParagraphs = project.content
-    ? project.content.split("\n\n").filter(Boolean).map((block, i) => {
-        if (block.startsWith("## ")) {
-          return <h2 key={i} className="text-2xl font-bold mt-8 mb-4">{block.replace("## ", "")}</h2>;
-        }
-        if (block.startsWith("# ")) {
-          return <h1 key={i} className="text-3xl font-bold mt-8 mb-4">{block.replace("# ", "")}</h1>;
-        }
-        if (block.startsWith("> ")) {
-          return <blockquote key={i} className="border-l-4 border-gray-300 pl-4 italic my-4">{block.replace("> ", "")}</blockquote>;
-        }
-        return <p key={i} className="mb-4 leading-relaxed">{block}</p>;
-      })
-    : [<p key="0">No content available.</p>];
-
   return (
     <div className="min-h-[calc(100vh-64px)] flex flex-col items-center py-12 bg-gray-50">
       <div className="w-full max-w-4xl px-4 sm:px-6 lg:px-8">
@@ -69,9 +53,7 @@ export default function ProjectDetails({
           <ProjectImage src={project.image_file} alt={project.title} />
         )}
         <ProjectContent>
-          {contentParagraphs.map((item, index) => (
-            <Fragment key={index}>{item}</Fragment>
-          ))}
+          <p className="mb-4 leading-relaxed">{project.description}</p>
         </ProjectContent>
         <div className="mt-8 flex gap-2">
           {project.tech_stack?.split(", ").map((tech) => (

@@ -55,7 +55,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body
-        className={`${mono.variable} ${bodytype.variable} antialiased text-base font-body bg-void text-text`}
+        className={`${mono.variable} ${bodytype.variable} antialiased text-base font-body bg-void text-text px-8 max-md:px-5`}
       >
         <StoreProvider>
           <LocaleProvider>

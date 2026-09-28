@@ -6,6 +6,7 @@ import Link from "next/link";
 import postService from "~/services/post";
 import type { Post } from "@/types/general";
 import { useLocale } from "~/lib/LocaleProvider";
+import MarkdownRenderer from "@/admin/shared/components/MarkdownRenderer";
 
 export default function PostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
@@ -29,9 +30,11 @@ export default function PostPage({ params }: { params: Promise<{ slug: string }>
         {new Date(post.published_date).toLocaleDateString("es-BO", { year: "numeric", month: "long", day: "numeric" })}
         {post.published ? "" : t.postPage.draft}
       </p>
-      <div className="prose prose-invert max-w-none text-muted leading-relaxed whitespace-pre-wrap">
-        {post.content}
-      </div>
+      {post.image_file && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={post.image_file} alt={post.title} className="w-full rounded-xl mb-8" loading="lazy" />
+      )}
+      <MarkdownRenderer content={post.content} />
     </article>
   );
 }

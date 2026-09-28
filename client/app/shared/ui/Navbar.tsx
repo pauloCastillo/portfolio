@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -11,8 +12,22 @@ export default function NavbarLayout() {
   const { locale, setLocale, t } = useLocale();
   const [activeSection, setActiveSection] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
+  const isHome = pathname === "/";
+  const isBlog = pathname.startsWith("/blog");
+  const blogNavItem = siteConfig.mainNav.find((n) => n.key === "blog") ?? {
+    key: "blog",
+    title: "Blog",
+    href: "/blog",
+  };
+  const visibleNav = isBlog
+    ? [{ key: "home", title: "Home", href: "/" } as const, blogNavItem]
+    : siteConfig.mainNav;
 
   useEffect(() => {
+    if (pathname !== "/") {
+      setActiveSection("");
+      return;
+    }
     const sections = siteConfig.mainNav.map((n) => n.href.replace("#", ""));
 
     const observer = new IntersectionObserver(
@@ -32,11 +47,7 @@ export default function NavbarLayout() {
     });
 
     return () => observer.disconnect();
-  }, []);
-
-  // useEffect(() => {
-  //   setMobileOpen(false);
-  // }, [pathname]);
+  }, [pathname]);
 
   useEffect(() => {
     if (mobileOpen) {
@@ -59,6 +70,11 @@ export default function NavbarLayout() {
     }
   };
 
+  const isRoute = (href: string) => !href.startsWith("#");
+
+  const isRouteActive = (href: string) =>
+    pathname === href || pathname.startsWith(href + "/");
+
   return (
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
@@ -66,36 +82,60 @@ export default function NavbarLayout() {
       transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
       className="sticky top-0 z-100 flex items-center justify-between px-10 max-md:px-5 py-5 border-b border-border bg-[rgba(15,17,23,0.92)] backdrop-blur-12"
     >
-      <button onClick={() => scrollTo("heroe")} className="font-mono text-lg font-bold text-text no-underline shrink-0 bg-transparent border-none cursor-pointer">
+      <Link href="/" className="font-mono text-lg font-bold text-text no-underline shrink-0">
         Kasti<span className="text-cyan">dev</span>
-      </button>
+      </Link>
 
       <ul className="hidden md:flex items-center gap-8 list-none m-0 p-0">
-        {siteConfig.mainNav.map((navItem) => {
+        {visibleNav.map((navItem) => {
           const sectionId = navItem.href.replace("#", "");
-          const isActive = activeSection === sectionId;
+          const isActive = isRoute(navItem.href)
+            ? isRouteActive(navItem.href)
+            : activeSection === sectionId;
 
           return (
             <li key={navItem.title} className="relative">
-              <button
-                onClick={() => scrollTo(sectionId)}
-                className="relative text-sm bg-transparent border-none cursor-pointer"
-              >
-                <motion.span
-                  className={isActive ? "text-cyan" : "text-muted"}
-                  animate={{ color: isActive ? "#22d3ee" : "#94a3b8" }}
-                  transition={{ duration: 0.3 }}
+              {isRoute(navItem.href) ? (
+                <Link
+                  href={navItem.href}
+                  className="relative text-sm no-underline"
                 >
-                  {t.nav[navItem.key]}
-                </motion.span>
-                {isActive && (
                   <motion.span
-                    layoutId="nav-indicator"
-                    className="absolute -bottom-1.5 left-0 right-0 h-px bg-cyan"
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  />
-                )}
-              </button>
+                    className={isActive ? "text-cyan" : "text-muted"}
+                    animate={{ color: isActive ? "#22d3ee" : "#94a3b8" }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {t.nav[navItem.key]}
+                  </motion.span>
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-indicator"
+                      className="absolute -bottom-1.5 left-0 right-0 h-px bg-cyan"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                </Link>
+              ) : (
+                <button
+                  onClick={() => scrollTo(sectionId)}
+                  className="relative text-sm bg-transparent border-none cursor-pointer"
+                >
+                  <motion.span
+                    className={isActive ? "text-cyan" : "text-muted"}
+                    animate={{ color: isActive ? "#22d3ee" : "#94a3b8" }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {t.nav[navItem.key]}
+                  </motion.span>
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-indicator"
+                      className="absolute -bottom-1.5 left-0 right-0 h-px bg-cyan"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                </button>
+              )}
             </li>
           );
         })}
@@ -123,16 +163,25 @@ export default function NavbarLayout() {
             </button>
           ))}
         </div>
-        <a
-          href="#contacto"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollTo("contacto");
-          }}
-          className="font-mono text-[13px] text-cyan no-underline border border-cyan px-5 max-md:px-4 py-2 rounded-md transition-colors duration-200 hover:bg-[rgba(34,211,238,0.1)] whitespace-nowrap"
-        >
-          {t.nav.cta}
-        </a>
+        {isHome ? (
+          <a
+            href="#contacto"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollTo("contacto");
+            }}
+            className="font-mono text-[13px] text-cyan no-underline border border-cyan px-5 max-md:px-4 py-2 rounded-md transition-colors duration-200 hover:bg-[rgba(34,211,238,0.1)] whitespace-nowrap"
+          >
+            {t.nav.cta}
+          </a>
+        ) : (
+          <Link
+            href="/#contacto"
+            className="font-mono text-[13px] text-cyan no-underline border border-cyan px-5 max-md:px-4 py-2 rounded-md transition-colors duration-200 hover:bg-[rgba(34,211,238,0.1)] whitespace-nowrap"
+          >
+            {t.nav.cta}
+          </Link>
+        )}
 
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
@@ -163,9 +212,11 @@ export default function NavbarLayout() {
             transition={{ duration: 0.2 }}
             className="fixed inset-0 top-20 z-50 bg-[rgba(15,17,23,0.98)] backdrop-blur-12 flex flex-col items-center justify-start pt-16 gap-6 md:hidden"
           >
-            {siteConfig.mainNav.map((navItem, i) => {
+            {visibleNav.map((navItem, i) => {
               const sectionId = navItem.href.replace("#", "");
-              const isActive = activeSection === sectionId;
+              const isActive = isRoute(navItem.href)
+                ? isRouteActive(navItem.href)
+                : activeSection === sectionId;
 
               return (
                 <motion.div
@@ -174,14 +225,26 @@ export default function NavbarLayout() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.08 }}
                 >
-                  <button
-                    onClick={() => scrollTo(sectionId)}
-                    className={`text-lg bg-transparent border-none cursor-pointer ${
-                      isActive ? "text-cyan" : "text-muted"
-                    }`}
-                  >
-                    {t.nav[navItem.key]}
-                  </button>
+                  {isRoute(navItem.href) ? (
+                    <Link
+                      href={navItem.href}
+                      onClick={() => setMobileOpen(false)}
+                      className={`text-lg no-underline ${
+                        isActive ? "text-cyan" : "text-muted"
+                      }`}
+                    >
+                      {t.nav[navItem.key]}
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={() => scrollTo(sectionId)}
+                      className={`text-lg bg-transparent border-none cursor-pointer ${
+                        isActive ? "text-cyan" : "text-muted"
+                      }`}
+                    >
+                      {t.nav[navItem.key]}
+                    </button>
+                  )}
                 </motion.div>
               );
             })}
