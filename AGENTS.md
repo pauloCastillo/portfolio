@@ -1,0 +1,112 @@
+# AGENTS.md — Portfolio (Next.js + FastAPI monorepo)
+
+Monorepo with two independent workspaces: `client/` (Next.js App Router) and
+`server/` (FastAPI). No root package manager; work inside each workspace.
+
+## Client (`client/`) — Next.js 16 + React 19 + TypeScript
+
+- Stack: Next.js App Router, TypeScript strict, Tailwind CSS v4, Redux Toolkit,
+  axios, react-markdown + remark-gfm + rehype-sanitize, zod, Framer Motion.
+- Path aliases (see `tsconfig.json`, `vitest.config.ts`): `@/*` → `app/*`,
+  `~/*` → `./*` (repo root = `client/`).
+- Specs live in `client/openspec/` (`specs/`, `changes/`, `changes/archive/`).
+  Check them before changing admin/blog/project publishing flows.
+
+Commands (run in `client/`):
+
+```bash
+npm run dev            # next dev
+npm run build          # next build (production check)
+npm run lint           # eslint
+npm run test           # vitest WATCH — local only, never in CI/hooks
+npx vitest run         # single run (use in CI, pre-commit, agents)
+npx vitest run <path>  # single file
+npx playwright test    # e2e; specs live in _tests/ (excluded from vitest)
+```
+
+Conventions:
+
+- App Router only (`app/`). Shared UI in `app/shared/ui/`, admin UI in
+  `app/admin/`, API proxy routes in `app/api/`, global state in `store/`,
+  data fetching in `services/`, helpers in `lib/` + `utils/`.
+- Env: `.env*` files are gitignored. Public base URL is
+  `NEXT_PUBLIC_BASE_URL` — do not read `process.env.BASEURL` (undefined).
+- `sitemap.ts` / `robots.ts` must use `NEXT_PUBLIC_BASE_URL` and must not emit
+  fragment URLs (`/#...`).
+- Axios default timeout lives in `app/api/config.ts` — keep it sane (>1s).
+- Auth cookie (`httpOnly`) is set in `app/api/auth/login/route.ts`; do not
+  also return the raw JWT in the JSON body.
+- Husky pre-commit must call `vitest run`, never bare `vitest` (watch hangs).
+- Public navbar (`app/shared/ui/Navbar.tsx`) is minimalist off-home: on
+  `/blog` and `/blog/[slug]` it renders only `Home (/) + Blog (/blog)`.
+  Logo is always `<Link href="/">`; section anchors (`#...`) only exist on
+  `/`, so the CTA is `<Link href="/#contacto">` off-home and the
+  `IntersectionObserver` only runs on `/`. Do not use `scrollTo()`
+  (`getElementById(...).scrollIntoView`) outside `/` — it no-ops.
+- i18n (`lib/i18n.ts`): `NavKey` derives from the `es` dictionary; every new
+  `nav` key must be added to BOTH `es` and `en` (`lib/i18n.test.ts` enforces
+  identical keys).
+- Component tests (`*.test.tsx`, jsdom): `vitest.config.ts` has no
+  `globals: true`, so `@testing-library/react` auto-cleanup does NOT run —
+  add `afterEach(() => cleanup())` when a file renders more than once.
+  jsdom lacks `IntersectionObserver` — stub it in `beforeAll` for components
+  using it (e.g. Navbar).
+- `npm run lint` is currently broken (ESLint 10 vs `eslint-config-next`'s
+  `eslint-plugin-react`: `contextOrFilename.getFilename is not a function`,
+  fails on untouched files). Until fixed, verify with `npx tsc --noEmit`
+  plus `npm run build`.
+
+## Server (`server/`) — FastAPI + SQLAlchemy 2 + Pydantic v2
+
+- Architecture: `app/api/v1/` (routers) → `app/services/` → `app/repositories/`
+  + `app/domain/`; cross-cutting in `app/core/` (`config.py`, `database.py`,
+  `jwt.py`); legacy `app/db/` exists.
+- DB: MySQL via PyMySQL (`DATABASE_URL`). Env files (`.env`, `.env.local`) are
+  gitignored and contain real secrets — never commit them.
+- Entry point: `main.py` (`/health`, router prefix `/api/v1`, docs at
+  `/api/docs`). `sys.path` hack in `main.py` allows bare `from core...` imports.
+
+Commands (run in `server/`, venv at `.venv/`):
+
+```bash
+source .venv/bin/activate
+uvicorn main:app --reload --port 8000
+pytest                    # full suite (pytest.ini: tests/, --cov=app)
+pytest tests/test_x.py    # single file
+pytest -m "unit"          # markers: unit, integration, slow
+```
+
+Conventions:
+
+- `requirements.txt` = prod, `requirements-dev.txt` = test/lint tooling.
+- `Base.metadata.create_all()` currently runs on import in
+  `app/core/database.py` — importing `main`/`core.database` needs a live MySQL.
+  Tests override with SQLite in `tests/conftest.py`. Do not add more
+  import-time side effects; prefer migrations / explicit flags.
+- Empty collection GETs should return `200 []`, not 404.
+- File uploads (`endpoints/projects.py`): never accept `image/svg+xml`
+  (stored XSS under `/public/media`); do not trust `UploadFile.size`
+  (missing on some Starlette versions — use `await file.read()` + length check).
+- JWT expiry and cookie `maxAge` in login route must stay consistent.
+- Logout cookie attributes (`sameSite`, `path`) must match login or the
+  browser keeps the original cookie.
+- CORS origins live in `main.py` — add the production domain when deploying;
+  `http://localhost:3306` entry is a mistake (MySQL port).
+
+## Git / hygiene
+
+- Branch `main` tracks `origin/main`. Current worktree has unstaged admin/blog
+  edits + untracked `MarkdownEditor`/`MarkdownRenderer` shared components and
+  `openspec/changes/move-markdown-editor-to-blog/` — check `git status` before
+  committing.
+- Never commit: `.env*`, `node_modules/`, `.next/`, `.venv/`, `__pycache__/`,
+  `*.pyc`, `test-results/`, `playwright-report/`. Root `.gitignore` is minimal;
+  `server/.gitignore` has a typo (`_pycache__`) and ignores `venv/` instead of
+  `.venv/` — fix opportunistically, and untrack committed `.pyc` files.
+- `client/` standardizes on npm (`package-lock.json`); do not reintroduce
+  `yarn.lock`. No `packageManager` field pinned yet.
+- `client/jest.config.ts` is orphaned (vitest is the runner) — ignore unless
+  cleaning up.
+- Verify before finishing: `npx vitest run` in `client/` and `pytest` (or at
+  least the touched test file) in `server/`; `npm run build` for client
+  production checks.
