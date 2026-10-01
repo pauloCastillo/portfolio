@@ -1,18 +1,21 @@
 # AGENTS.md — Portfolio (Next.js + FastAPI monorepo)
 
-Monorepo with two independent workspaces: `client/` (Next.js App Router) and
-`server/` (FastAPI). No root package manager; work inside each workspace.
+Flat layout: Next.js App Router code lives in `src/` (`src/app/`, `src/lib/`,
+`src/services/`, `src/store/`, `src/utils/`), Next.js configs + `package.json`
+at the repo root; FastAPI backend lives in `api/` (`api/main.py`, `api/app/`,
+`api/tests/`). `package.json` scripts run from the repo root; pytest/uvicorn
+run from `api/`.
 
-## Client (`client/`) — Next.js 16 + React 19 + TypeScript
+## Client (root + `src/`) — Next.js 16 + React 19 + TypeScript
 
 - Stack: Next.js App Router, TypeScript strict, Tailwind CSS v4, Redux Toolkit,
   axios, react-markdown + remark-gfm + rehype-sanitize, zod, Framer Motion.
-- Path aliases (see `tsconfig.json`, `vitest.config.ts`): `@/*` → `app/*`,
-  `~/*` → `./*` (repo root = `client/`).
-- Specs live in `client/openspec/` (`specs/`, `changes/`, `changes/archive/`).
+- Path aliases (see `tsconfig.json`, `vitest.config.ts`): `@/*` → `src/app/*`,
+  `~/*` → `src/*`. Both files must stay in sync.
+- Specs live in `openspec/` (`specs/`, `changes/`, `changes/archive/`).
   Check them before changing admin/blog/project publishing flows.
 
-Commands (run in `client/`):
+Commands (run in repo root):
 
 ```bash
 npm run dev            # next dev
@@ -56,7 +59,7 @@ Conventions:
   fails on untouched files). Until fixed, verify with `npx tsc --noEmit`
   plus `npm run build`.
 
-## Server (`server/`) — FastAPI + SQLAlchemy 2 + Pydantic v2
+## Server (`api/`) — FastAPI + SQLAlchemy 2 + Pydantic v2
 
 - Architecture: `app/api/v1/` (routers) → `app/services/` → `app/repositories/`
   + `app/domain/`; cross-cutting in `app/core/` (`config.py`, `database.py`,
@@ -65,8 +68,10 @@ Conventions:
   gitignored and contain real secrets — never commit them.
 - Entry point: `main.py` (`/health`, router prefix `/api/v1`, docs at
   `/api/docs`). `sys.path` hack in `main.py` allows bare `from core...` imports.
+- Env: `api/app/core/database.py` loads `.env.local` from the repo root via an
+  absolute path — keep it that way so it works with cwd `api/` or repo root.
 
-Commands (run in `server/`, venv at `.venv/`):
+Commands (run in `api/`, venv at `api/.venv/`):
 
 ```bash
 source .venv/bin/activate
@@ -95,18 +100,15 @@ Conventions:
 
 ## Git / hygiene
 
-- Branch `main` tracks `origin/main`. Current worktree has unstaged admin/blog
-  edits + untracked `MarkdownEditor`/`MarkdownRenderer` shared components and
-  `openspec/changes/move-markdown-editor-to-blog/` — check `git status` before
-  committing.
-- Never commit: `.env*`, `node_modules/`, `.next/`, `.venv/`, `__pycache__/`,
-  `*.pyc`, `test-results/`, `playwright-report/`. Root `.gitignore` is minimal;
-  `server/.gitignore` has a typo (`_pycache__`) and ignores `venv/` instead of
-  `.venv/` — fix opportunistically, and untrack committed `.pyc` files.
-- `client/` standardizes on npm (`package-lock.json`); do not reintroduce
-  `yarn.lock`. No `packageManager` field pinned yet.
-- `client/jest.config.ts` is orphaned (vitest is the runner) — ignore unless
-  cleaning up.
-- Verify before finishing: `npx vitest run` in `client/` and `pytest` (or at
-  least the touched test file) in `server/`; `npm run build` for client
+- Branch `main` tracks `origin/main`. The repo was flattened from
+  `client/`+`server/` to root+`src/`+`api/` — check `git status` before
+  committing (many renames still unstaged).
+- Never commit: `.env*`, `node_modules/`, `.next/`, `api/.venv/`,
+  `__pycache__/`, `*.pyc`, `test-results/`, `playwright-report/`. The backend
+  has no committed `.pyc` files — keep it that way.
+- Frontend standardizes on npm (`package-lock.json` is gitignored, matching the
+  previous `client/` setup); do not reintroduce `yarn.lock`. No
+  `packageManager` field pinned yet.
+- Verify before finishing: `npx vitest run` in the repo root and `pytest` (or
+  at least the touched test file) in `api/`; `npm run build` for client
   production checks.
