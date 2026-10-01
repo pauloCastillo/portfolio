@@ -30,16 +30,6 @@ const nextConfig: NextConfig = {
     optimizePackageImports:["@fortawesome/free-brands-svg-icons"],
     proxyClientMaxBodySize: "1mb",
   },
-  images:{
-    remotePatterns:[
-      {
-        protocol: "https",
-        hostname: "lh3.googleusercontent.com",
-        port: "",
-        pathname: "/aida-public/**",
-      }
-    ]
-  },
 };
 
 export default nextConfig;

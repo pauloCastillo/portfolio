@@ -29,10 +29,6 @@ export default function authService() {
         }
     };
 
-    const loginWithGoogle = (callbackUrl = '/admin') => {
-        window.location.href = `/api/auth/google?callbackUrl=${encodeURIComponent(callbackUrl)}`;
-    };
-
     const recoverPassword = async (email: string): Promise<AuthResponse> => {
         try {
             const response = await axios.post('/api/auth/recover', { email });
@@ -46,5 +42,5 @@ export default function authService() {
         }
     };
 
-    return { handleLogin, logout, loginWithGoogle, recoverPassword };
+    return { handleLogin, logout, recoverPassword };
 }

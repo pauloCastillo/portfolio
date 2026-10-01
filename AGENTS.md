@@ -39,6 +39,10 @@ Conventions:
 - Axios default timeout lives in `app/api/config.ts` — keep it sane (>1s).
 - Auth cookie (`httpOnly`) is set in `app/api/auth/login/route.ts`; do not
   also return the raw JWT in the JSON body.
+- Auth is email/password only (`app/auth/page.tsx` + `app/api/auth/login/`).
+  Google OAuth was removed intentionally so no one outside the org can enter
+  admin — do not reintroduce `/api/auth/google`, `loginWithGoogle`,
+  `GOOGLE_OAUTH_URL`, or the `lh3.googleusercontent.com` remotePattern.
 - Husky pre-commit must call `vitest run`, never bare `vitest` (watch hangs).
 - Public navbar (`app/shared/ui/Navbar.tsx`) is minimalist off-home: on
   `/blog` and `/blog/[slug]` it renders only `Home (/) + Blog (/blog)`.

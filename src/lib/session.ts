@@ -4,7 +4,7 @@ import { getIronSession, type SessionOptions } from 'iron-session'
 export interface SessionData {
   accessToken?: string
   // Opcional desde día 1: el backend aún no emite refresh_token (Fase 2).
-  // Cuando lo haga, login/google-callback lo guardan aquí sin cambiar el schema.
+  // Cuando lo haga, el login lo guardará aquí sin cambiar el schema.
   refreshToken?: string
 }
 
