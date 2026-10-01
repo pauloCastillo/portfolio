@@ -21,7 +21,7 @@ DB_NAME = os.getenv("NAME_DB")
 
 DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}?charset=utf8mb4&collation=utf8mb4_unicode_ci"
 
-engine = create_engine(DATABASE_URL, echo=True)
+engine = create_engine(DATABASE_URL, echo=os.getenv("ENV", "dev") != "prod")
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
@@ -32,4 +32,7 @@ def get_db():
     with SessionLocal() as db:
         yield db
 
-Base.metadata.create_all(bind=engine) 
+
+# Esquema gestionado con Alembic (api/alembic/): `alembic upgrade head`.
+# No crear tablas al importar: el import debe funcionar sin MySQL vivo
+# (el engine solo conecta al usarse) y sin efectos laterales.

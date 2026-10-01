@@ -4,6 +4,7 @@ import "./globals.css";
 
 import NavbarLayout from "@/shared/ui/Navbar";
 import AppFooter from "@/components/AppFooter";
+import VisitBeacon from "@/components/VisitBeacon";
 
 import { config } from "@fortawesome/fontawesome-svg-core"
 import "@fortawesome/fontawesome-svg-core/styles.css"
@@ -59,6 +60,7 @@ export default function RootLayout({
       >
         <StoreProvider>
           <LocaleProvider>
+            <VisitBeacon />
             <NavbarLayout />
             <main>{children}</main>
             <AppFooter />

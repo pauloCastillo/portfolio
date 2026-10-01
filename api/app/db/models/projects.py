@@ -13,7 +13,7 @@ class Project(Base):
     __tablename__ = "project"
     
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    user_id: Mapped[str] = mapped_column(String, ForeignKey("user.id"), nullable=False)
+    user_id: Mapped[str] = mapped_column(String(36), ForeignKey("user.id"), nullable=False)
     title: Mapped[str] = mapped_column(String(255), nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False)
     image_file: Mapped[str | None] = mapped_column(String(200), nullable=True, default=None)

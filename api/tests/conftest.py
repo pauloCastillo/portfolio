@@ -23,6 +23,7 @@ from core.database import Base, get_db
 from db.models.users import User
 from db.models.projects import Project
 from db.models.posts import Post
+from db.models.visits import VisitEvent
 from db.models.skills import Skill
 from db.models.techs import Technology
 from db.models.experience import Experience
@@ -32,7 +33,22 @@ from uuid import uuid4
 
 from core.security.password import get_password_hash
 from core.dependencies import get_email_service
+from core.rate_limit import limiter
 from services.email_service import EmailService
+
+
+@pytest.fixture(autouse=True)
+def _reset_rate_limits():
+    """Cuota de rate-limit fresca por test (slowapi guarda en memoria)."""
+    try:
+        limiter._storage.reset()
+    except Exception:
+        pass
+    yield
+    try:
+        limiter._storage.reset()
+    except Exception:
+        pass
 
 
 # Crear base de datos en memoria para tests

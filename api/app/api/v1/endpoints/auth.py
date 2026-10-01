@@ -1,6 +1,6 @@
 from datetime import timedelta
 from typing import Optional
-from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks, status
+from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks, Request, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
@@ -11,6 +11,7 @@ from core.security.password import verify_password
 from core.security.jwt import create_access_token, verify_token
 from core.dependencies import get_user_service, get_email_service
 from core.config import get_settings
+from core.rate_limit import limiter
 from services.user_service import UserService
 from services.email_service import EmailService
 
@@ -28,7 +29,9 @@ router = APIRouter(
 )
 
 @router.post("/login", response_model=Token)
+@limiter.limit("5/minute")
 def login_for_access_token(
+    request: Request,
     user_login: UserLogin,
     db: Session = Depends(get_db),
     user_service: UserService = Depends(get_user_service)
@@ -59,8 +62,10 @@ def login_for_access_token(
 
 
 @router.post("/forgot-password")
+@limiter.limit("3/hour")
 async def forgot_password(
-    request: ForgotPasswordRequest,
+    request: Request,
+    payload: ForgotPasswordRequest,
     background_tasks: BackgroundTasks,
     db: Session = Depends(get_db),
     user_service: UserService = Depends(get_user_service),
@@ -72,7 +77,7 @@ async def forgot_password(
     Envía un email con un enlace de reseteo si el email está registrado.
     Siempre retorna la misma respuesta para prevenir enumeración de usuarios.
     """
-    result = user_service.initiate_password_reset(db, request.email)
+    result = user_service.initiate_password_reset(db, payload.email)
 
     if result:
         settings = get_settings()
@@ -90,15 +95,17 @@ async def forgot_password(
 
 
 @router.post("/reset-password")
+@limiter.limit("10/hour")
 def reset_password(
-    request: ResetPasswordRequest,
+    request: Request,
+    payload: ResetPasswordRequest,
     db: Session = Depends(get_db),
     user_service: UserService = Depends(get_user_service),
 ):
     """
     Resetear contraseña usando un token válido.
     """
-    success = user_service.reset_password(db, request.token, request.new_password)
+    success = user_service.reset_password(db, payload.token, payload.new_password)
 
     if not success:
         raise HTTPException(
@@ -110,7 +117,9 @@ def reset_password(
 
 
 @router.post("/validate", response_model=TokenValidationResponse)
+@limiter.limit("60/minute")
 def validate_token(
+    request: Request,
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     """

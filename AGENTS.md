@@ -83,13 +83,24 @@ uvicorn main:app --reload --port 8000
 pytest                    # full suite (pytest.ini: tests/, --cov=app)
 pytest tests/test_x.py    # single file
 pytest -m "unit"          # markers: unit, integration, slow
+alembic upgrade head      # apply pending DB migrations (run in api/)
+alembic revision --autogenerate -m "msg"  # new migration after model changes
 ```
 
 Conventions:
 
+- DB schema is managed with Alembic (`api/alembic/`, baseline `0001_baseline`).
+  Never create tables by hand or via `create_all`: change the model in
+  `app/db/models/`, then `alembic revision --autogenerate -m "msg"` and review
+  the diff before `alembic upgrade head`. Known historic drift exists between
+  the live DB and the models (column lengths, nullability, index/FK names from
+  pre-Alembic DDL) — do NOT autogenerate a cleanup migration for it; only
+  migrate intentional model changes. All `String` columns MUST declare a length
+  (`String(36)` for UUIDs) or MySQL DDL fails.
 - `requirements.txt` = prod, `requirements-dev.txt` = test/lint tooling.
-- `Base.metadata.create_all()` currently runs on import in
-  `app/core/database.py` — importing `main`/`core.database` needs a live MySQL.
+- `Base.metadata.create_all()` no longer runs on import in
+  `app/core/database.py` — importing `main`/`core.database` must stay side-effect
+  free (engine connects lazily, so no live MySQL is needed to import).
   Tests override with SQLite in `tests/conftest.py`. Do not add more
   import-time side effects; prefer migrations / explicit flags.
 - Empty collection GETs should return `200 []`, not 404.

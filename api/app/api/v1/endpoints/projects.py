@@ -1,7 +1,10 @@
+import secrets
+from io import BytesIO
 from typing import Annotated
 from pathlib import Path
 
 from fastapi import APIRouter, status, Depends, UploadFile, File, HTTPException
+from PIL import Image
 from sqlalchemy.orm import Session
 
 from db.schemas.project_dto import ProjectCreate, ProjectResponse, ProjectUpdate
@@ -9,6 +12,13 @@ from core.database import get_db
 from services.project_service import ProjectService
 from core.dependencies import get_project_service, get_current_user
 from db.models.users import User
+
+Image.MAX_IMAGE_PIXELS = 50_000_000
+
+MAX_IMAGE_BYTES = 30 * 1024 * 1024
+
+# Formato Pillow -> extensión segura (nunca se conserva la del cliente)
+ALLOWED_FORMATS = {"PNG": ".png", "JPEG": ".jpg", "WEBP": ".webp"}
 
 
 db_depends = Annotated[Session, Depends(get_db)]
@@ -41,19 +51,40 @@ UPLOAD_DIR = Path(__file__).resolve().parent.parent.parent.parent.parent / "publ
 
 
 @router.post("/upload/image", name="upload_image", status_code=status.HTTP_201_CREATED)
-def upload_image(current_user: current_user_dep, file: UploadFile = File(...)):
-    """Subir imagen de proyecto."""
-    if file.content_type not in ["image/png", "image/jpeg", "image/jpg", "image/webp", "image/svg+xml"]:
+async def upload_image(current_user: current_user_dep, file: UploadFile = File(...)):
+    """Subir imagen de proyecto.
+
+    Validación estricta: sin SVG, verifica contenido real con Pillow,
+    mide tamaño por bytes leídos (nunca `file.size`) y guarda con
+    nombre aleatorio.
+    """
+    if file.content_type == "image/svg+xml":
         raise HTTPException(status_code=400, detail="Invalid image type")
-    if file.size and file.size > 30 * 1024 * 1024:
+    if file.content_type not in ["image/png", "image/jpeg", "image/jpg", "image/webp"]:
+        raise HTTPException(status_code=400, detail="Invalid image type")
+
+    # Tamaño medido de los bytes reales: UploadFile.size es None
+    # en varias versiones de Starlette y el cliente lo puede omitir.
+    content = await file.read()
+    if len(content) > MAX_IMAGE_BYTES:
         raise HTTPException(status_code=400, detail="File too large (max 30MB)")
+    if not content:
+        raise HTTPException(status_code=400, detail="Empty file")
+
+    try:
+        image = Image.open(BytesIO(content))
+        image.verify()
+        fmt = image.format
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid image content")
+    if fmt not in ALLOWED_FORMATS:
+        raise HTTPException(status_code=400, detail="Invalid image type")
 
     UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-    filename = f"{Path(file.filename).stem}_{int(__import__('time').time())}{Path(file.filename).suffix}"
+    filename = f"{secrets.token_hex(16)}{ALLOWED_FORMATS[fmt]}"
     filepath = UPLOAD_DIR / filename
 
     with open(filepath, "wb") as f:
-        content = file.file.read()
         f.write(content)
 
     return {"filename": filename, "path": f"/public/media/{filename}"}

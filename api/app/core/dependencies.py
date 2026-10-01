@@ -12,6 +12,7 @@ from sqlalchemy.orm import Session
 from services.project_service import ProjectService
 from services.user_service import UserService
 from services.post_service import PostService
+from services.visit_service import VisitService
 from services.skill_service import SkillService
 from services.tech_service import TechService
 from services.experience_service import ExperienceService
@@ -40,6 +41,11 @@ def get_user_service() -> UserService:
 def get_post_service() -> PostService:
     """Factory con cache para PostService."""
     return PostService()
+
+
+def get_visit_service() -> VisitService:
+    """Factory con cache para VisitService."""
+    return VisitService()
 
 
 def get_skill_service() -> SkillService:

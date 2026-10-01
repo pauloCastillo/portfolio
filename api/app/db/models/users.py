@@ -10,9 +10,9 @@ class User(Base):
 
     __tablename__ = "user"
 
-    id: Mapped[str] = mapped_column(String, primary_key=True, index=True, default=lambda: str(uuid4()))
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, index=True, default=lambda: str(uuid4()))
     username: Mapped[str] = mapped_column(String(255), nullable=False)
-    email: Mapped[str] = mapped_column(String, nullable=False, unique=True)
+    email: Mapped[str] = mapped_column(String(255), nullable=False, unique=True)
     password: Mapped[str] = mapped_column(String(128), nullable=False)
     phone: Mapped[str | None] = mapped_column(String(20), nullable=True)
     bio: Mapped[str] = mapped_column(Text, nullable=True, deferred=True)
